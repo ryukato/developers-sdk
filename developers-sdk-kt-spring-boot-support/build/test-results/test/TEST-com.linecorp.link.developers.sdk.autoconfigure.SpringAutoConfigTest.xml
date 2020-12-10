@@ -1,0 +1,1018 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-10-02T12:46:57" hostname="AL01414671.local" time="0.158">
+  <properties/>
+  <testcase name="test()" classname="com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest" time="0.158"/>
+  <system-out><![CDATA[21:46:54.911 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+21:46:54.921 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+21:46:54.944 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+21:46:54.956 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest], using SpringBootContextLoader
+21:46:54.958 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest]: class path resource [com/linecorp/link/developers/sdk/autoconfigure/SpringAutoConfigTest-context.xml] does not exist
+21:46:54.958 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest]: class path resource [com/linecorp/link/developers/sdk/autoconfigure/SpringAutoConfigTestContext.groovy] does not exist
+21:46:54.959 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+21:46:54.995 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest]
+21:46:55.079 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest]: using defaults.
+21:46:55.079 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+21:46:55.085 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [javax/servlet/ServletContext]
+21:46:55.086 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.transaction.TransactionalTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/TransactionDefinition]
+21:46:55.087 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Skipping candidate TestExecutionListener [org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener] due to a missing dependency. Specify custom listener classes or make the default listener classes and their required dependencies available. Offending class: [org/springframework/transaction/interceptor/TransactionAttribute]
+21:46:55.087 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@3657df0a, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@546552ee, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@754888c3, org.springframework.test.context.support.DirtiesContextTestExecutionListener@ac8159b, org.springframework.test.context.event.EventPublishingTestExecutionListener@2ef3447, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@7c63f4d6, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@4ddc7509, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@7f2d5e4, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@7c449451, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@1f620a4b, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@31b84093]
+21:46:55.090 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@32eef788 testClass = SpringAutoConfigTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]], class annotated with @DirtiesContext [false] with mode [null].
+21:46:55.098 [Test worker] DEBUG org.springframework.test.context.support.DependencyInjectionTestExecutionListener - Performing dependency injection for test context [[DefaultTestContext@32eef788 testClass = SpringAutoConfigTest, testInstance = com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest@ab4b8ec, testMethod = [null], testException = [null], mergedContextConfiguration = [ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]]].
+21:46:55.114 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}
+2020-10-02 21:46:55.283 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.c.l.ClasspathLoggingApplicationListener:51?[0;39m - Application started with classpath: [file:/Users/user/.gradle/caches/6.6.1/workerMain/gradle-worker.jar, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/classes/java/test, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/classes/kotlin/test/, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/resources/test/, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/classes/java/main, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/classes/kotlin/main/, file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/resources/main/, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-test/2.3.4.RELEASE/a5fc832082202954b704ef4221a57a47adfb675f/spring-boot-starter-test-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-webflux/2.3.4.RELEASE/42b5804b8e7bdc63c94fd23ca847c33be73855ef/spring-boot-starter-webflux-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-json/2.3.4.RELEASE/1fac4d2fa9d2827e5e7a2c11ccc50f8dea2e95b/spring-boot-starter-json-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter/2.3.4.RELEASE/cfeb7cce94a342b4b31b64c42a82c287c2f17207/spring-boot-starter-2.3.4.RELEASE.jar, file:/Users/user/.m2/repository/com/linecorp/developers-sdk-kt/0.0.1-SNAPSHOT/developers-sdk-kt-0.0.1-SNAPSHOT.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-jackson/1.3.0/5a68726b4da31b705850e2ca2f31959cc77e057b/ktor-client-jackson-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.module/jackson-module-kotlin/2.11.2/470e6cb1482e883ed006817bae7bb143ad75b8c0/jackson-module-kotlin-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-reflect/1.3.72/86613e1a669a701b0c660bfd2af4f82a7ae11fca/kotlin-reflect-1.3.72.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk8/1.3.72/916d54b9eb6442b615e6f1488978f551c0674720/kotlin-stdlib-jdk8-1.3.72.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core/1.3.0/f26f662ae9fb095a0ab1aac5373179470fc128fb/ktor-client-core-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-cio/1.3.0/b614d9628e07476cb8ec464b4ba8291726d1befc/ktor-client-cio-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-logging-jvm/1.3.0/a489ed128f77ab4cbea13d1aa37c4377d07ad8a5/ktor-client-logging-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.github.microutils/kotlin-logging/1.7.10/919a9678f45aadfd09654e72ab0f7de727ad6a67/kotlin-logging-1.7.10.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-test-autoconfigure/2.3.4.RELEASE/fdfe878383124d96d477ceba4799eb546cfbdf3d/spring-boot-test-autoconfigure-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-autoconfigure/2.3.4.RELEASE/ff9efafb9d62c17d8c3c1faec7afad147c924263/spring-boot-autoconfigure-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-test/2.3.4.RELEASE/e0de9f2db2ef11082af1e9a74259edc7826dbc2f/spring-boot-test-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot/2.3.4.RELEASE/f23f14ae4062d5983db89b7c7336166b6734fc57/spring-boot-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-logging/2.3.4.RELEASE/677a66ac80e88cefaaca64e72b5523eb4836b7ae/spring-boot-starter-logging-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/jakarta.annotation/jakarta.annotation-api/1.3.5/59eb84ee0d616332ff44aba065f3888cf002cd2d/jakarta.annotation-api-1.3.5.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-test/5.2.9.RELEASE/cdcd16d9931ee1d9cba35ca3c465521794c0b98a/spring-test-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-webflux/5.2.9.RELEASE/c62f1230a10bde828161379f16d31ed5051a46fe/spring-webflux-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-web/5.2.9.RELEASE/4bc4a60b74ea0a92ed09d41c675f8426324b4e56/spring-web-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-context/5.2.9.RELEASE/4003ef2db8b5e4b22330fc6d67aae7ac5d304319/spring-context-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-aop/5.2.9.RELEASE/6ae14b8a11b4a30f22a15c8f97ac4b5d0979a4ef/spring-aop-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-beans/5.2.9.RELEASE/80e722ffa73a43459f639d36e25aa4e4a08d8d79/spring-beans-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-expression/5.2.9.RELEASE/c8584de306be115ef1715b7ed9d50fb2802867aa/spring-expression-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-core/5.2.9.RELEASE/400a6fdb45bfa5318aa7d06360f4495b75080bb5/spring-core-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.yaml/snakeyaml/1.26/a78a8747147d2c5807683e76ec2b633e95c14fe9/snakeyaml-1.26.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-network-tls/1.3.0/fc44d2a10b28b046eb2ff02cb57f86d76ce9f381/ktor-network-tls-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-json-jvm/1.3.0/d3602197ee3f376e78173bd41c75b5c25ccf77b0/ktor-client-json-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-client-core-jvm/1.3.0/1e3f7d66879b5d3d6e1701513d875a93ab3b9c20/ktor-client-core-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-cio-jvm/1.3.0/eb229c2e5160269007d550988a98f62cd82f7ed8/ktor-http-cio-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-jvm/1.3.0/d8d46bc2edf2a6e12257609c6f7bdae7ec1b41e4/ktor-http-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-network/1.3.0/71e40a15e12ee90812da84b74bb09c9014cc639a/ktor-network-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-utils-jvm/1.3.0/ae61e8696e15335d429530dee6eff18cf465ca63/ktor-utils-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-jdk7/1.3.72/3adfc2f4ea4243e01204be8081fe63bde6b12815/kotlin-stdlib-jdk7-1.3.72.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-io-jvm/1.3.0/377941b8c35e2143559c2d88599eea316b757483/ktor-io-jvm-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/atomicfu/0.14.1/e0072a7ad62fbec16d8490fb298da7d76d0ae347/atomicfu-0.14.1.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib/1.3.72/8032138f12c0180bc4e51fe139d4c52b46db6109/kotlin-stdlib-1.3.72.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.apache.commons/commons-lang3/3.10/e155460aaf5b464062a09c3923f089ce99128a17/commons-lang3-3.10.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.14/3cb1181b2141a7e752f5bdc998b7ef1849f726cf/commons-codec-1.14.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.bouncycastle/bcprov-jdk15on/1.64/1467dac1b787b5ad2a18201c0c281df69882259e/bcprov-jdk15on-1.64.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http-cio/1.3.0/a049ff05b72fd29551bc7aa360953dce03307400/ktor-http-cio-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-http/1.3.0/f8cde61fbf567e42ba65e327ce2dde5670a130e9/ktor-http-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-utils/1.3.0/5569656b4b82def88e0aac46b3dd6f8ef07e249b/ktor-utils-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.ktor/ktor-io/1.3.0/93ba9b1387f1dab7bac8c4b3a1a25a7720e6071a/ktor-io-1.3.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core-common/1.3.8/f637004addee7d856f617979f583352e97a21e5a/kotlinx-coroutines-core-common-1.3.8.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlinx/kotlinx-coroutines-core/1.3.8/f62be6d4cbf27781c2969867b4ed952f38378492/kotlinx-coroutines-core-1.3.8.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains.kotlin/kotlin-stdlib-common/1.3.72/6ca8bee3d88957eaaaef077c41c908c9940492d8/kotlin-stdlib-common-1.3.72.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.jayway.jsonpath/json-path/2.4.0/765a4401ceb2dc8d40553c2075eb80a8fa35c2ae/json-path-2.4.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.synchronoss.cloud/nio-multipart-parser/1.1.0/c6c417fec6612584b1c34d4dd98c5a4e47e8c754/nio-multipart-parser-1.1.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-classic/1.2.3/7c4f3c474fb2c041d8028740440937705ebb473a/logback-classic-1.2.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-to-slf4j/2.13.3/966f6fd1af4959d6b12bfa880121d4a2b164f857/log4j-to-slf4j-2.13.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.slf4j/jul-to-slf4j/1.7.30/d58bebff8cbf70ff52b59208586095f467656c30/jul-to-slf4j-1.7.30.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.synchronoss.cloud/nio-stream-storage/1.1.3/986dba5f6e5eed20f0dba6ddc8e8a64a9ebdc2f3/nio-stream-storage-1.1.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.slf4j/slf4j-api/1.7.30/b5a4b6d16ab13e34a88fae84c35cd5d68cac922c/slf4j-api-1.7.30.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jdk8/2.11.2/d4c1933a8d62db65c3d5a5cd809511e021a189c0/jackson-datatype-jdk8-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.datatype/jackson-datatype-jsr310/2.11.2/e6235e5eb3cf3edd2a95cd0dc96bc48aeb309e8a/jackson-datatype-jsr310-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.module/jackson-module-parameter-names/2.11.2/c0dc526fcef5a3aae0273fc516ecf3505f7a5de8/jackson-module-parameter-names-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-databind/2.11.2/ee08bbd8975dde844307fe8309dfcd5ec7ee129d/jackson-databind-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/jakarta.xml.bind/jakarta.xml.bind-api/2.3.3/48e3b9cfc10752fba3521d6511f4165bea951801/jakarta.xml.bind-api-2.3.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.assertj/assertj-core/3.16.1/6e772120aff69ca3d1583b3d1b36b7529de43ba1/assertj-core-3.16.1.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest/2.2/1820c0968dba3a11a1b30669bb1f01978a91dedc/hamcrest-2.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-junit-jupiter/3.3.3/1176ce43cf773e11a5a318ff04e57e55f9187347/mockito-junit-jupiter-3.3.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-params/5.6.2/f2a64a42cf73077062c2386db0598062b7480d91/junit-jupiter-params-5.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.6.2/c0833bd6de29dd77f8d071025b97b8b434308cd3/junit-jupiter-engine-5.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.6.2/c9ba885abfe975cda123bf6f8f0a69a1b46956d0/junit-jupiter-api-5.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.6.2/1752cad2579e20c2b224602fe846fc660fb35805/junit-platform-engine-1.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.6.2/7644a14b329e76b5fe487628b50fb5eab6ba7d26/junit-platform-commons-1.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter/5.6.2/b5c481685b6a8ca91c0d46f28f886a444354daa5/junit-jupiter-5.6.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-core/3.3.3/4878395d4e63173f3825e17e5e0690e8054445f1/mockito-core-3.3.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.skyscreamer/jsonassert/1.5.0/6c9d5fe2f59da598d9aefc1cfc6528ff3cf32df3/jsonassert-1.5.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.xmlunit/xmlunit-core/2.7.0/4d014eac96329c70175116b185749765cee0aad5/xmlunit-core-2.7.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework.boot/spring-boot-starter-reactor-netty/2.3.4.RELEASE/b204d15044f57810b3408997e6fdccb54fed0c01/spring-boot-starter-reactor-netty-2.3.4.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.springframework/spring-jcl/5.2.9.RELEASE/39777c3eeaf3d0957d9fdffbb75e3ff8a89caf62/spring-jcl-5.2.9.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.jetbrains/annotations/13.0/919f0dfe192fb4e063e7dacadee7f8bb9a2672a9/annotations-13.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-annotations/2.11.2/e0a7f61fce3e3eac38a079c11831868269de2ea/jackson-annotations-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.fasterxml.jackson.core/jackson-core/2.11.2/bc022ab0f0c83c07f9c52c5ab9a6a4932b15cc35/jackson-core-2.11.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/net.minidev/json-smart/2.3/7396407491352ce4fa30de92efb158adb76b5b/json-smart-2.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/jakarta.activation/jakarta.activation-api/1.2.2/99f53adba383cb1bf7c3862844488574b559621f/jakarta.activation-api-1.2.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.10.14/5288bd154aa7bc8ea81a658f60a790f646025832/byte-buddy-1.10.14.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.10.14/627b576d22189363c49eb59859664490ae230b38/byte-buddy-agent-1.10.14.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.6/639033469776fd37c08358c6b92a4761feb2af4b/objenesis-2.6.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/com.vaadin.external.google/android-json/0.0.20131108.vaadin1/fa26d351fe62a6a17f5cda1287c1c6110dec413f/android-json-0.0.20131108.vaadin1.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.projectreactor.netty/reactor-netty/0.9.12.RELEASE/41022546d07f1499fb9d8617bba4a1a89d3549db/reactor-netty-0.9.12.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.projectreactor/reactor-core/3.3.10.RELEASE/f5787f994a9a810c0986418232e06fcf4afc1216/reactor-core-3.3.10.RELEASE.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/ch.qos.logback/logback-core/1.2.3/864344400c3d4d92dfeb0a305dc87d953677c03c/logback-core-1.2.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.apache.logging.log4j/log4j-api/2.13.3/ec1508160b93d274b1add34419b897bae84c6ca9/log4j-api-2.13.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/net.minidev/accessors-smart/1.2/c592b500269bfde36096641b01238a8350f8aa31/accessors-smart-1.2.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.apiguardian/apiguardian-api/1.1.0/fc9dff4bb36d627bdc553de77e1f17efd790876c/apiguardian-api-1.1.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.2.0/28c11eb91f9b6d8e200631d46e20a7f407f2a046/opentest4j-1.2.0.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http2/4.1.52.Final/1e06a41e2b67cd6f91bf97935f4729c843ac1a57/netty-codec-http2-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler-proxy/4.1.52.Final/e5701741e851d83b5ef15738f84c825ba2c0688e/netty-handler-proxy-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-http/4.1.52.Final/e0d75d03edf6e4d0682c85e8b26762bcde34697d/netty-codec-http-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-handler/4.1.52.Final/eb7d4fa554f4fdc8dacb80dce7e3f806fd1dc2db/netty-handler-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-epoll/4.1.52.Final/5cfac181f741082a1e69ceecdf11e379abb0d136/netty-transport-native-epoll-4.1.52.Final-linux-x86_64.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.3/d9fb7a7926ffa635b3dcaa5049fb2bfa25b3e7d0/reactive-streams-1.0.3.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.4/da08b8cce7bbf903602a25a3a163ae252435795/asm-5.0.4.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec-socks/4.1.52.Final/93170f664ae83ec70c35752b91cb733f9b80bf90/netty-codec-socks-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-codec/4.1.52.Final/d98ad5bb86707c3c1a7105a346119dac332bdf23/netty-codec-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport-native-unix-common/4.1.52.Final/bec4d7135ae82ab1f90938bb6625e43b4b15e165/netty-transport-native-unix-common-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-transport/4.1.52.Final/970ee3790f504452bd32692f6b208a590c51f0ee/netty-transport-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-buffer/4.1.52.Final/fdf681985f50d84fac625df52f34b6d6cb699bda/netty-buffer-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-resolver/4.1.52.Final/1fd5a58ff5df4dc9bb3027a6fbf114767d9278d5/netty-resolver-4.1.52.Final.jar, file:/Users/user/.gradle/caches/modules-2/files-2.1/io.netty/netty-common/4.1.52.Final/715bfadb9f3bf86da38fa12b97b4aaa9828b4789/netty-common-4.1.52.Final.jar] 
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.3.4.RELEASE)
+
+2020-10-02 21:46:55.386 [Test worker] ?[34mINFO ?[0;39m ?[36mc.l.l.d.s.autoconfigure.SpringAutoConfigTest:55?[0;39m - Starting SpringAutoConfigTest on AL01414671.local with PID 81124 (started by user in /Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support) 
+2020-10-02 21:46:55.387 [Test worker] ?[39mDEBUG?[0;39m ?[36mc.l.l.d.s.autoconfigure.SpringAutoConfigTest:56?[0;39m - Running with Spring Boot v2.3.4.RELEASE, Spring v5.2.9.RELEASE 
+2020-10-02 21:46:55.387 [Test worker] ?[34mINFO ?[0;39m ?[36mc.l.l.d.s.autoconfigure.SpringAutoConfigTest:651?[0;39m - No active profile set, falling back to default profiles: default 
+2020-10-02 21:46:55.388 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.boot.SpringApplication:679?[0;39m - Loading source class com.linecorp.link.developers.sdk.autoconfigure.TestApp 
+2020-10-02 21:46:55.404 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.c.config.ConfigFileApplicationListener:222?[0;39m - Loaded config file 'file:/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/resources/test/config/application.yml' (classpath:/config/application.yml) 
+2020-10-02 21:46:55.405 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.w.r.c.AnnotationConfigReactiveWebServerApplicationContext:596?[0;39m - Refreshing org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925 
+2020-10-02 21:46:55.417 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor' 
+2020-10-02 21:46:55.431 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.internalCachingMetadataReaderFactory' 
+2020-10-02 21:46:55.586 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.core.env.PropertySourcesPropertyResolver:115?[0;39m - Found key 'spring.jmx.enabled' in PropertySource 'configurationProperties' with value of type String 
+2020-10-02 21:46:55.774 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.c.a.ClassPathScanningCandidateComponentProvider:435?[0;39m - Identified candidate component class: file [/Users/user/DEV/projects/develoeprs-sdk/developers-sdk-kt-spring-boot-support/build/classes/kotlin/main/com/linecorp/link/developers/sdk/autoconfigure/ApiClientProperties.class] 
+2020-10-02 21:46:55.809 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer$TestRestTemplateRegistrar' 
+2020-10-02 21:46:55.810 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer$WebTestClientRegistrar' 
+2020-10-02 21:46:55.876 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'propertySourcesPlaceholderConfigurer' 
+2020-10-02 21:46:55.881 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.test.mock.mockito.MockitoPostProcessor' 
+2020-10-02 21:46:55.894 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor' 
+2020-10-02 21:46:55.896 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory' 
+2020-10-02 21:46:55.898 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor' 
+2020-10-02 21:46:55.900 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor' 
+2020-10-02 21:46:55.904 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.test.mock.mockito.MockitoPostProcessor$SpyPostProcessor' 
+2020-10-02 21:46:55.905 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.ConfigurationPropertiesBindingPostProcessor' 
+2020-10-02 21:46:55.905 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.context.internalConfigurationPropertiesBinder' 
+2020-10-02 21:46:55.905 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.context.internalConfigurationPropertiesBinderFactory' 
+2020-10-02 21:46:55.907 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webServerFactoryCustomizerBeanPostProcessor' 
+2020-10-02 21:46:55.917 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'nettyReactiveWebServerFactory' 
+2020-10-02 21:46:55.917 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryConfiguration$EmbeddedNetty' 
+2020-10-02 21:46:55.923 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'reactorServerResourceFactory' 
+2020-10-02 21:46:55.932 [Test worker] ?[39mDEBUG?[0;39m ?[36mreactor.util.Loggers$LoggerFactory:249?[0;39m - Using Slf4j logging framework 
+2020-10-02 21:46:55.958 [Test worker] ?[39mDEBUG?[0;39m ?[36mi.n.u.internal.logging.InternalLoggerFactory:45?[0;39m - Using SLF4J as the default logging framework 
+2020-10-02 21:46:55.959 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:1026?[0;39m - Platform: MacOS 
+2020-10-02 21:46:55.962 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:417?[0;39m - -Dio.netty.noUnsafe: false 
+2020-10-02 21:46:55.962 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:885?[0;39m - Java version: 8 
+2020-10-02 21:46:55.964 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:130?[0;39m - sun.misc.Unsafe.theUnsafe: available 
+2020-10-02 21:46:55.965 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:154?[0;39m - sun.misc.Unsafe.copyMemory: available 
+2020-10-02 21:46:55.965 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:192?[0;39m - java.nio.Buffer.address: available 
+2020-10-02 21:46:55.966 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:257?[0;39m - direct buffer constructor: available 
+2020-10-02 21:46:55.967 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:331?[0;39m - java.nio.Bits.unaligned: available, true 
+2020-10-02 21:46:55.968 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:396?[0;39m - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9 
+2020-10-02 21:46:55.968 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent0:403?[0;39m - java.nio.DirectByteBuffer.<init>(long, int): available 
+2020-10-02 21:46:55.968 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:1058?[0;39m - sun.misc.Unsafe: available 
+2020-10-02 21:46:55.969 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:1179?[0;39m - -Dio.netty.tmpdir: /var/folders/3p/6kg18qq110sdwclcxh5zfc280000gn/T (java.io.tmpdir) 
+2020-10-02 21:46:55.969 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:1258?[0;39m - -Dio.netty.bitMode: 64 (sun.arch.data.model) 
+2020-10-02 21:46:55.971 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:177?[0;39m - -Dio.netty.maxDirectMemory: 477626368 bytes 
+2020-10-02 21:46:55.971 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:184?[0;39m - -Dio.netty.uninitializedArrayAllocationThreshold: -1 
+2020-10-02 21:46:55.972 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.CleanerJava6:92?[0;39m - java.nio.ByteBuffer.cleaner(): available 
+2020-10-02 21:46:55.973 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:204?[0;39m - -Dio.netty.noPreferDirect: false 
+2020-10-02 21:46:55.977 [Test worker] ?[39mDEBUG?[0;39m ?[36mreactor.netty.tcp.TcpResources:254?[0;39m - [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=12, workerCount=12} 
+2020-10-02 21:46:55.977 [Test worker] ?[39mDEBUG?[0;39m ?[36mreactor.netty.tcp.TcpResources:254?[0;39m - [http] resources will use the default ConnectionProvider: reactor.netty.resources.PooledConnectionProvider@22d464b7 
+2020-10-02 21:46:55.979 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'nettyReactiveWebServerFactory' via factory method to bean named 'reactorServerResourceFactory' 
+2020-10-02 21:46:55.994 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'reactiveWebServerFactoryCustomizer' 
+2020-10-02 21:46:55.995 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.ReactiveWebServerFactoryAutoConfiguration' 
+2020-10-02 21:46:55.998 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'server-org.springframework.boot.autoconfigure.web.ServerProperties' 
+2020-10-02 21:46:56.010 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.BoundConfigurationProperties' 
+2020-10-02 21:46:56.105 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'reactiveWebServerFactoryCustomizer' via factory method to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties' 
+2020-10-02 21:46:56.109 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'nettyWebServerFactoryCustomizer' 
+2020-10-02 21:46:56.110 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration$NettyWebServerFactoryCustomizerConfiguration' 
+2020-10-02 21:46:56.112 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'nettyWebServerFactoryCustomizer' via factory method to bean named 'environment' 
+2020-10-02 21:46:56.112 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'nettyWebServerFactoryCustomizer' via factory method to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties' 
+2020-10-02 21:46:56.164 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.InternalThreadLocalMap:56?[0;39m - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024 
+2020-10-02 21:46:56.164 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.InternalThreadLocalMap:59?[0;39m - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096 
+2020-10-02 21:46:56.168 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'testApp' 
+2020-10-02 21:46:56.171 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.AutoConfigurationPackages' 
+2020-10-02 21:46:56.173 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration' 
+2020-10-02 21:46:56.174 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.context.properties.ConfigurationBeanFactoryMetadata' 
+2020-10-02 21:46:56.176 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$Jackson2ObjectMapperBuilderCustomizerConfiguration' 
+2020-10-02 21:46:56.178 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'standardJacksonObjectMapperBuilderCustomizer' 
+2020-10-02 21:46:56.179 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties' 
+2020-10-02 21:46:56.184 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'standardJacksonObjectMapperBuilderCustomizer' via factory method to bean named 'org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925' 
+2020-10-02 21:46:56.184 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'standardJacksonObjectMapperBuilderCustomizer' via factory method to bean named 'spring.jackson-org.springframework.boot.autoconfigure.jackson.JacksonProperties' 
+2020-10-02 21:46:56.187 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperBuilderConfiguration' 
+2020-10-02 21:46:56.188 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$ParameterNamesModuleConfiguration' 
+2020-10-02 21:46:56.190 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'parameterNamesModule' 
+2020-10-02 21:46:56.198 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration$JacksonObjectMapperConfiguration' 
+2020-10-02 21:46:56.199 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'jacksonObjectMapper' 
+2020-10-02 21:46:56.201 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'jacksonObjectMapperBuilder' via factory method to bean named 'org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925' 
+2020-10-02 21:46:56.201 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'jacksonObjectMapperBuilder' via factory method to bean named 'standardJacksonObjectMapperBuilderCustomizer' 
+2020-10-02 21:46:56.203 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'jsonComponentModule' 
+2020-10-02 21:46:56.203 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration' 
+2020-10-02 21:46:56.214 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'jacksonObjectMapper' via factory method to bean named 'jacksonObjectMapperBuilder' 
+2020-10-02 21:46:56.243 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$DefaultCodecsConfiguration' 
+2020-10-02 21:46:56.244 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'defaultCodecCustomizer' 
+2020-10-02 21:46:56.245 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.codec-org.springframework.boot.autoconfigure.codec.CodecProperties' 
+2020-10-02 21:46:56.247 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'defaultCodecCustomizer' via factory method to bean named 'spring.codec-org.springframework.boot.autoconfigure.codec.CodecProperties' 
+2020-10-02 21:46:56.249 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration$JacksonCodecConfiguration' 
+2020-10-02 21:46:56.250 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'jacksonCodecCustomizer' 
+2020-10-02 21:46:56.251 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'jacksonCodecCustomizer' via factory method to bean named 'jacksonObjectMapper' 
+2020-10-02 21:46:56.253 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.http.codec.CodecsAutoConfiguration' 
+2020-10-02 21:46:56.254 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration' 
+2020-10-02 21:46:56.255 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.error.ErrorWebFluxAutoConfiguration' via constructor to bean named 'server-org.springframework.boot.autoconfigure.web.ServerProperties' 
+2020-10-02 21:46:56.257 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'errorWebExceptionHandler' 
+2020-10-02 21:46:56.257 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'errorAttributes' 
+2020-10-02 21:46:56.261 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties' 
+2020-10-02 21:46:56.266 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'serverCodecConfigurer' 
+2020-10-02 21:46:56.266 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$EnableWebFluxConfiguration' 
+2020-10-02 21:46:56.267 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.webflux-org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties' 
+2020-10-02 21:46:56.270 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$EnableWebFluxConfiguration' via constructor to bean named 'spring.webflux-org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties' 
+2020-10-02 21:46:56.276 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$WebFluxConfig' 
+2020-10-02 21:46:56.277 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$WebFluxConfig' via constructor to bean named 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties' 
+2020-10-02 21:46:56.278 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$WebFluxConfig' via constructor to bean named 'spring.webflux-org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties' 
+2020-10-02 21:46:56.278 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$WebFluxConfig' via constructor to bean named 'org.springframework.beans.factory.support.DefaultListableBeanFactory@3f748926' 
+2020-10-02 21:46:56.296 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'errorWebExceptionHandler' via factory method to bean named 'errorAttributes' 
+2020-10-02 21:46:56.297 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'errorWebExceptionHandler' via factory method to bean named 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties' 
+2020-10-02 21:46:56.297 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'errorWebExceptionHandler' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.297 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'errorWebExceptionHandler' via factory method to bean named 'org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925' 
+2020-10-02 21:46:56.322 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webFluxConversionService' 
+2020-10-02 21:46:56.329 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webFluxValidator' 
+2020-10-02 21:46:56.332 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webHandler' 
+2020-10-02 21:46:56.334 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'requestMappingHandlerMapping' 
+2020-10-02 21:46:56.338 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webFluxContentTypeResolver' 
+2020-10-02 21:46:56.340 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'requestMappingHandlerMapping' via factory method to bean named 'webFluxContentTypeResolver' 
+2020-10-02 21:46:56.362 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'routerFunctionMapping' 
+2020-10-02 21:46:56.363 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'routerFunctionMapping' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.369 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'resourceHandlerMapping' 
+2020-10-02 21:46:56.370 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'resourceUrlProvider' 
+2020-10-02 21:46:56.373 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'resourceHandlerMapping' via factory method to bean named 'resourceUrlProvider' 
+2020-10-02 21:46:56.388 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.w.r.handler.SimpleUrlHandlerMapping:162?[0;39m - Patterns [/webjars/**, /**] in 'resourceHandlerMapping' 
+2020-10-02 21:46:56.389 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'welcomePageRouterFunctionMapping' 
+2020-10-02 21:46:56.389 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration$WelcomePageConfiguration' 
+2020-10-02 21:46:56.391 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'welcomePageRouterFunctionMapping' via factory method to bean named 'org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925' 
+2020-10-02 21:46:56.391 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'welcomePageRouterFunctionMapping' via factory method to bean named 'spring.webflux-org.springframework.boot.autoconfigure.web.reactive.WebFluxProperties' 
+2020-10-02 21:46:56.391 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'welcomePageRouterFunctionMapping' via factory method to bean named 'spring.resources-org.springframework.boot.autoconfigure.web.ResourceProperties' 
+2020-10-02 21:46:56.395 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'requestMappingHandlerAdapter' 
+2020-10-02 21:46:56.396 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'webFluxAdapterRegistry' 
+2020-10-02 21:46:56.487 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'requestMappingHandlerAdapter' via factory method to bean named 'webFluxAdapterRegistry' 
+2020-10-02 21:46:56.487 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'requestMappingHandlerAdapter' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.488 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'requestMappingHandlerAdapter' via factory method to bean named 'webFluxConversionService' 
+2020-10-02 21:46:56.488 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'requestMappingHandlerAdapter' via factory method to bean named 'webFluxValidator' 
+2020-10-02 21:46:56.508 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.w.r.r.m.a.ControllerMethodResolver:246?[0;39m - ControllerAdvice beans: none 
+2020-10-02 21:46:56.508 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'handlerFunctionAdapter' 
+2020-10-02 21:46:56.510 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'simpleHandlerAdapter' 
+2020-10-02 21:46:56.512 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'responseEntityResultHandler' 
+2020-10-02 21:46:56.513 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseEntityResultHandler' via factory method to bean named 'webFluxAdapterRegistry' 
+2020-10-02 21:46:56.513 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseEntityResultHandler' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.513 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseEntityResultHandler' via factory method to bean named 'webFluxContentTypeResolver' 
+2020-10-02 21:46:56.518 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'responseBodyResultHandler' 
+2020-10-02 21:46:56.519 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseBodyResultHandler' via factory method to bean named 'webFluxAdapterRegistry' 
+2020-10-02 21:46:56.519 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseBodyResultHandler' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.519 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'responseBodyResultHandler' via factory method to bean named 'webFluxContentTypeResolver' 
+2020-10-02 21:46:56.523 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'viewResolutionResultHandler' 
+2020-10-02 21:46:56.523 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'viewResolutionResultHandler' via factory method to bean named 'webFluxAdapterRegistry' 
+2020-10-02 21:46:56.524 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'viewResolutionResultHandler' via factory method to bean named 'webFluxContentTypeResolver' 
+2020-10-02 21:46:56.530 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'serverResponseResultHandler' 
+2020-10-02 21:46:56.531 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'serverResponseResultHandler' via factory method to bean named 'serverCodecConfigurer' 
+2020-10-02 21:46:56.533 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'responseStatusExceptionHandler' 
+2020-10-02 21:46:56.535 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'localeContextResolver' 
+2020-10-02 21:46:56.538 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.WebFluxAutoConfiguration' 
+2020-10-02 21:46:56.540 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.HttpHandlerAutoConfiguration$AnnotationConfig' 
+2020-10-02 21:46:56.540 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.web.reactive.HttpHandlerAutoConfiguration$AnnotationConfig' via constructor to bean named 'org.springframework.boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext@40885925' 
+2020-10-02 21:46:56.542 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'httpHandler' 
+2020-10-02 21:46:56.549 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.web.server.adapter.HttpWebHandlerAdapter:218?[0;39m - enableLoggingRequestDetails='false': form data and headers will be masked to prevent unsafe logging of potentially sensitive data 
+2020-10-02 21:46:56.552 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.HttpHandlerAutoConfiguration' 
+2020-10-02 21:46:56.553 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'com.linecorp.link.developers.sdk.autoconfigure.ApiClientSdkAutoConfiguration' 
+2020-10-02 21:46:56.556 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'apiClient' 
+2020-10-02 21:46:56.565 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'developers-api-com.linecorp.link.developers.sdk.autoconfigure.ApiClientProperties' 
+2020-10-02 21:46:56.585 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'apiKeySecretLoader' 
+2020-10-02 21:46:56.587 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'base64ApiKeySecretDecoder' 
+2020-10-02 21:46:56.601 [Test worker] ?[31mWARN ?[0;39m ?[36mc.l.l.d.s.a.ApiClientSdkAutoConfiguration:69?[0;39m - SHOULD NOT USE this - "base64ApiKeySecretDecoder", PLEASE USE MORE SECURE ONE 
+2020-10-02 21:46:56.603 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'apiKeySecretLoader' via factory method to bean named 'developers-api-com.linecorp.link.developers.sdk.autoconfigure.ApiClientProperties' 
+2020-10-02 21:46:56.603 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'apiKeySecretLoader' via factory method to bean named 'base64ApiKeySecretDecoder' 
+2020-10-02 21:46:56.606 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'apiClientFactory' 
+2020-10-02 21:46:56.610 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'apiClient' via factory method to bean named 'developers-api-com.linecorp.link.developers.sdk.autoconfigure.ApiClientProperties' 
+2020-10-02 21:46:56.611 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'apiClient' via factory method to bean named 'apiKeySecretLoader' 
+2020-10-02 21:46:56.611 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'apiClient' via factory method to bean named 'apiClientFactory' 
+2020-10-02 21:46:56.818 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'base64ApiKeySecretEncoder' 
+2020-10-02 21:46:56.819 [Test worker] ?[31mWARN ?[0;39m ?[36mc.l.l.d.s.a.ApiClientSdkAutoConfiguration:62?[0;39m - SHOULD NOT USE this - "base64ApiKeySecretEncoder", PLEASE USE MORE SECURE ONE 
+2020-10-02 21:46:56.819 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$ClassProxyingConfiguration' 
+2020-10-02 21:46:56.820 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.aop.AopAutoConfiguration$ClassProxyingConfiguration' via constructor to bean named 'org.springframework.beans.factory.support.DefaultListableBeanFactory@3f748926' 
+2020-10-02 21:46:56.823 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.aop.AopAutoConfiguration' 
+2020-10-02 21:46:56.825 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration' 
+2020-10-02 21:46:56.826 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'applicationAvailability' 
+2020-10-02 21:46:56.829 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration' 
+2020-10-02 21:46:56.830 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration' 
+2020-10-02 21:46:56.831 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'lifecycleProcessor' 
+2020-10-02 21:46:56.832 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.lifecycle-org.springframework.boot.autoconfigure.context.LifecycleProperties' 
+2020-10-02 21:46:56.834 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'lifecycleProcessor' via factory method to bean named 'spring.lifecycle-org.springframework.boot.autoconfigure.context.LifecycleProperties' 
+2020-10-02 21:46:56.837 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration' 
+2020-10-02 21:46:56.839 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties' 
+2020-10-02 21:46:56.841 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration' via constructor to bean named 'spring.info-org.springframework.boot.autoconfigure.info.ProjectInfoProperties' 
+2020-10-02 21:46:56.843 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration' 
+2020-10-02 21:46:56.845 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'taskExecutorBuilder' 
+2020-10-02 21:46:56.845 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties' 
+2020-10-02 21:46:56.847 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'taskExecutorBuilder' via factory method to bean named 'spring.task.execution-org.springframework.boot.autoconfigure.task.TaskExecutionProperties' 
+2020-10-02 21:46:56.850 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.task.TaskSchedulingAutoConfiguration' 
+2020-10-02 21:46:56.852 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'taskSchedulerBuilder' 
+2020-10-02 21:46:56.853 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties' 
+2020-10-02 21:46:56.855 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:805?[0;39m - Autowiring by type from bean name 'taskSchedulerBuilder' via factory method to bean named 'spring.task.scheduling-org.springframework.boot.autoconfigure.task.TaskSchedulingProperties' 
+2020-10-02 21:46:56.857 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.embedded.EmbeddedWebServerFactoryCustomizerAutoConfiguration' 
+2020-10-02 21:46:56.859 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.function.client.ClientHttpConnectorConfiguration$ReactorNetty' 
+2020-10-02 21:46:56.860 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.function.client.ClientHttpConnectorAutoConfiguration' 
+2020-10-02 21:46:56.862 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration$WebClientCodecsConfiguration' 
+2020-10-02 21:46:56.864 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'exchangeStrategiesCustomizer' 
+2020-10-02 21:46:56.867 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientAutoConfiguration' 
+2020-10-02 21:46:56.868 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.boot.test.web.client.TestRestTemplate' 
+2020-10-02 21:46:56.889 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.f.support.DefaultListableBeanFactory:225?[0;39m - Creating shared instance of singleton bean 'org.springframework.test.web.reactive.server.WebTestClient' 
+2020-10-02 21:46:56.898 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.context.support.DefaultLifecycleProcessor:356?[0;39m - Starting beans in phase 2147483646 
+2020-10-02 21:46:56.901 [Test worker] ?[39mDEBUG?[0;39m ?[36mreactor.netty.resources.DefaultLoopKQueue:249?[0;39m - Default KQueue support : false 
+2020-10-02 21:46:56.904 [Test worker] ?[39mDEBUG?[0;39m ?[36mreactor.netty.resources.DefaultLoopEpoll:249?[0;39m - Default Epoll support : false 
+2020-10-02 21:46:56.908 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.channel.MultithreadEventLoopGroup:44?[0;39m - -Dio.netty.eventLoopThreads: 24 
+2020-10-02 21:46:56.914 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.channel.nio.NioEventLoop:106?[0;39m - -Dio.netty.noKeySetOptimization: false 
+2020-10-02 21:46:56.914 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.channel.nio.NioEventLoop:107?[0;39m - -Dio.netty.selectorAutoRebuildThreshold: 512 
+2020-10-02 21:46:56.922 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.internal.PlatformDependent:919?[0;39m - org.jctools-core.MpscChunkedArrayQueue: available 
+2020-10-02 21:46:56.954 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.ResourceLeakDetector:130?[0;39m - -Dio.netty.leakDetection.level: simple 
+2020-10-02 21:46:56.955 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.ResourceLeakDetector:131?[0;39m - -Dio.netty.leakDetection.targetRecords: 4 
+2020-10-02 21:46:56.974 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.channel.DefaultChannelId:79?[0;39m - -Dio.netty.processId: 81124 (auto-detected) 
+2020-10-02 21:46:56.977 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.NetUtil:139?[0;39m - -Djava.net.preferIPv4Stack: false 
+2020-10-02 21:46:56.977 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.NetUtil:140?[0;39m - -Djava.net.preferIPv6Addresses: false 
+2020-10-02 21:46:56.985 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.NetUtil:224?[0;39m - Loopback interface: lo0 (lo0, 0:0:0:0:0:0:0:1%lo0) 
+2020-10-02 21:46:56.986 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.util.NetUtil:289?[0;39m - Failed to get SOMAXCONN from sysctl and file /proc/sys/net/core/somaxconn. Default: 128 
+2020-10-02 21:46:56.990 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.channel.DefaultChannelId:101?[0;39m - -Dio.netty.machineId: ac:de:48:ff:fe:00:11:22 (auto-detected) 
+2020-10-02 21:46:57.015 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:154?[0;39m - -Dio.netty.allocator.numHeapArenas: 4 
+2020-10-02 21:46:57.016 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:155?[0;39m - -Dio.netty.allocator.numDirectArenas: 4 
+2020-10-02 21:46:57.016 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:157?[0;39m - -Dio.netty.allocator.pageSize: 8192 
+2020-10-02 21:46:57.016 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:162?[0;39m - -Dio.netty.allocator.maxOrder: 11 
+2020-10-02 21:46:57.016 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:166?[0;39m - -Dio.netty.allocator.chunkSize: 16777216 
+2020-10-02 21:46:57.017 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:167?[0;39m - -Dio.netty.allocator.smallCacheSize: 256 
+2020-10-02 21:46:57.017 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:168?[0;39m - -Dio.netty.allocator.normalCacheSize: 64 
+2020-10-02 21:46:57.017 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:169?[0;39m - -Dio.netty.allocator.maxCachedBufferCapacity: 32768 
+2020-10-02 21:46:57.018 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:170?[0;39m - -Dio.netty.allocator.cacheTrimInterval: 8192 
+2020-10-02 21:46:57.018 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:171?[0;39m - -Dio.netty.allocator.cacheTrimIntervalMillis: 0 
+2020-10-02 21:46:57.018 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:172?[0;39m - -Dio.netty.allocator.useCacheForAllThreads: true 
+2020-10-02 21:46:57.019 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.PooledByteBufAllocator:173?[0;39m - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023 
+2020-10-02 21:46:57.027 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.ByteBufUtil:87?[0;39m - -Dio.netty.allocator.type: pooled 
+2020-10-02 21:46:57.028 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.ByteBufUtil:96?[0;39m - -Dio.netty.threadLocalDirectBufferSize: 0 
+2020-10-02 21:46:57.028 [Test worker] ?[39mDEBUG?[0;39m ?[36mio.netty.buffer.ByteBufUtil:99?[0;39m - -Dio.netty.maxThreadLocalCharBufferSize: 16384 
+2020-10-02 21:46:57.048 [reactor-http-nio-1] ?[39mDEBUG?[0;39m ?[36mreactor.netty.tcp.TcpServer:249?[0;39m - [id: 0xc30b967d, L:/0:0:0:0:0:0:0:0:50414] Bound new server 
+2020-10-02 21:46:57.050 [Test worker] ?[34mINFO ?[0;39m ?[36mo.s.boot.web.embedded.netty.NettyWebServer:109?[0;39m - Netty started on port(s): 50414 
+2020-10-02 21:46:57.051 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.context.support.DefaultLifecycleProcessor:188?[0;39m - Successfully started bean 'webServerStartStop' 
+2020-10-02 21:46:57.051 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.context.support.DefaultLifecycleProcessor:356?[0;39m - Starting beans in phase 2147483647 
+2020-10-02 21:46:57.052 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.context.support.DefaultLifecycleProcessor:188?[0;39m - Successfully started bean 'webServerGracefulShutdown' 
+2020-10-02 21:46:57.070 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.b.a.l.ConditionEvaluationReportLoggingListener:126?[0;39m - 
+
+
+============================
+CONDITIONS EVALUATION REPORT
+============================
+
+
+Positive matches:
+-----------------
+
+   AopAutoConfiguration matched:
+      - @ConditionalOnProperty (spring.aop.auto=true) matched (OnPropertyCondition)
+
+   AopAutoConfiguration.ClassProxyingConfiguration matched:
+      - @ConditionalOnMissingClass did not find unwanted class 'org.aspectj.weaver.Advice' (OnClassCondition)
+      - @ConditionalOnProperty (spring.aop.proxy-target-class=true) matched (OnPropertyCondition)
+
+   ApiClientSdkAutoConfiguration#apiClient matched:
+      - @ConditionalOnMissingBean (types: com.linecorp.link.developers.sdk.api.ApiClient; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ApiClientSdkAutoConfiguration#apiClientFactory matched:
+      - @ConditionalOnMissingBean (types: com.linecorp.link.developers.sdk.api.factory.ApiClientFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ApiClientSdkAutoConfiguration#apiKeySecretDecoder matched:
+      - @ConditionalOnMissingBean (types: com.linecorp.link.developers.sdk.key.ApiKeySecretDecoder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ApiClientSdkAutoConfiguration#apiKeySecretEncoder matched:
+      - @ConditionalOnMissingBean (types: com.linecorp.link.developers.sdk.key.ApiKeySecretEncoder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ApiClientSdkAutoConfiguration#apiKeySecretLoader matched:
+      - @ConditionalOnMissingBean (types: com.linecorp.link.developers.sdk.autoconfigure.ApiKeySecretLoader; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ClientHttpConnectorAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   ClientHttpConnectorAutoConfiguration#clientConnectorCustomizer matched:
+      - @ConditionalOnBean (types: org.springframework.http.client.reactive.ClientHttpConnector; SearchStrategy: all) found bean 'reactorClientHttpConnector' (OnBeanCondition)
+
+   ClientHttpConnectorConfiguration.ReactorNetty matched:
+      - @ConditionalOnClass found required class 'reactor.netty.http.client.HttpClient' (OnClassCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.http.client.reactive.ClientHttpConnector; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   CodecsAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'org.springframework.http.codec.CodecConfigurer', 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   CodecsAutoConfiguration.JacksonCodecConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+
+   CodecsAutoConfiguration.JacksonCodecConfiguration#jacksonCodecCustomizer matched:
+      - @ConditionalOnBean (types: com.fasterxml.jackson.databind.ObjectMapper; SearchStrategy: all) found bean 'jacksonObjectMapper' (OnBeanCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration matched:
+      - @ConditionalOnWebApplication (required) found ReactiveWebApplicationContext (OnWebApplicationCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration.NettyWebServerFactoryCustomizerConfiguration matched:
+      - @ConditionalOnClass found required class 'reactor.netty.http.server.HttpServer' (OnClassCondition)
+
+   ErrorWebFluxAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.reactive.config.WebFluxConfigurer' (OnClassCondition)
+      - found ReactiveWebApplicationContext (OnWebApplicationCondition)
+
+   ErrorWebFluxAutoConfiguration#errorAttributes matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.reactive.error.ErrorAttributes; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   ErrorWebFluxAutoConfiguration#errorWebExceptionHandler matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.reactive.error.ErrorWebExceptionHandler; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   GenericCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.GenericCacheConfiguration automatic cache type (CacheCondition)
+
+   HttpHandlerAutoConfiguration matched:
+      - @ConditionalOnClass found required classes 'org.springframework.web.reactive.DispatcherHandler', 'org.springframework.http.server.reactive.HttpHandler' (OnClassCondition)
+      - found ReactiveWebApplicationContext (OnWebApplicationCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.http.server.reactive.HttpHandler; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.databind.ObjectMapper' (OnClassCondition)
+
+   JacksonAutoConfiguration.Jackson2ObjectMapperBuilderCustomizerConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperBuilderConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperBuilderConfiguration#jacksonObjectMapperBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.http.converter.json.Jackson2ObjectMapperBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.converter.json.Jackson2ObjectMapperBuilder' (OnClassCondition)
+
+   JacksonAutoConfiguration.JacksonObjectMapperConfiguration#jacksonObjectMapper matched:
+      - @ConditionalOnMissingBean (types: com.fasterxml.jackson.databind.ObjectMapper; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   JacksonAutoConfiguration.ParameterNamesModuleConfiguration matched:
+      - @ConditionalOnClass found required class 'com.fasterxml.jackson.module.paramnames.ParameterNamesModule' (OnClassCondition)
+
+   JacksonAutoConfiguration.ParameterNamesModuleConfiguration#parameterNamesModule matched:
+      - @ConditionalOnMissingBean (types: com.fasterxml.jackson.module.paramnames.ParameterNamesModule; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   LifecycleAutoConfiguration#defaultLifecycleProcessor matched:
+      - @ConditionalOnMissingBean (names: lifecycleProcessor; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   NoOpCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.NoOpCacheConfiguration automatic cache type (CacheCondition)
+
+   PropertyPlaceholderAutoConfiguration#propertySourcesPlaceholderConfigurer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.context.support.PropertySourcesPlaceholderConfigurer; SearchStrategy: current) did not find any beans (OnBeanCondition)
+
+   ReactiveWebServerFactoryAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.http.ReactiveHttpInputMessage' (OnClassCondition)
+      - found ReactiveWebApplicationContext (OnWebApplicationCondition)
+
+   ReactiveWebServerFactoryConfiguration.EmbeddedNetty matched:
+      - @ConditionalOnClass found required class 'reactor.netty.http.server.HttpServer' (OnClassCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.boot.web.reactive.server.ReactiveWebServerFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   ReactiveWebServerFactoryConfiguration.EmbeddedNetty#reactorServerResourceFactory matched:
+      - @ConditionalOnMissingBean (types: org.springframework.http.client.reactive.ReactorResourceFactory; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   SimpleCacheConfiguration matched:
+      - Cache org.springframework.boot.autoconfigure.cache.SimpleCacheConfiguration automatic cache type (CacheCondition)
+
+   TaskExecutionAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor' (OnClassCondition)
+
+   TaskExecutionAutoConfiguration#applicationTaskExecutor matched:
+      - @ConditionalOnMissingBean (types: java.util.concurrent.Executor; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskExecutionAutoConfiguration#taskExecutorBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskExecutorBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   TaskSchedulingAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler' (OnClassCondition)
+
+   TaskSchedulingAutoConfiguration#taskSchedulerBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.task.TaskSchedulerBuilder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebClientAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.reactive.function.client.WebClient' (OnClassCondition)
+
+   WebClientAutoConfiguration#webClientBuilder matched:
+      - @ConditionalOnMissingBean (types: org.springframework.web.reactive.function.client.WebClient$Builder; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebClientAutoConfiguration.WebClientCodecsConfiguration matched:
+      - @ConditionalOnBean (types: org.springframework.boot.web.codec.CodecCustomizer; SearchStrategy: all) found beans 'jacksonCodecCustomizer', 'defaultCodecCustomizer' (OnBeanCondition)
+
+   WebClientAutoConfiguration.WebClientCodecsConfiguration#exchangeStrategiesCustomizer matched:
+      - @ConditionalOnMissingBean (types: org.springframework.boot.autoconfigure.web.reactive.function.client.WebClientCodecCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+   WebFluxAutoConfiguration matched:
+      - @ConditionalOnClass found required class 'org.springframework.web.reactive.config.WebFluxConfigurer' (OnClassCondition)
+      - found ReactiveWebApplicationContext (OnWebApplicationCondition)
+      - @ConditionalOnMissingBean (types: org.springframework.web.reactive.config.WebFluxConfigurationSupport; SearchStrategy: all) did not find any beans (OnBeanCondition)
+
+
+Negative matches:
+-----------------
+
+   ActiveMQAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.jms.ConnectionFactory' (OnClassCondition)
+
+   AopAutoConfiguration.AspectJAutoProxyingConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.aspectj.weaver.Advice' (OnClassCondition)
+
+   ArtemisAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.jms.ConnectionFactory' (OnClassCondition)
+
+   BatchAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.batch.core.launch.JobLauncher' (OnClassCondition)
+
+   CacheAutoConfiguration:
+      Did not match:
+         - @ConditionalOnBean (types: org.springframework.cache.interceptor.CacheAspectSupport; SearchStrategy: all) did not find any beans of type org.springframework.cache.interceptor.CacheAspectSupport (OnBeanCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.cache.CacheManager' (OnClassCondition)
+
+   CacheAutoConfiguration.CacheManagerEntityManagerFactoryDependsOnPostProcessor:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean' (OnClassCondition)
+         - Ancestor org.springframework.boot.autoconfigure.cache.CacheAutoConfiguration did not match (ConditionEvaluationReport.AncestorsMatchedCondition)
+
+   CaffeineCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.github.benmanes.caffeine.cache.Caffeine' (OnClassCondition)
+
+   CassandraAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   CassandraReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.cassandra.ReactiveSession' (OnClassCondition)
+
+   CassandraRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.datastax.oss.driver.api.core.CqlSession' (OnClassCondition)
+
+   ClientHttpConnectorConfiguration.JettyClient:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.eclipse.jetty.reactive.client.ReactiveRequest' (OnClassCondition)
+
+   ClientHttpConnectorConfiguration.ReactorNetty#reactorClientResourceFactory:
+      Did not match:
+         - @ConditionalOnMissingBean (types: org.springframework.http.client.reactive.ReactorResourceFactory; SearchStrategy: all) found beans of type 'org.springframework.http.client.reactive.ReactorResourceFactory' reactorServerResourceFactory (OnBeanCondition)
+
+   CouchbaseAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Bucket' (OnClassCondition)
+
+   CouchbaseReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Cluster' (OnClassCondition)
+
+   CouchbaseRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.couchbase.client.java.Bucket' (OnClassCondition)
+
+   DataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+
+   DataSourceTransactionManagerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jdbc.core.JdbcTemplate' (OnClassCondition)
+
+   DispatcherServletAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.servlet.DispatcherServlet' (OnClassCondition)
+
+   EhCacheCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'net.sf.ehcache.Cache' (OnClassCondition)
+
+   ElasticsearchDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.elasticsearch.core.ElasticsearchTemplate' (OnClassCondition)
+
+   ElasticsearchRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.elasticsearch.client.Client' (OnClassCondition)
+
+   ElasticsearchRestClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.elasticsearch.client.RestClient' (OnClassCondition)
+
+   EmbeddedLdapAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.unboundid.ldap.listener.InMemoryDirectoryServer' (OnClassCondition)
+
+   EmbeddedMongoAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.MongoClientSettings' (OnClassCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration.JettyWebServerFactoryCustomizerConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'org.eclipse.jetty.server.Server', 'org.eclipse.jetty.util.Loader', 'org.eclipse.jetty.webapp.WebAppContext' (OnClassCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration.TomcatWebServerFactoryCustomizerConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'org.apache.catalina.startup.Tomcat', 'org.apache.coyote.UpgradeProtocol' (OnClassCondition)
+
+   EmbeddedWebServerFactoryCustomizerAutoConfiguration.UndertowWebServerFactoryCustomizerConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'io.undertow.Undertow', 'org.xnio.SslClientAuthMode' (OnClassCondition)
+
+   ErrorMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.Servlet' (OnClassCondition)
+
+   FlywayAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.flywaydb.core.Flyway' (OnClassCondition)
+
+   FreeMarkerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'freemarker.template.Configuration' (OnClassCondition)
+
+   GroovyTemplateAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'groovy.text.markup.MarkupTemplateEngine' (OnClassCondition)
+
+   GsonAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.google.gson.Gson' (OnClassCondition)
+
+   H2ConsoleAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.h2.server.web.WebServlet' (OnClassCondition)
+
+   HazelcastAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HazelcastCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HazelcastJpaDependencyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.hazelcast.core.HazelcastInstance' (OnClassCondition)
+
+   HibernateJpaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.persistence.EntityManager' (OnClassCondition)
+
+   HttpEncodingAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.filter.CharacterEncodingFilter' (OnClassCondition)
+
+   HttpMessageConvertersAutoConfiguration:
+      Did not match:
+         - NoneNestedConditions 1 matched 0 did not; NestedCondition on HttpMessageConvertersAutoConfiguration.NotReactiveWebApplicationCondition.ReactiveWebApplication found ReactiveWebApplicationContext (HttpMessageConvertersAutoConfiguration.NotReactiveWebApplicationCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.http.converter.HttpMessageConverter' (OnClassCondition)
+
+   HypermediaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.hateoas.EntityModel' (OnClassCondition)
+
+   InfinispanCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.infinispan.spring.embedded.provider.SpringEmbeddedCacheManager' (OnClassCondition)
+
+   InfluxDbAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.influxdb.InfluxDB' (OnClassCondition)
+
+   IntegrationAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.integration.config.EnableIntegration' (OnClassCondition)
+
+   JCacheCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.cache.Caching' (OnClassCondition)
+
+   JdbcRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration' (OnClassCondition)
+
+   JdbcTemplateAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jdbc.core.JdbcTemplate' (OnClassCondition)
+
+   JerseyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.ServletRegistration' (OnClassCondition)
+
+   JmsAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.jms.Message' (OnClassCondition)
+
+   JmxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.jmx.enabled=true) found different value in property 'enabled' (OnPropertyCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.jmx.export.MBeanExporter' (OnClassCondition)
+
+   JndiConnectionFactoryAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jms.core.JmsTemplate' (OnClassCondition)
+
+   JndiDataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType' (OnClassCondition)
+
+   JooqAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.jooq.DSLContext' (OnClassCondition)
+
+   JpaRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.jpa.repository.JpaRepository' (OnClassCondition)
+
+   JsonbAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.json.bind.Jsonb' (OnClassCondition)
+
+   JtaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.transaction.Transaction' (OnClassCondition)
+
+   KafkaAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.kafka.core.KafkaTemplate' (OnClassCondition)
+
+   LdapAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.ldap.core.ContextSource' (OnClassCondition)
+
+   LdapRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.ldap.repository.LdapRepository' (OnClassCondition)
+
+   LiquibaseAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'liquibase.change.DatabaseChange' (OnClassCondition)
+
+   MailSenderAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.mail.internet.MimeMessage' (OnClassCondition)
+
+   MailSenderValidatorAutoConfiguration:
+      Did not match:
+         - @ConditionalOnSingleCandidate did not find required type 'org.springframework.mail.javamail.JavaMailSenderImpl' (OnBeanCondition)
+
+   MessageSourceAutoConfiguration:
+      Did not match:
+         - ResourceBundle did not find bundle with basename messages (MessageSourceAutoConfiguration.ResourceBundleCondition)
+
+   MongoAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MongoDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoReactiveRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.reactivestreams.client.MongoClient' (OnClassCondition)
+
+   MongoRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.mongodb.client.MongoClient' (OnClassCondition)
+
+   MultipartAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.MultipartConfigElement' (OnClassCondition)
+
+   MustacheAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.samskivert.mustache.Mustache' (OnClassCondition)
+
+   Neo4jDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.ogm.session.SessionFactory' (OnClassCondition)
+
+   Neo4jRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.neo4j.ogm.session.Neo4jSession' (OnClassCondition)
+
+   OAuth2ClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
+
+   OAuth2ResourceServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.oauth2.server.resource.BearerTokenAuthenticationToken' (OnClassCondition)
+
+   PersistenceExceptionTranslationAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor' (OnClassCondition)
+
+   ProjectInfoAutoConfiguration#buildProperties:
+      Did not match:
+         - @ConditionalOnResource did not find resource '${spring.info.build.location:classpath:META-INF/build-info.properties}' (OnResourceCondition)
+
+   ProjectInfoAutoConfiguration#gitProperties:
+      Did not match:
+         - GitResource did not find git info at classpath:git.properties (ProjectInfoAutoConfiguration.GitResourceAvailableCondition)
+
+   QuartzAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.quartz.Scheduler' (OnClassCondition)
+
+   R2dbcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.r2dbc.spi.ConnectionFactory' (OnClassCondition)
+
+   R2dbcDataAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.r2dbc.core.DatabaseClient' (OnClassCondition)
+
+   R2dbcRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.r2dbc.spi.ConnectionFactory' (OnClassCondition)
+
+   R2dbcTransactionManagerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.r2dbc.connectionfactory.R2dbcTransactionManager' (OnClassCondition)
+
+   RSocketMessagingAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.RSocketFactory' (OnClassCondition)
+
+   RSocketRequesterAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.RSocketFactory' (OnClassCondition)
+
+   RSocketSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.rsocket.core.SecuritySocketAcceptorInterceptor' (OnClassCondition)
+
+   RSocketServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.core.RSocketServer' (OnClassCondition)
+
+   RSocketStrategiesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.rsocket.RSocketFactory' (OnClassCondition)
+
+   RabbitAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.rabbitmq.client.Channel' (OnClassCondition)
+
+   ReactiveElasticsearchRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.elasticsearch.client.reactive.ReactiveElasticsearchClient' (OnClassCondition)
+
+   ReactiveElasticsearchRestClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.elasticsearch.client.reactive.ReactiveRestClients' (OnClassCondition)
+
+   ReactiveOAuth2ClientAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity' (OnClassCondition)
+
+   ReactiveOAuth2ResourceServerAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity' (OnClassCondition)
+
+   ReactiveSecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity' (OnClassCondition)
+
+   ReactiveUserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.ReactiveAuthenticationManager' (OnClassCondition)
+
+   ReactiveWebServerFactoryAutoConfiguration#forwardedHeaderTransformer:
+      Did not match:
+         - @ConditionalOnProperty (server.forward-headers-strategy=framework) did not find property 'server.forward-headers-strategy' (OnPropertyCondition)
+
+   ReactiveWebServerFactoryAutoConfiguration#tomcatReactiveWebServerFactoryCustomizer:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.catalina.startup.Tomcat' (OnClassCondition)
+
+   ReactiveWebServerFactoryConfiguration.EmbeddedJetty:
+      Did not match:
+         - @ConditionalOnClass did not find required classes 'org.eclipse.jetty.server.Server', 'org.eclipse.jetty.servlet.ServletHolder' (OnClassCondition)
+
+   ReactiveWebServerFactoryConfiguration.EmbeddedTomcat:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.catalina.startup.Tomcat' (OnClassCondition)
+
+   ReactiveWebServerFactoryConfiguration.EmbeddedUndertow:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'io.undertow.Undertow' (OnClassCondition)
+
+   RedisAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.core.RedisOperations' (OnClassCondition)
+
+   RedisCacheConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.connection.RedisConnectionFactory' (OnClassCondition)
+
+   RedisReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.connection.ReactiveRedisConnectionFactory' (OnClassCondition)
+
+   RedisRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.redis.repository.configuration.EnableRedisRepositories' (OnClassCondition)
+
+   RepositoryRestMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.rest.webmvc.config.RepositoryRestMvcConfiguration' (OnClassCondition)
+
+   RestTemplateAutoConfiguration:
+      Did not match:
+         - NoneNestedConditions 1 matched 0 did not; NestedCondition on RestTemplateAutoConfiguration.NotReactiveWebApplicationCondition.ReactiveWebApplication found ReactiveWebApplicationContext (RestTemplateAutoConfiguration.NotReactiveWebApplicationCondition)
+      Matched:
+         - @ConditionalOnClass found required class 'org.springframework.web.client.RestTemplate' (OnClassCondition)
+
+   Saml2RelyingPartyAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.saml2.provider.service.registration.RelyingPartyRegistrationRepository' (OnClassCondition)
+
+   SecurityAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.DefaultAuthenticationEventPublisher' (OnClassCondition)
+
+   SecurityFilterAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.config.http.SessionCreationPolicy' (OnClassCondition)
+
+   SendGridAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'com.sendgrid.SendGrid' (OnClassCondition)
+
+   ServletWebServerFactoryAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.ServletRequest' (OnClassCondition)
+
+   SessionAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.session.Session' (OnClassCondition)
+
+   SolrAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.solr.client.solrj.impl.CloudSolrClient' (OnClassCondition)
+
+   SolrRepositoriesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.apache.solr.client.solrj.SolrClient' (OnClassCondition)
+
+   SpringApplicationAdminJmxAutoConfiguration:
+      Did not match:
+         - @ConditionalOnProperty (spring.application.admin.enabled=true) did not find property 'enabled' (OnPropertyCondition)
+
+   SpringDataWebAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.data.web.PageableHandlerMethodArgumentResolver' (OnClassCondition)
+
+   TaskSchedulingAutoConfiguration#taskScheduler:
+      Did not match:
+         - @ConditionalOnBean (names: org.springframework.context.annotation.internalScheduledAnnotationProcessor; SearchStrategy: all) did not find any beans named org.springframework.context.annotation.internalScheduledAnnotationProcessor (OnBeanCondition)
+
+   ThymeleafAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.thymeleaf.spring5.SpringTemplateEngine' (OnClassCondition)
+
+   TransactionAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.transaction.PlatformTransactionManager' (OnClassCondition)
+
+   UserDetailsServiceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.security.authentication.AuthenticationManager' (OnClassCondition)
+
+   ValidationAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.validation.executable.ExecutableValidator' (OnClassCondition)
+
+   WebFluxAutoConfiguration#hiddenHttpMethodFilter:
+      Did not match:
+         - @ConditionalOnProperty (spring.webflux.hiddenmethod.filter.enabled) did not find property 'enabled' (OnPropertyCondition)
+
+   WebFluxAutoConfiguration.ResourceChainCustomizerConfiguration:
+      Did not match:
+         - @ConditionalOnEnabledResourceChain did not find class org.webjars.WebJarAssetLocator (OnEnabledResourceChainCondition)
+
+   WebMvcAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.Servlet' (OnClassCondition)
+
+   WebServiceTemplateAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.oxm.Marshaller' (OnClassCondition)
+
+   WebServicesAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.ws.transport.http.MessageDispatcherServlet' (OnClassCondition)
+
+   WebSocketMessagingAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer' (OnClassCondition)
+
+   WebSocketReactiveAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.Servlet' (OnClassCondition)
+
+   WebSocketServletAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.servlet.Servlet' (OnClassCondition)
+
+   XADataSourceAutoConfiguration:
+      Did not match:
+         - @ConditionalOnClass did not find required class 'javax.transaction.TransactionManager' (OnClassCondition)
+
+
+Exclusions:
+-----------
+
+    None
+
+
+Unconditional classes:
+----------------------
+
+    com.linecorp.link.developers.sdk.autoconfigure.ApiClientSdkAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.ConfigurationPropertiesAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.LifecycleAutoConfiguration
+
+    org.springframework.boot.autoconfigure.context.PropertyPlaceholderAutoConfiguration
+
+    org.springframework.boot.autoconfigure.availability.ApplicationAvailabilityAutoConfiguration
+
+    org.springframework.boot.autoconfigure.info.ProjectInfoAutoConfiguration
+
+
+ 
+2020-10-02 21:46:57.091 [Test worker] ?[34mINFO ?[0;39m ?[36mc.l.l.d.s.autoconfigure.SpringAutoConfigTest:61?[0;39m - Started SpringAutoConfigTest in 1.974 seconds (JVM running for 2.8) 
+2020-10-02 21:46:57.096 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:126?[0;39m - Storing ApplicationContext [1082677541] in cache under key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.096 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 0, missCount = 1] 
+2020-10-02 21:46:57.101 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.101 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 1, missCount = 1] 
+2020-10-02 21:46:57.106 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.s.AbstractDirtiesContextTestExecutionListener:107?[0;39m - Before test method: context [DefaultTestContext@32eef788 testClass = SpringAutoConfigTest, testInstance = com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest@ab4b8ec, testMethod = test@SpringAutoConfigTest, testException = [null], mergedContextConfiguration = [ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null]. 
+2020-10-02 21:46:57.108 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.108 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 2, missCount = 1] 
+2020-10-02 21:46:57.109 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.109 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 3, missCount = 1] 
+2020-10-02 21:46:57.239 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.239 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 4, missCount = 1] 
+2020-10-02 21:46:57.249 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.250 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 5, missCount = 1] 
+2020-10-02 21:46:57.251 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.251 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 6, missCount = 1] 
+2020-10-02 21:46:57.252 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.252 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 7, missCount = 1] 
+2020-10-02 21:46:57.253 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.253 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 8, missCount = 1] 
+2020-10-02 21:46:57.254 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.254 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 9, missCount = 1] 
+2020-10-02 21:46:57.256 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.256 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 10, missCount = 1] 
+2020-10-02 21:46:57.257 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.s.AbstractDirtiesContextTestExecutionListener:107?[0;39m - After test method: context [DefaultTestContext@32eef788 testClass = SpringAutoConfigTest, testInstance = com.linecorp.link.developers.sdk.autoconfigure.SpringAutoConfigTest@ab4b8ec, testMethod = test@SpringAutoConfigTest, testException = [null], mergedContextConfiguration = [ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]], class annotated with @DirtiesContext [false] with mode [null], method annotated with @DirtiesContext [false] with mode [null]. 
+2020-10-02 21:46:57.263 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.c.DefaultCacheAwareContextLoaderDelegate:137?[0;39m - Retrieved ApplicationContext [1082677541] from cache with key [[ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]]] 
+2020-10-02 21:46:57.263 [Test worker] ?[39mDEBUG?[0;39m ?[36morg.springframework.test.context.cache:290?[0;39m - Spring test ApplicationContext cache statistics: [DefaultContextCache@75c4e5b0 size = 1, maxSize = 32, parentContextCount = 0, hitCount = 11, missCount = 1] 
+2020-10-02 21:46:57.263 [Test worker] ?[39mDEBUG?[0;39m ?[36mo.s.t.c.s.AbstractDirtiesContextTestExecutionListener:142?[0;39m - After test class: context [DefaultTestContext@32eef788 testClass = SpringAutoConfigTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [ReactiveWebMergedContextConfiguration@64b418dc testClass = SpringAutoConfigTest, locations = '{}', classes = '{class com.linecorp.link.developers.sdk.autoconfigure.TestApp, class com.linecorp.link.developers.sdk.autoconfigure.TestApp}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true, server.port=0}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@0, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@69bbce24, org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@14be4aa7, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@4dc22c78, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@30016c2e, org.springframework.boot.test.web.reactive.server.WebTestClientContextCustomizer@1ca9b391, org.springframework.boot.test.context.SpringBootTestArgs@1], contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> false]], class annotated with @DirtiesContext [false] with mode [null]. 
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

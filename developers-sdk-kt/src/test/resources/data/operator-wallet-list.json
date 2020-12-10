@@ -1,0 +1,14 @@
+{
+  "responseTime": 1602571690000,
+  "statusCode": 1000,
+  "statusMessage": "Success",
+  "responseData": [
+    {
+      "name": "test-wallet1",
+      "walletAddress": "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+      "createdAt": 1602571690000
+    }
+  ]
+}
+
+

@@ -1,0 +1,147 @@
+{
+  "responseTime": 1602571690000,
+  "statusCode": 1000,
+  "statusMessage": "Success",
+  "responseData": [
+    {
+      "height": 189946,
+      "txhash": "B4450297E89B9635DBD302D478CA311A7B31D579434B725A96D1D3870B35DFBC",
+      "codespace": "",
+      "code": 0,
+      "index": 0,
+      "data": "",
+      "logs": [{
+        "msgIndex": 0,
+        "log": "",
+        "events": [{
+          "type": "grant_perm",
+          "attributes": [{
+            "key": "to",
+            "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+          },
+            {
+              "key": "contract_id",
+              "value": "3336b76f"
+            },
+            {
+              "key": "perm",
+              "value": "modify"
+            },
+            {
+              "key": "to",
+              "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+            },
+            {
+              "key": "contract_id",
+              "value": "3336b76f"
+            },
+            {
+              "key": "perm",
+              "value": "mint"
+            },
+            {
+              "key": "to",
+              "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+            },
+            {
+              "key": "contract_id",
+              "value": "3336b76f"
+            },
+            {
+              "key": "perm",
+              "value": "burn"
+            }
+          ]
+        },
+          {
+            "type": "issue",
+            "attributes": [{
+              "key": "contract_id",
+              "value": "3336b76f"
+            },
+              {
+                "key": "name",
+                "value": "jdssr"
+              },
+              {
+                "key": "symbol",
+                "value": "JDSSR"
+              },
+              {
+                "key": "owner",
+                "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+              },
+              {
+                "key": "to",
+                "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+              },
+              {
+                "key": "amount",
+                "value": "1000000"
+              },
+              {
+                "key": "mintable",
+                "value": "true"
+              },
+              {
+                "key": "decimals",
+                "value": "6"
+              }
+            ]
+          },
+          {
+            "type": "message",
+            "attributes": [{
+              "key": "action",
+              "value": "issue_token"
+            },
+              {
+                "key": "module",
+                "value": "token"
+              },
+              {
+                "key": "sender",
+                "value": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7"
+              }
+            ]
+          }
+        ]
+      }],
+      "info": "",
+      "gasWanted": 99174,
+      "gasUsed": 81561,
+      "tx": {
+        "type": "cosmos-sdk/StdTx",
+        "value": {
+          "msg": [{
+            "type": "token/MsgIssue",
+            "value": {
+              "owner": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7",
+              "to": "tlink1ny5qydw6m4dknqjny55lymf30vtswzwqktjyw7",
+              "name": "jdssr",
+              "meta": "",
+              "symbol": "JDSSR",
+              "imgUri": "https://obs-beta.line-scdn.net/sample",
+              "amount": 1000000,
+              "mintable": true,
+              "decimals": 6
+            }
+          }],
+          "fee": {
+            "gas": 99174,
+            "amount": []
+          },
+          "memo": "",
+          "signatures": [{
+            "pubKey": {
+              "type": "tendermint/PubKeySecp256k1",
+              "value": "AsdRA7OTQcZKPzGMrFq+55XMZpZo2ofifvaq6avNxaUu"
+            },
+            "signature": "D3aDr983Hx3uGKINT6o38Cv2oli6j6PQv6ecpvIzoyFQgednds6JwnPJTGrx55WuWrjsdR8rwc/MlOc3YlPLqQ=="
+          }]
+        }
+      },
+      "timestamp": 1602488335000
+    }
+  ]
+}
