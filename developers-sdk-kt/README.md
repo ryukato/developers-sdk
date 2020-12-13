@@ -36,7 +36,7 @@ implementation("io.ktor:ktor-client-cio:1.3.0")
 implementation("io.ktor:ktor-client-jackson:1.3.0")
 implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
 ```
-### Get started with Maven
+### Get started with Maven (not yet possible, config publishing in WIP)
 ```xml
 <properties>
   <developers-sdk.version>latest-version</developers-sdk.version>
@@ -69,7 +69,7 @@ implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
     <version>${ktor.version}</version>
 </dependency>
 ```
-### With spring-boot
+### With spring-boot (// TODO move to develoeprs-sdk-kt-spring-boot-support)
 If you use `spring-boot`, then you can simple use created `ApiClient` instance by auto-configuration.
 You can define a sort of service class with `ApiClient` instance injected by spring-framework.
 For example,  
