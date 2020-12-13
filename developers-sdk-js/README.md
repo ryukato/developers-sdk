@@ -12,8 +12,8 @@ This class provides a functionality to generate signature for a request.
 ## Run and Test
 To run this project on local, please execute following commands.
 
-1. `npm install`
-2. `npm build`
+1. `yarn`
+2. `yarn run build`
 
 ### Run all tests
-`npm run test`
+`yarn run test`
