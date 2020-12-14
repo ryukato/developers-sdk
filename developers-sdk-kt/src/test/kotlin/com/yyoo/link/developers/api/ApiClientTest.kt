@@ -8,7 +8,7 @@ import com.yyoo.link.developers.sdk.api.*
 
 import com.yyoo.link.developers.sdk.api.factory.ApiClientFactory
 import com.yyoo.link.developers.sdk.api.factory.ApiClientFactoryConfig
-import com.yyoo.link.developers.sdk.http.HttpClientBuilderImpl
+import com.yyoo.link.developers.sdk.http.DefaultHttpClientBuilderImpl
 import com.yyoo.link.developers.sdk.model.dto.ApiKeySecret
 import com.yyoo.link.developers.sdk.model.request.*
 import com.yyoo.link.developers.sdk.model.response.*
@@ -43,7 +43,7 @@ class ApiClientTest {
             logLevel = LogLevel.ALL,
             engineFactory = testMockEngineFactory
         )
-        val httpClientBuilder = HttpClientBuilderImpl()
+        val httpClientBuilder = DefaultHttpClientBuilderImpl()
         apiClient = ApiClientFactory().build(config, httpClientBuilder)
     }
 
