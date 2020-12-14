@@ -23,7 +23,7 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
-	implementation("com.linecorp:developers-sdk-kt:0.0.1-SNAPSHOT")
+	implementation("com.github.ryukato:link-developers-sdk-kt:0.0.1-SNAPSHOT")
 
 	// ktor
 	implementation("io.ktor:ktor-client-core:1.3.0")
