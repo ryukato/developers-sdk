@@ -16,5 +16,9 @@ data class ApiClientFactoryConfig @KtorExperimentalAPI constructor(
     val enableLogging: Boolean = true,
     val logger: Logger = Logger.DEFAULT,
     val logLevel: LogLevel = LogLevel.BODY,
-    val serializer: JsonSerializer? = null
-)
+    val serializer: JsonSerializer = JacksonSerializer()
+) {
+    init {
+        require(apiBaseUrl.isNotBlank()) { "invalid api-base-url: blank" }
+    }
+}

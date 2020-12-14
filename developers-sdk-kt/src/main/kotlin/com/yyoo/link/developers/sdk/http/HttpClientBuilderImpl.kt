@@ -18,7 +18,7 @@ internal class HttpClientBuilderImpl: HttpClientBuilder {
     override var enableLogging: Boolean = true
     override var logger: Logger = Logger.DEFAULT
     override var logLevel: LogLevel = LogLevel.BODY
-    override var serializer: JsonSerializer? = null
+    override lateinit var serializer: JsonSerializer
 
     @KtorExperimentalAPI
     override fun build(
@@ -43,7 +43,7 @@ internal class HttpClientBuilderImpl: HttpClientBuilder {
 
             }
             this.install(JsonFeature) {
-                this.serializer = this@HttpClientBuilderImpl.serializer ?: JacksonSerializer()
+                this.serializer = this@HttpClientBuilderImpl.serializer
             }
         }
     }

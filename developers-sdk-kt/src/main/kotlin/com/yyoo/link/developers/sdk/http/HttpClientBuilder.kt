@@ -7,7 +7,7 @@ import io.ktor.client.features.json.*
 import io.ktor.client.features.logging.*
 
 interface HttpClientBuilder {
-    var serializer: JsonSerializer?
+    var serializer: JsonSerializer
     var logLevel: LogLevel
     var logger: Logger
     var requestTimeout: Long
