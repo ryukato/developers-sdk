@@ -3,6 +3,7 @@ package com.yyoo.link.developers.sdk.api.factory
 import com.yyoo.link.developers.sdk.api.ApiClient
 import com.yyoo.link.developers.sdk.api.ApiClientImpl
 import com.yyoo.link.developers.sdk.http.HttpClientBuilder
+import com.yyoo.link.developers.sdk.http.HttpClientBuilderImpl
 import io.ktor.client.engine.*
 import io.ktor.client.engine.cio.*
 import io.ktor.client.features.json.*
@@ -12,29 +13,20 @@ import io.ktor.util.*
 class ApiClientFactory {
     @KtorExperimentalAPI
     fun build(
-        apiBaseUrl: String,
-        serviceApiKey: String,
-        serviceApiSecret: String,
-        engineFactory: HttpClientEngineFactory<HttpClientEngineConfig> = CIO,
-        enableResponseValidation: Boolean = false,
-        requestTimeout: Long = 10000L,
-        enableLogging: Boolean = true,
-        logger: Logger = Logger.DEFAULT,
-        logLevel: LogLevel = LogLevel.BODY,
-        serializer: JsonSerializer? = null
+        config: ApiClientFactoryConfig,
+        httpClientBuilder: HttpClientBuilder
     ): ApiClient {
         // TODO decouple concrete HttpClientBuilder
-        val httpClientBuilder = HttpClientBuilder()
-        httpClientBuilder.engineFactory = engineFactory
-        httpClientBuilder.enableLogging = enableLogging
-        httpClientBuilder.enableResponseValidation = enableResponseValidation
-        httpClientBuilder.requestTimeout = requestTimeout
-        httpClientBuilder.logger = logger
-        httpClientBuilder.logLevel = logLevel
-        httpClientBuilder.serializer = serializer
+        httpClientBuilder.engineFactory = config.engineFactory
+        httpClientBuilder.enableLogging = config.enableLogging
+        httpClientBuilder.enableResponseValidation = config.enableResponseValidation
+        httpClientBuilder.requestTimeout = config.requestTimeout
+        httpClientBuilder.logger = config.logger
+        httpClientBuilder.logLevel = config.logLevel
+        httpClientBuilder.serializer = config.serializer
 
-        val httpClient = httpClientBuilder.build(serviceApiKey, serviceApiSecret)
-        return ApiClientImpl(baseUrl(apiBaseUrl), httpClient)
+        val httpClient = httpClientBuilder.build(config.apiKeySecret)
+        return ApiClientImpl(baseUrl(config.apiBaseUrl), httpClient)
     }
 
     private fun baseUrl(apiBaseUrl: String): String {

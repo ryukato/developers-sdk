@@ -7,6 +7,9 @@ import com.yyoo.link.developers.sdk.api.ApiClient
 import com.yyoo.link.developers.sdk.api.*
 
 import com.yyoo.link.developers.sdk.api.factory.ApiClientFactory
+import com.yyoo.link.developers.sdk.api.factory.ApiClientFactoryConfig
+import com.yyoo.link.developers.sdk.http.HttpClientBuilderImpl
+import com.yyoo.link.developers.sdk.model.dto.ApiKeySecret
 import com.yyoo.link.developers.sdk.model.request.*
 import com.yyoo.link.developers.sdk.model.response.*
 import com.yyoo.link.developers.util.loadJsonToString
@@ -34,15 +37,14 @@ class ApiClientTest {
         mockEngineConfig = mockEngineConfig()
         testMockEngineFactory = TestMockEngineFactory(mockEngineConfig)
 
-        apiClient = ApiClientFactory().build(
+        val config = ApiClientFactoryConfig(
             apiBaseUrl = API_BASE_URL,
-            serviceApiKey = SERVICE_API_KEY,
-            serviceApiSecret = SERVICE_API_SECRET,
+            apiKeySecret = ApiKeySecret(SERVICE_API_KEY, SERVICE_API_SECRET),
             logLevel = LogLevel.ALL,
             engineFactory = testMockEngineFactory
         )
-
-
+        val httpClientBuilder = HttpClientBuilderImpl()
+        apiClient = ApiClientFactory().build(config, httpClientBuilder)
     }
 
     @KtorExperimentalAPI
