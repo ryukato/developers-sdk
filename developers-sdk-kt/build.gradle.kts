@@ -74,6 +74,8 @@ val developerList = listOf(
 )
 val gitHubProjectMainSourceUrl =
     "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt/src/main/kotlin"
+
+// TODO if run on github else on local => create buildSrc on root-project and create getProperty function
 val mavenUserName = project.property("MAVEN_USERNAME").toString()
 val mavenPassword = project.property("MAVEN_PASSWORD").toString()
 val binTrayUserName = project.property("BINTRAY_USERNAME").toString()
