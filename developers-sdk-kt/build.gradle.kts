@@ -1,8 +1,5 @@
-
 import org.gradle.api.publish.maven.internal.artifact.FileBasedMavenArtifact
-import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.net.URL
 
 plugins {
     java
@@ -11,7 +8,6 @@ plugins {
     id("com.jfrog.bintray") version "1.8.5"
     `maven-publish`
     signing
-    id("org.jetbrains.dokka") version "1.4.20"
 }
 
 group = "com.yyoo"
@@ -67,16 +63,21 @@ dependencies {
 }
 
 val publishGroupId = "com.github.ryukato"
-val publishArtifactId = "link-developers-sdk-kt"
+val publishArtifactId = "developers-sdk-kt"
 val publishVersion = "0.0.1-SNAPSHOT"
-val publishName = "link-developers-sdk-kt"
+val publishName = "developers-sdk-kt"
 val publishDescription = "SDK for line-blockchain in Kotlin"
 val publishProjectUrl = "https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt/README.md"
 val publishLicense = "MIT License"
 val developerList = listOf(
     mapOf("id" to "ryukato", "name" to "Yoonyoul Yoo", "email" to "ryukato79@gmail.com")
 )
-val gitHubProjectMainSourceUrl = "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt/src/main/kotlin"
+val gitHubProjectMainSourceUrl =
+    "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt/src/main/kotlin"
+val mavenUserName = project.property("MAVEN_USERNAME").toString()
+val mavenPassword = project.property("MAVEN_PASSWORD").toString()
+val binTrayUserName = project.property("BINTRAY_USERNAME").toString()
+val binTrayApiKey = project.property("BINTRAY_KEY").toString()
 
 publishing {
     publications {
@@ -127,12 +128,19 @@ publishing {
 
     repositories {
         maven {
-            // TODO change URLs to point to maven repository
-            val releasesRepoUrl = uri("$buildDir/repos/releases")
-            val snapshotsRepoUrl = uri("$buildDir/repos/snapshots")
+            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
+            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
             url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+            credentials {
+                username = mavenUserName
+                password = mavenPassword
+            }
         }
     }
+}
+java {
+    withSourcesJar()
+    withJavadocJar()
 }
 
 signing {
@@ -141,8 +149,8 @@ signing {
 }
 
 bintray {
-    user = project.property("BINTRAY_USERNAME").toString()
-    key = project.property("BINTRAY_KEY").toString()
+    user = binTrayUserName
+    key = binTrayApiKey
     setPublications("mavenSDK")
 
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
@@ -179,6 +187,12 @@ tasks.withType<JavaCompile> {
     targetCompatibility = "1.8"
 }
 
+tasks.javadoc {
+    if (JavaVersion.current().isJava9Compatible) {
+        (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
+    }
+}
+
 tasks.withType<com.jfrog.bintray.gradle.tasks.BintrayUploadTask> {
     doFirst {
         publishing.publications
@@ -191,19 +205,5 @@ tasks.withType<com.jfrog.bintray.gradle.tasks.BintrayUploadTask> {
                     })
                 }
             }
-    }
-}
-
-
-tasks.withType<DokkaTask>().configureEach {
-    dokkaSourceSets {
-        named("main") {
-            moduleName.set("developers-sdk-kt")
-            sourceLink {
-                localDirectory.set(file("src/main/kotlin"))
-                remoteUrl.set(URL(gitHubProjectMainSourceUrl))
-                remoteLineSuffix.set("#L")
-            }
-        }
     }
 }
