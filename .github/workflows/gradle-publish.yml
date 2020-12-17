@@ -21,22 +21,22 @@ jobs:
         with:
           java-version: 1.8
           server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-          settings-path: ${{ github.workspace }} # location for the settings.xml file
+          settings-path: ${{ github.workspace }}/developers-sdk-kt # location for the settings.xml file
 
       - name: Build with Gradle
-        run: ./developers-sdk-kt/gradlew assemble
+        run: gradle assemble
 
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to maven central repository
-        run: ./developers-sdk-kt/gradlew publish
+        run: gradle publish
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to bintray(jcenter) repository
-        run: ./developers-sdk-kt/gradlew bintryUpload
+        run: gradle bintryUpload
         env:
           BINTRAY_USERNAME: ${{ secrets.BIN_TRAY_USRE_NAME }}
           BINTRAY_KEY: ${{ secrets.BIN_TRAY_API_KEY }}
