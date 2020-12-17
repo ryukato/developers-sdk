@@ -1,6 +1,8 @@
 
 import org.gradle.api.publish.maven.internal.artifact.FileBasedMavenArtifact
+import org.jetbrains.dokka.gradle.DokkaTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import java.net.URL
 
 plugins {
     java
@@ -9,6 +11,7 @@ plugins {
     id("com.jfrog.bintray") version "1.8.5"
     `maven-publish`
     signing
+    id("org.jetbrains.dokka") version "1.4.20"
 }
 
 group = "com.yyoo"
@@ -63,22 +66,6 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock-native:1.3.0")
 }
 
-tasks.withType<Test> {
-    useJUnitPlatform()
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "1.8"
-    }
-}
-
-tasks.withType<JavaCompile> {
-    sourceCompatibility = "1.8"
-    targetCompatibility = "1.8"
-}
-
 val publishGroupId = "com.github.ryukato"
 val publishArtifactId = "link-developers-sdk-kt"
 val publishVersion = "0.0.1-SNAPSHOT"
@@ -89,6 +76,7 @@ val publishLicense = "MIT License"
 val developerList = listOf(
     mapOf("id" to "ryukato", "name" to "Yoonyoul Yoo", "email" to "ryukato79@gmail.com")
 )
+val gitHubProjectMainSourceUrl = "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt/src/main/kotlin"
 
 publishing {
     publications {
@@ -174,6 +162,23 @@ bintray {
     })
 }
 
+
+tasks.withType<Test> {
+    useJUnitPlatform()
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "1.8"
+    }
+}
+
+tasks.withType<JavaCompile> {
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
+}
+
 tasks.withType<com.jfrog.bintray.gradle.tasks.BintrayUploadTask> {
     doFirst {
         publishing.publications
@@ -189,3 +194,16 @@ tasks.withType<com.jfrog.bintray.gradle.tasks.BintrayUploadTask> {
     }
 }
 
+
+tasks.withType<DokkaTask>().configureEach {
+    dokkaSourceSets {
+        named("main") {
+            moduleName.set("developers-sdk-kt")
+            sourceLink {
+                localDirectory.set(file("src/main/kotlin"))
+                remoteUrl.set(URL(gitHubProjectMainSourceUrl))
+                remoteLineSuffix.set("#L")
+            }
+        }
+    }
+}
