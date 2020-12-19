@@ -1,18 +1,17 @@
+import { LoggerFactory } from "./logger-factory";
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import cryptoRandomString from 'crypto-random-string';
-import { GenericResponse } from './response';
+import { GenericResponse, ServiceDetail, ServiceToken } from './response';
 import { SingtureGenerator } from './signature-generator';
+import { Constant } from './constants';
 
 declare module 'axios' {
   interface AxiosResponse<T = any> extends Promise<T> { }
 }
 
-const SERVICE_API_KEY_HEADER = "service-api-key"
-const SIGNATURE = "Signature"
-const TIMESTAMP = "Timestamp"
-const NONCE = "Nonce"
-
 export class HttpClient {
+  private logger = LoggerFactory.logger("HttpClient");
+
   protected readonly instance: AxiosInstance;
   private readonly serviceApiKey: string;
   private readonly serviceApiSecret: string;
@@ -28,6 +27,11 @@ export class HttpClient {
     this.serviceApiSecret = apiSecret
 
     this._initialzeResponseInterceptor();
+  }
+
+  // for test
+  public getAxiosInstance(): AxiosInstance {
+    return this.instance;
   }
 
   private _initialzeResponseInterceptor = () => {
@@ -46,6 +50,7 @@ export class HttpClient {
 
   private _handleRequest = (config: AxiosRequestConfig) => {
     this.addRequestHeaders(config)
+    this.logger.debug("headers" + JSON.stringify(config.headers))
     return config;
   }
 
@@ -53,14 +58,34 @@ export class HttpClient {
     const nonce = cryptoRandomString({ length: 8 });
     const timestamp = Date.now()
     const method = config.method.toUpperCase()
-    config.headers[SERVICE_API_KEY_HEADER] = this.serviceApiKey;
-    config.headers[NONCE] = nonce;
-    config.headers[SIGNATURE] =
+    config.headers[Constant.SERVICE_API_KEY_HEADER] = this.serviceApiKey;
+    config.headers[Constant.NONCE_HEADER] = nonce;
+    config.headers[Constant.SIGNATURE_HEADER] =
       SingtureGenerator.signature(this.serviceApiSecret, method, config.url, timestamp, nonce, config.params);
-    config.headers[TIMESTAMP] = timestamp
+    config.headers[Constant.TIMESTAMP_HEADER] = timestamp
   }
 
   public async time(): Promise<GenericResponse<void>> {
-    return await this.instance.get("/v1/time")
+    const response = await this.instance.get("/v1/time");
+    this.logger.debug(`response: ${JSON.stringify(response)}`);
+    return response;
+  }
+
+  public async serviceDetail(serviceId: string): Promise<GenericResponse<ServiceDetail>> {
+    const response = await this.instance.get(`/v1/services/${serviceId}`);
+    this.logger.debug(`response: ${JSON.stringify(response)}`);
+    return response;
+  }
+
+  public async serviceTokens(): Promise<GenericResponse<Array<ServiceToken>>> {
+    const response = await this.instance.get(`/v1/service-tokens`);
+    this.logger.debug(`response: ${JSON.stringify(response)}`);
+    return response;
+  }
+
+  public async serviceTokenDetail(contractId: string): Promise<GenericResponse<ServiceToken>> {
+    const response = await this.instance.get(`/v1/service-tokens/${contractId}`);
+    this.logger.debug(`response: ${JSON.stringify(response)}`);
+    return response;
   }
 }
