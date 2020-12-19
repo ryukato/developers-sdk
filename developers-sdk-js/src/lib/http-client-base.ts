@@ -1,8 +1,22 @@
 import { LoggerFactory } from "./logger-factory";
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import cryptoRandomString from 'crypto-random-string';
-import { GenericResponse, ServiceDetail, ServiceToken, TxResultResponse, ServiceTokenHolder } from './response';
-import { UpdateServiceTokenRequest, MintServiceTokenRequest, BurnServiceTokenRequest, OrderBy } from './request';
+import {
+  GenericResponse,
+  ServiceDetail,
+  ServiceToken,
+  TxResultResponse,
+  ServiceTokenHolder,
+  ItemToken,
+  FungibleToken
+} from './response';
+import {
+  UpdateServiceTokenRequest,
+  MintServiceTokenRequest,
+  BurnServiceTokenRequest,
+  PageRequest,
+  FungibleTokenCreateUpdateRequest
+} from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
 
@@ -46,14 +60,17 @@ export class HttpClient {
     );
   };
 
-  private _handleResponse = ({ data }: AxiosResponse) => data;
+  private _handleResponse = ({ data }: AxiosResponse) => {
+    this.logger.debug(`response: ${JSON.stringify(data)}`);
+    return data
+  };
   protected _handleError = (error: any) => Promise.reject(error);
 
   private _handleRequest = (config: AxiosRequestConfig) => {
     this.addRequestHeaders(config)
     this.logger.debug(`headers: ${JSON.stringify(config.headers)}`)
-    if(config.data) {
-        this.logger.debug(`body: ${JSON.stringify(config.data)}`)
+    if (config.data) {
+      this.logger.debug(`body: ${JSON.stringify(config.data)}`)
     }
     if (config.params) {
       this.logger.debug(`query-params: ${JSON.stringify(config.params)}`)
@@ -74,69 +91,103 @@ export class HttpClient {
 
   public async time(): Promise<GenericResponse<void>> {
     const response = await this.instance.get("/v1/time");
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
     return response;
   }
 
   public async serviceDetail(serviceId: string): Promise<GenericResponse<ServiceDetail>> {
     const response = await this.instance.get(`/v1/services/${serviceId}`);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
     return response;
   }
 
   public async serviceTokens(): Promise<GenericResponse<Array<ServiceToken>>> {
     const response = await this.instance.get(`/v1/service-tokens`);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
     return response;
   }
 
   public async serviceTokenDetail(contractId: string): Promise<GenericResponse<ServiceToken>> {
     const response = await this.instance.get(`/v1/service-tokens/${contractId}`);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
     return response;
   }
 
   public async updateServiceToken(
     contractId: string,
-    updateServiceTokenRequest: UpdateServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
+    request: UpdateServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
     const response =
-      await this.instance.put(`/v1/service-tokens/${contractId}`, updateServiceTokenRequest);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
+      await this.instance.put(`/v1/service-tokens/${contractId}`, request);
     return response;
   }
 
   public async mintServiceToken(
     contractId: string,
-    mintServiceTokenRequest: MintServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
+    request: MintServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
     const response =
-      await this.instance.post(`/v1/service-tokens/${contractId}/mint`, mintServiceTokenRequest);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
+      await this.instance.post(`/v1/service-tokens/${contractId}/mint`, request);
     return response;
   }
 
   public async burnServiceToken(
     contractId: string,
-    burnServiceTokenRequest: BurnServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
+    request: BurnServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
     const response =
-      await this.instance.post(`/v1/service-tokens/${contractId}/burn`, burnServiceTokenRequest);
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
+      await this.instance.post(`/v1/service-tokens/${contractId}/burn`, request);
     return response;
   }
 
   public async serviceTokenHolders(
     contractId: string,
-    limit: number = 10,
-    page: number = 0,
-    orderBy: OrderBy = OrderBy.ASC
+    pageRequest: PageRequest
   ): Promise<GenericResponse<Array<ServiceTokenHolder>>> {
     const response = await this.instance.get(`/v1/service-tokens/${contractId}/holders`, {
       "params": {
-        "limit": limit,
-        "page": page,
-        "orderBy": orderBy
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
       }
     });
-    this.logger.debug(`response: ${JSON.stringify(response)}`);
+    return response;
+  }
+
+  public async itemToken(contractId: string): Promise<GenericResponse<ItemToken>> {
+    const response = await this.instance.get(`/v1/item-tokens/${contractId}`);
+    return response;
+  }
+
+  public async fungibleTokens(
+    contractId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<FungibleToken>>> {
+    const response = await this.instance.get(`/v1/item-tokens/${contractId}/fungibles`, {
+      "params": {
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
+      }
+    });
+    return response;
+  }
+
+  public async createFungibleToken(
+    contractId: string,
+    request: FungibleTokenCreateUpdateRequest): Promise<GenericResponse<TxResultResponse>> {
+    const response =
+      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles`, request);
+    return response;
+  }
+
+  public async fungibleToken(
+    contractId: string,
+    tokenType: string
+  ): Promise<GenericResponse<FungibleToken>> {
+    return await this.instance.get(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`);
+
+  }
+  
+  public async updateFungibleToken(
+    contractId: string,
+    tokenType: string,
+    request: FungibleTokenCreateUpdateRequest): Promise<GenericResponse<TxResultResponse>> {
+    const response =
+      await this.instance.put(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`, request);
     return response;
   }
 }

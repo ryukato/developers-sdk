@@ -30,7 +30,7 @@ export class UpdateServiceTokenRequest {
     readonly ownerSecret: string,
     readonly name: string,
     readonly meta?: string
-  ) {}
+  ) { }
 }
 
 export class BurnServiceTokenRequest {
@@ -38,7 +38,7 @@ export class BurnServiceTokenRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string
-  ) {}
+  ) { }
 }
 
 export class MintServiceTokenRequest extends AbstractTransactionRequest {
@@ -58,15 +58,15 @@ export class MemoRequest {
     readonly memo: string,
     readonly walletAddress: string,
     readonly walletSecret: string
-  ) {}
+  ) { }
 }
 
 export class TransferBaseCoinRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null
+    readonly toAddress: string = null,
+    readonly toUserId: string = null
   ) {
     super(toAddress, toUserId);
   }
@@ -76,8 +76,8 @@ export class TransferServiceTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
   ) {
     super(toAddress, toUserId);
   }
@@ -87,20 +87,20 @@ export class TransferFungibleTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class TransferFungibleTokenOfUserRequest extends AbstractTransactionRequest{
+export class TransferFungibleTokenOfUserRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
   ) {
     super(toAddress, toUserId);
   }
@@ -109,8 +109,8 @@ export class TransferFungibleTokenOfUserRequest extends AbstractTransactionReque
 export class TransferNonFungibleRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null
+    readonly toAddress: string = null,
+    readonly toUserId: string = null
   ) {
     super(toAddress, toUserId);
   }
@@ -120,8 +120,8 @@ export class TransferNonFungibleOfUserRequest extends AbstractTransactionRequest
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null
+    readonly toAddress: string = null,
+    readonly toUserId: string = null
   ) {
     super(toAddress, toUserId);
   }
@@ -130,8 +130,8 @@ export class TransferNonFungibleOfUserRequest extends AbstractTransactionRequest
 export class BatchTransferNonFungibleRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
     readonly transferList: Collections.Set<TokenId>
   ) {
     super(toAddress, toUserId);
@@ -142,8 +142,8 @@ export class BatchTransferNonFungibleOfUserRequest extends AbstractTransactionRe
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
     readonly transferList: Collections.Set<TokenId>
   ) {
     super(toAddress, toUserId);
@@ -168,7 +168,7 @@ export class FungibleTokenCreateUpdateRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly name: string,
-    readonly meta: string = null
+    readonly meta?: string
   ) { }
 }
 
@@ -189,8 +189,8 @@ export class FungibleTokenItemTokenBurnRequest extends AbstractItemTokenBurnTran
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly fromUserId: string= null,
-    readonly fromAddress: string= null,
+    readonly fromUserId: string = null,
+    readonly fromAddress: string = null,
   ) {
     super(fromUserId, fromAddress);
   }
@@ -201,7 +201,7 @@ export class NonFungibleTokenCreateUpdateRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly name: string,
-    readonly meta: string= null
+    readonly meta: string = null
   ) { }
 }
 
@@ -209,8 +209,8 @@ export class NonFungibleTokenMintRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
     readonly name: string,
     readonly meta: string
   ) {
@@ -222,8 +222,8 @@ export class NonFungibleTokenMultiMintRequest extends AbstractTransactionRequest
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
     readonly mintList: Collections.Set<MultiMintNonFungible>
   ) {
     super(toAddress, toUserId);
@@ -242,8 +242,8 @@ export class NonFungibleTokenItemTokenBurnRequest extends AbstractItemTokenBurnT
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly fromUserId: string= null,
-    readonly fromAddress: string= null
+    readonly fromUserId: string = null,
+    readonly fromAddress: string = null
   ) {
     super(fromUserId, fromAddress);
   }
@@ -254,8 +254,8 @@ export class NonFungibleTokenItemTokenAttachRequest {
     readonly parentTokenId: string,
     readonly serviceWalletAddress: string,
     readonly serviceWalletSecret: string,
-    readonly tokenHolderAddress: string= null,
-    readonly tokenHolderUserId: string= null
+    readonly tokenHolderAddress: string = null,
+    readonly tokenHolderUserId: string = null
   ) {
     if (tokenHolderAddress != null || tokenHolderUserId != null) {
       throw new Error("tokenHolderAddress or tokenHolderUserId, one of them is required")
@@ -267,8 +267,8 @@ export class NonFungibleTokenItemTokenDetachRequest {
   constructor(
     readonly serviceWalletAddress: string,
     readonly serviceWalletSecret: string,
-    readonly tokenHolderAddress: string= null,
-    readonly tokenHolderUserId: string= null
+    readonly tokenHolderAddress: string = null,
+    readonly tokenHolderUserId: string = null
   ) {
     if (tokenHolderAddress != null || tokenHolderUserId != null) {
       throw new Error("tokenHolderAddress or tokenHolderUserId, one of them is required")
@@ -279,8 +279,8 @@ export class NonFungibleTokenItemTokenDetachRequest {
 export class UserServiceTokenTransferRequest extends AbstractTransactionRequest {
   constructor(
     readonly amount: string,
-    readonly toAddress: string= null,
-    readonly toUserId: string= null,
+    readonly toAddress: string = null,
+    readonly toUserId: string = null,
     readonly landingUri: string
   ) {
     super(toAddress, toUserId);
@@ -303,4 +303,11 @@ export enum OrderBy {
 
 export enum RequestType {
   REDIRECT_URI = "redirect_uri", AOA = "aoa"
+}
+
+export class PageRequest {
+  constructor(
+    readonly page: number = 0,
+    readonly limit: number = 10,
+    readonly orderBy: OrderBy = OrderBy.ASC) { }
 }
