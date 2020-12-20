@@ -107,7 +107,8 @@ export class HttpClient {
   }
 
   public async serviceDetail(serviceId: string): Promise<GenericResponse<ServiceDetail>> {
-    const response = await this.instance.get(`/v1/services/${serviceId}`);
+    const path = `/v1/services/${serviceId}`;
+    const response = await this.instance.get(path);
     return response;
   }
 
@@ -117,15 +118,16 @@ export class HttpClient {
   }
 
   public async serviceTokenDetail(contractId: string): Promise<GenericResponse<ServiceToken>> {
-    const response = await this.instance.get(`/v1/service-tokens/${contractId}`);
+    const path = `/v1/service-tokens/${contractId}`;
+    const response = await this.instance.get(path);
     return response;
   }
 
   public async updateServiceToken(
     contractId: string,
     request: UpdateServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.put(`/v1/service-tokens/${contractId}`, request);
+    const path = `/v1/service-tokens/${contractId}`;
+    const response = await this.instance.put(path, request);
     return response;
   }
 
@@ -133,16 +135,16 @@ export class HttpClient {
     contractId: string,
     request: MintServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
     this.assertTransactionRequest(request)
-    const response =
-      await this.instance.post(`/v1/service-tokens/${contractId}/mint`, request);
+    const path = `/v1/service-tokens/${contractId}/mint`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
   public async burnServiceToken(
     contractId: string,
     request: BurnServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.post(`/v1/service-tokens/${contractId}/burn`, request);
+    const path = `/v1/service-tokens/${contractId}/burn`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
@@ -150,18 +152,15 @@ export class HttpClient {
     contractId: string,
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<ServiceTokenHolder>>> {
-    const response = await this.instance.get(`/v1/service-tokens/${contractId}/holders`, {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
-    });
+    const path = `/v1/service-tokens/${contractId}/holders`;
+    const requestConfig = this.requestConfig(pageRequest);
+    const response = await this.instance.get(path, requestConfig);
     return response;
   }
 
   public async itemToken(contractId: string): Promise<GenericResponse<ItemToken>> {
-    const response = await this.instance.get(`/v1/item-tokens/${contractId}`);
+    const path = `/v1/item-tokens/${contractId}`;
+    const response = await this.instance.get(path);
     return response;
   }
 
@@ -169,21 +168,17 @@ export class HttpClient {
     contractId: string,
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<FungibleToken>>> {
-    const response = await this.instance.get(`/v1/item-tokens/${contractId}/fungibles`, {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
-    });
+    const path = `/v1/item-tokens/${contractId}/fungibles`;
+    const requestConfig = this.requestConfig(pageRequest);
+    const response = await this.instance.get(path, requestConfig);
     return response;
   }
 
   public async createFungibleToken(
     contractId: string,
     request: FungibleTokenCreateUpdateRequest): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles`, request);
+    const path = `/v1/item-tokens/${contractId}/fungibles`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
@@ -191,16 +186,16 @@ export class HttpClient {
     contractId: string,
     tokenType: string
   ): Promise<GenericResponse<FungibleToken>> {
-    return await this.instance.get(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`);
-
+    const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}`;
+    return await this.instance.get(path);
   }
 
   public async updateFungibleToken(
     contractId: string,
     tokenType: string,
     request: FungibleTokenCreateUpdateRequest): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.put(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`, request);
+    const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}`;
+    const response = await this.instance.put(path, request);
     return response;
   }
 
@@ -209,8 +204,8 @@ export class HttpClient {
     tokenType: string,
     request: FungibleTokenMintRequest): Promise<GenericResponse<TxResultResponse>> {
     this.assertTransactionRequest(request)
-    const response =
-      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/mint`, request);
+    const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}/mint`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
@@ -219,8 +214,8 @@ export class HttpClient {
     tokenType: string,
     request: FungibleTokenBurnRequest): Promise<GenericResponse<TxResultResponse>> {
     this.assertItemTokenBurnTransactionRequest(request)
-    const response =
-      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/burn`, request);
+    const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}/burn`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
@@ -229,26 +224,18 @@ export class HttpClient {
     tokenType: string,
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<FungibleTokenHolder>>> {
-    const response = await this.instance.get(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/holders`, {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
-    });
+    const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}/holders`;
+    const requestConfig = this.requestConfig(pageRequest);
+    const response = await this.instance.get(path, requestConfig);
     return response;
   }
 
   public async nonFungibleTokens(
     contractId: string,
     pageRequest: PageRequest): Promise<GenericResponse<Array<ItemTokenType>>> {
-    const response = await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles`, {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
-    });
+    const path = `/v1/item-tokens/${contractId}/non-fungibles`;
+    const requestConfig = this.requestConfig(pageRequest);
+    const response = await this.instance.get(path,requestConfig);
     return response;
   }
 
@@ -256,8 +243,8 @@ export class HttpClient {
     contractId: string,
     request: NonFungibleTokenCreateUpdateRequest
   ): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.post(`/v1/item-tokens/${contractId}/non-fungibles`, request);
+    const path = `/v1/item-tokens/${contractId}/non-fungibles`;
+    const response = await this.instance.post(path, request);
     return response;
   }
 
@@ -266,13 +253,9 @@ export class HttpClient {
     tokenType: string,
     pageRequest: PageRequest
   ): Promise<GenericResponse<NonFungibleTokenType>> {
-    const response = await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`, {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
-    });
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`;
+    const requestConfig = this.requestConfig(pageRequest);
+    const response = await this.instance.get(path, requestConfig);
     return response;
   }
 
@@ -281,8 +264,8 @@ export class HttpClient {
     tokenType: string,
     request: NonFungibleTokenCreateUpdateRequest
   ): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.put(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`, request);
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`;
+    const response = await this.instance.put(path, request);
     return response;
   }
 
@@ -291,7 +274,8 @@ export class HttpClient {
     tokenType: string,
     tokenIndex: string
   ): Promise<GenericResponse<NonFungibleId>> {
-    return await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`);
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`;
+    return await this.instance.get(path);
   }
 
   public async updateNonFungibleToken(
@@ -300,8 +284,8 @@ export class HttpClient {
     tokenIndex: string,
     request: NonFungibleTokenCreateUpdateRequest
   ): Promise<GenericResponse<TxResultResponse>> {
-    const response =
-      await this.instance.put(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`, request);
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`;
+    const response = await this.instance.put(path, request);
     return response;
   }
 
@@ -315,6 +299,16 @@ export class HttpClient {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/mint`
     const response = await this.instance.post(path, request);
     return response;
+  }
+
+  private requestConfig(pageRequest: PageRequest): AxiosRequestConfig {
+    return {
+      "params": {
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
+      }
+    };
   }
 
   private assertTransactionRequest(request: AbstractTransactionRequest) {
