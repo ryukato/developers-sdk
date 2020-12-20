@@ -8,14 +8,24 @@ import {
   TxResultResponse,
   ServiceTokenHolder,
   ItemToken,
-  FungibleToken
+  FungibleToken,
+  FungibleTokenHolder,
+  ItemTokenType,
+  NonFungibleTokenType,
+  NonFungibleId
 } from './response';
 import {
+  AbstractTransactionRequest,
+  AbstractItemTokenBurnTransactionRequest,
   UpdateServiceTokenRequest,
   MintServiceTokenRequest,
   BurnServiceTokenRequest,
   PageRequest,
-  FungibleTokenCreateUpdateRequest
+  FungibleTokenCreateUpdateRequest,
+  FungibleTokenMintRequest,
+  FungibleTokenBurnRequest,
+  NonFungibleTokenCreateUpdateRequest,
+  NonFungibleTokenMintRequest
 } from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
@@ -40,6 +50,8 @@ export class HttpClient {
     });
     this.serviceApiKey = apiKey
     this.serviceApiSecret = apiSecret
+    this.instance.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8"
+    this.instance.defaults.headers.put["Content-Type"] = "application/json;charset=UTF-8"
 
     this._initialzeResponseInterceptor();
   }
@@ -120,6 +132,7 @@ export class HttpClient {
   public async mintServiceToken(
     contractId: string,
     request: MintServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
+    this.assertTransactionRequest(request)
     const response =
       await this.instance.post(`/v1/service-tokens/${contractId}/mint`, request);
     return response;
@@ -181,7 +194,7 @@ export class HttpClient {
     return await this.instance.get(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`);
 
   }
-  
+
   public async updateFungibleToken(
     contractId: string,
     tokenType: string,
@@ -189,5 +202,132 @@ export class HttpClient {
     const response =
       await this.instance.put(`/v1/item-tokens/${contractId}/fungibles/${tokenType}`, request);
     return response;
+  }
+
+  public async mintFungibleToken(
+    contractId: string,
+    tokenType: string,
+    request: FungibleTokenMintRequest): Promise<GenericResponse<TxResultResponse>> {
+    this.assertTransactionRequest(request)
+    const response =
+      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/mint`, request);
+    return response;
+  }
+
+  public async burnFungibleToken(
+    contractId: string,
+    tokenType: string,
+    request: FungibleTokenBurnRequest): Promise<GenericResponse<TxResultResponse>> {
+    this.assertItemTokenBurnTransactionRequest(request)
+    const response =
+      await this.instance.post(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/burn`, request);
+    return response;
+  }
+
+  public async fungibleTokenHolders(
+    contractId: string,
+    tokenType: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<FungibleTokenHolder>>> {
+    const response = await this.instance.get(`/v1/item-tokens/${contractId}/fungibles/${tokenType}/holders`, {
+      "params": {
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
+      }
+    });
+    return response;
+  }
+
+  public async nonFungibleTokens(
+    contractId: string,
+    pageRequest: PageRequest): Promise<GenericResponse<Array<ItemTokenType>>> {
+    const response = await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles`, {
+      "params": {
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
+      }
+    });
+    return response;
+  }
+
+  public async createNonFungibleToken(
+    contractId: string,
+    request: NonFungibleTokenCreateUpdateRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const response =
+      await this.instance.post(`/v1/item-tokens/${contractId}/non-fungibles`, request);
+    return response;
+  }
+
+  public async nonFungibleTokenType(
+    contractId: string,
+    tokenType: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<NonFungibleTokenType>> {
+    const response = await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`, {
+      "params": {
+        "limit": pageRequest.limit,
+        "page": pageRequest.page,
+        "orderBy": pageRequest.orderBy
+      }
+    });
+    return response;
+  }
+
+  public async updateNonFungibleTokenType(
+    contractId: string,
+    tokenType: string,
+    request: NonFungibleTokenCreateUpdateRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const response =
+      await this.instance.put(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`, request);
+    return response;
+  }
+
+  public async nonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ): Promise<GenericResponse<NonFungibleId>> {
+    return await this.instance.get(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`);
+  }
+
+  public async updateNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: NonFungibleTokenCreateUpdateRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const response =
+      await this.instance.put(`/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`, request);
+    return response;
+  }
+
+  // POST /v1/item-tokens/{contractId}/non-fungibles/{tokenType}/mint
+  public async mintNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: NonFungibleTokenMintRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/mint`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  private assertTransactionRequest(request: AbstractTransactionRequest) {
+    if (!request.toUserId && !request.toAddress) {
+      this.logger.error("toAddress or toUserId, one of them is required");
+      throw new Error("toAddress or toUserId, one of them is required")
+    }
+  }
+
+  private assertItemTokenBurnTransactionRequest(request: AbstractItemTokenBurnTransactionRequest) {
+    if (!request.fromUserId && !request.fromAddress) {
+      this.logger.error("fromAddress or fromUserId, one of them is required");
+      throw new Error("fromAddress or fromUserId, one of them is required")
+    }
   }
 }

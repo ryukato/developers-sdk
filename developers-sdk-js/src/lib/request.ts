@@ -3,10 +3,10 @@ import * as Collections from "typescript-collections";
 export class AbstractItemTokenBurnTransactionRequest {
 
   constructor(
-    readonly fromUserId: string,
-    readonly fromAddress: string
+    readonly fromUserId?: string,
+    readonly fromAddress?: string
   ) {
-    if (!fromUserId || !fromAddress) {
+    if (!fromUserId && !fromAddress) {
       throw new Error("fromAddress or fromUserId, one of them is required")
     }
   }
@@ -17,7 +17,7 @@ export class AbstractTransactionRequest {
     readonly toUserId?: string,
     readonly toAddress?: string
   ) {
-    if (!toUserId || !toAddress) {
+    if (!toUserId && !toAddress) {
       throw new Error("toAddress or toUserId, one of them is required")
     }
   }
@@ -177,20 +177,20 @@ export class FungibleTokenMintRequest extends AbstractTransactionRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
+    readonly toAddress?: string,
+    readonly toUserId?: string,
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class FungibleTokenItemTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
+export class FungibleTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly fromUserId: string = null,
-    readonly fromAddress: string = null,
+    readonly fromUserId?: string,
+    readonly fromAddress?: string,
   ) {
     super(fromUserId, fromAddress);
   }
@@ -201,7 +201,7 @@ export class NonFungibleTokenCreateUpdateRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly name: string,
-    readonly meta: string = null
+    readonly meta?: string
   ) { }
 }
 
@@ -209,10 +209,10 @@ export class NonFungibleTokenMintRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
     readonly name: string,
-    readonly meta: string
+    readonly meta: string,
+    readonly toAddress?: string,
+    readonly toUserId?: string,
   ) {
     super(toAddress, toUserId);
   }
