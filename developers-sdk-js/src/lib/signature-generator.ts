@@ -1,9 +1,11 @@
+import { LoggerFactory } from "./logger-factory";
 import CryptoJS from 'crypto-js';
 import _ from "lodash";
 import { RequestBodyFlattener } from "./request-body-flattener";
 /**
 reference site: https://jokecamp.wordpress.com/2012/10/21/examples-of-creating-base64-hashes-using-hmac-sha256-in-different-languages/#js
 */
+const logger = LoggerFactory.logger("SingtureGenerator");
 export class SingtureGenerator {
   static signature(
     apiSecret: string,
@@ -11,12 +13,15 @@ export class SingtureGenerator {
     path: string,
     timestamp: number,
     nonce: string,
-    parameters: object = {} // query string or request body
+    parameters: object = {}, // query string
+    body: object = {}
   ): string {
-    let signTarget = SingtureGenerator.createSignTarget(method, path, timestamp, nonce, parameters);
-    if (parameters && _.size(parameters) > 0) {
-      signTarget += RequestBodyFlattener.flatten(parameters);
+    let obj = _.assignIn(parameters, body);
+    let signTarget = SingtureGenerator.createSignTarget(method, path, timestamp, nonce, obj);
+    if (obj && _.size(obj) > 0) {
+      signTarget += RequestBodyFlattener.flatten(obj);
     }
+    logger.debug(`signature-target: ${signTarget}`)
     let hash = CryptoJS.HmacSHA512(signTarget, apiSecret);
     return CryptoJS.enc.Base64.stringify(hash);
   }

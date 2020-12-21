@@ -1,4 +1,3 @@
-import * as Collections from "typescript-collections";
 
 export class AbstractItemTokenBurnTransactionRequest {
 
@@ -132,7 +131,7 @@ export class BatchTransferNonFungibleRequest extends AbstractTransactionRequest 
     readonly walletSecret: string,
     readonly toAddress: string = null,
     readonly toUserId: string = null,
-    readonly transferList: Collections.Set<TokenId>
+    readonly transferList: Array<TokenId>
   ) {
     super(toAddress, toUserId);
   }
@@ -144,7 +143,7 @@ export class BatchTransferNonFungibleOfUserRequest extends AbstractTransactionRe
     readonly ownerSecret: string,
     readonly toAddress: string = null,
     readonly toUserId: string = null,
-    readonly transferList: Collections.Set<TokenId>
+    readonly transferList: Array<TokenId>
   ) {
     super(toAddress, toUserId);
   }
@@ -222,9 +221,9 @@ export class NonFungibleTokenMultiMintRequest extends AbstractTransactionRequest
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
-    readonly mintList: Collections.Set<MultiMintNonFungible>
+    readonly mintList: Array<MultiMintNonFungible>,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
@@ -234,7 +233,7 @@ export class MultiMintNonFungible {
   constructor(
     readonly tokenType: string,
     readonly name: string,
-    readonly meta: string
+    readonly meta?: string
   ) { }
 }
 

@@ -12,7 +12,9 @@ import {
   FungibleTokenHolder,
   ItemTokenType,
   NonFungibleTokenType,
-  NonFungibleId
+  NonFungibleId,
+  NonFungibleTokenTypeHolder,
+  NonFungibleTokenHolder
 } from './response';
 import {
   AbstractTransactionRequest,
@@ -25,7 +27,8 @@ import {
   FungibleTokenMintRequest,
   FungibleTokenBurnRequest,
   NonFungibleTokenCreateUpdateRequest,
-  NonFungibleTokenMintRequest
+  NonFungibleTokenMintRequest,
+  NonFungibleTokenMultiMintRequest
 } from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
@@ -97,7 +100,7 @@ export class HttpClient {
     config.headers[Constant.SERVICE_API_KEY_HEADER] = this.serviceApiKey;
     config.headers[Constant.NONCE_HEADER] = nonce;
     config.headers[Constant.SIGNATURE_HEADER] =
-      SingtureGenerator.signature(this.serviceApiSecret, method, config.url, timestamp, nonce, config.params);
+      SingtureGenerator.signature(this.serviceApiSecret, method, config.url, timestamp, nonce, config.params, config.data);
     config.headers[Constant.TIMESTAMP_HEADER] = timestamp
   }
 
@@ -289,7 +292,6 @@ export class HttpClient {
     return response;
   }
 
-  // POST /v1/item-tokens/{contractId}/non-fungibles/{tokenType}/mint
   public async mintNonFungibleToken(
     contractId: string,
     tokenType: string,
@@ -297,6 +299,36 @@ export class HttpClient {
     request: NonFungibleTokenMintRequest
   ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/mint`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async nunFungibleTokenTypeHolders(
+    contractId: string,
+    tokenType: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<NonFungibleTokenTypeHolder>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/holders`;
+    const requestConfig = this.requestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  // NFT has to belong to only one holder
+  public async nunFungibleTokenHolder(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ): Promise<GenericResponse<NonFungibleTokenHolder>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/holder`
+    return await this.instance.get(path);
+  }
+
+  // POST /v1/item-tokens/{contractId}/non-fungibles/multi-mint
+  public async multiMintnonFungibleToken(
+    contractId: string,
+    request: NonFungibleTokenMultiMintRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/multi-mint`
     const response = await this.instance.post(path, request);
     return response;
   }
