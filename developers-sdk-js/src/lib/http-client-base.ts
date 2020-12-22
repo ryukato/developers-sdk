@@ -386,7 +386,6 @@ export class HttpClient {
     return response;
   }
 
-  // GET /v1/item-tokens/{contractId}/non-fungibles/{tokenType}/{tokenIndex}/root
   public async rootOfNonFungibleToken(
     contractId: string,
     tokenType: string,
