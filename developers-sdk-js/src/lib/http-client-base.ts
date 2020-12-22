@@ -28,7 +28,9 @@ import {
   FungibleTokenBurnRequest,
   NonFungibleTokenCreateUpdateRequest,
   NonFungibleTokenMintRequest,
-  NonFungibleTokenMultiMintRequest
+  NonFungibleTokenMultiMintRequest,
+  NonFungibleTokenBurnRequest,
+  NonFungibleTokenAttachRequest
 } from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
@@ -323,7 +325,6 @@ export class HttpClient {
     return await this.instance.get(path);
   }
 
-  // POST /v1/item-tokens/{contractId}/non-fungibles/multi-mint
   public async multiMintnonFungibleToken(
     contractId: string,
     request: NonFungibleTokenMultiMintRequest
@@ -331,6 +332,68 @@ export class HttpClient {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/multi-mint`
     const response = await this.instance.post(path, request);
     return response;
+  }
+
+  public async burnNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: NonFungibleTokenBurnRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/burn`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async childrenOfNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<NonFungibleId>>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/children`
+    const requestConfig = this.requestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async parentOfNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ) : Promise<GenericResponse<Array<NonFungibleId>>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
+    return await this.instance.get(path);
+  }
+
+  public async attachNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: NonFungibleTokenAttachRequest
+  ) : Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async detachNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ) : Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
+    const response = await this.instance.delete(path);
+    return response;
+  }
+
+  // GET /v1/item-tokens/{contractId}/non-fungibles/{tokenType}/{tokenIndex}/root
+  public async rootOfNonFungibleToken(
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ) : Promise<GenericResponse<Array<NonFungibleId>>> {
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/root`
+    return await this.instance.get(path);
   }
 
   private requestConfig(pageRequest: PageRequest): AxiosRequestConfig {

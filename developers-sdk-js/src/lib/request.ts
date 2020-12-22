@@ -237,24 +237,24 @@ export class MultiMintNonFungible {
   ) { }
 }
 
-export class NonFungibleTokenItemTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
+export class NonFungibleTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly fromUserId: string = null,
-    readonly fromAddress: string = null
+    readonly fromUserId?: string,
+    readonly fromAddress?: string
   ) {
     super(fromUserId, fromAddress);
   }
 }
 
-export class NonFungibleTokenItemTokenAttachRequest {
+export class NonFungibleTokenAttachRequest {
   constructor(
     readonly parentTokenId: string,
     readonly serviceWalletAddress: string,
     readonly serviceWalletSecret: string,
-    readonly tokenHolderAddress: string = null,
-    readonly tokenHolderUserId: string = null
+    readonly tokenHolderAddress?: string,
+    readonly tokenHolderUserId?: string
   ) {
     if (tokenHolderAddress != null || tokenHolderUserId != null) {
       throw new Error("tokenHolderAddress or tokenHolderUserId, one of them is required")
@@ -262,7 +262,7 @@ export class NonFungibleTokenItemTokenAttachRequest {
   }
 }
 
-export class NonFungibleTokenItemTokenDetachRequest {
+export class NonFungibleTokenDetachRequest {
   constructor(
     readonly serviceWalletAddress: string,
     readonly serviceWalletSecret: string,

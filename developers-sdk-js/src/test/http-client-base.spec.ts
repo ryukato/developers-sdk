@@ -825,6 +825,7 @@ describe('http-client-base test', () => {
 
     stub.onGet(`/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/holders`).reply(config => {
       assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest)
       return [200, receivedData];
     });
 
@@ -903,6 +904,206 @@ describe('http-client-base test', () => {
     const response = await httpClient.multiMintnonFungibleToken(testContractId, request);
     expect(response["statusCode"]).to.equal(1002);
     expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('burn non-fungible-token api test', async () => {
+    const testContractId = "9636a07e";
+    const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+    const request = {
+      'ownerAddress': testAddress,
+      'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'fromAddress': testAddress
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/burn`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.burnNonFungibleToken(testContractId, testTokenType, testTokenIndex, request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('non-fungible-token-type children api test', async () => {
+    const testContractId = "9636a07e"
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+    const testChildTokenId = "100000080000006a";
+    const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
+    const receivedData = {
+      "responseTime": 1585498287024,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": [
+        {
+          "name": "Before",
+          "tokenId": testChildTokenId,
+          "meta": "",
+          "createdAt": 1585207242000,
+          "burnedAt": null
+        }
+      ]
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/children`).reply(config => {
+      assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest)
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.childrenOfNonFungibleToken(testContractId, testTokenType, testTokenIndex, pageRequest);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"][0]["tokenId"]).to.equal(testChildTokenId);
+  })
+
+  it('non-fungible-token-type parent api test', async () => {
+    const testContractId = "9636a07e"
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+    const testParentTokenId = "100000080000006a";
+    const receivedData = {
+      "responseTime": 1585498287024,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "name": "Before",
+        "tokenId": testParentTokenId,
+        "meta": "",
+        "createdAt": 1585207242000,
+        "burnedAt": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/parent`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.parentOfNonFungibleToken(testContractId, testTokenType, testTokenIndex);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["tokenId"]).to.equal(testParentTokenId);
+  })
+
+  it('attach non-fungible-token api test', async () => {
+    const testContractId = "9636a07e";
+    const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+    const testParentTokenId = "100000010000000e";
+    const request = {
+        'serviceWalletAddress': testAddress,
+        'serviceWalletSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+        'parentTokenId': testParentTokenId,
+        'tokenHolderAddress': testAddress
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/parent`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.attachNonFungibleToken(testContractId, testTokenType, testTokenIndex, request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('detach non-fungible-token api test', async () => {
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/parent`
+    stub.onDelete(path).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.detachNonFungibleToken(testContractId, testTokenType, testTokenIndex);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('non-fungible-token-type root api test', async () => {
+    const testContractId = "9636a07e"
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000001";
+    const testParentTokenId = "100000080000006a";
+    const receivedData = {
+      "responseTime": 1585498287024,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "name": "Before",
+        "tokenId": testParentTokenId,
+        "meta": "",
+        "createdAt": 1585207242000,
+        "burnedAt": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/root`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.rootOfNonFungibleToken(testContractId, testTokenType, testTokenIndex);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["tokenId"]).to.equal(testParentTokenId);
   })
 })
 
