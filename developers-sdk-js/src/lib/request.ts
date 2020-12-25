@@ -1,4 +1,4 @@
-
+import _ from "lodash";
 export class AbstractItemTokenBurnTransactionRequest {
 
   constructor(
@@ -64,8 +64,8 @@ export class TransferBaseCoinRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
@@ -75,8 +75,8 @@ export class TransferServiceTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
@@ -86,8 +86,8 @@ export class TransferFungibleTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
     readonly amount: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
@@ -98,52 +98,52 @@ export class TransferFungibleTokenOfUserRequest extends AbstractTransactionReque
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class TransferNonFungibleRequest extends AbstractTransactionRequest {
+export class TransferNonFungibleTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class TransferNonFungibleOfUserRequest extends AbstractTransactionRequest {
+export class TransferNonFungibleTokenOfUserRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class BatchTransferNonFungibleRequest extends AbstractTransactionRequest {
+export class BatchTransferNonFungibleTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
-    readonly transferList: Array<TokenId>
+    readonly transferList: Array<TokenId>,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
 }
 
-export class BatchTransferNonFungibleOfUserRequest extends AbstractTransactionRequest {
+export class BatchTransferNonFungibleTokenOfUserRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly toAddress: string = null,
-    readonly toUserId: string = null,
-    readonly transferList: Array<TokenId>
+    readonly transferList: Array<TokenId>,
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
@@ -151,14 +151,20 @@ export class BatchTransferNonFungibleOfUserRequest extends AbstractTransactionRe
 
 
 export class TokenId {
-  private tokenIdFormat = new RegExp("\\d{8}\\d{8}")
-  constructor(readonly tokenId: string) {
-    if (tokenId.length == 16) {
+  private constructor(readonly tokenId: string) { }
+  private static tokenIdFormat = new RegExp("\\d{8}\\d{8}")
+  static from(value: string): TokenId {
+    if (value.length != 16) {
       throw new Error("Invalid tokenId: length of token-id has to be 16")
     }
-    if (this.tokenIdFormat.test(tokenId)) {
-      throw new Error("Invalid tokenId: invalid format of tokenId, valid format is $tokenIdFormat")
+    if (!TokenId.tokenIdFormat.test(value)) {
+      throw new Error(`Invalid tokenId: invalid format of tokenId, valid format is ${this.tokenIdFormat}`)
     }
+    return new TokenId(value);
+  }
+
+  static fromMulti(values: Array<string>): Array<TokenId> {
+      return _.map(values, (value => TokenId.from(value)))
   }
 }
 

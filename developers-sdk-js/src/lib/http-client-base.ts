@@ -1,4 +1,5 @@
 import { LoggerFactory } from "./logger-factory";
+import _ from "lodash";
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig } from 'axios';
 import cryptoRandomString from 'crypto-random-string';
 import {
@@ -14,7 +15,12 @@ import {
   NonFungibleTokenType,
   NonFungibleId,
   NonFungibleTokenTypeHolder,
-  NonFungibleTokenHolder
+  NonFungibleTokenHolder,
+  WalletResponse,
+  BaseCoinBalance,
+  ServiceTokenBalance,
+  FungibleBalance,
+  NonFungibleBalance
 } from './response';
 import {
   AbstractTransactionRequest,
@@ -30,7 +36,12 @@ import {
   NonFungibleTokenMintRequest,
   NonFungibleTokenMultiMintRequest,
   NonFungibleTokenBurnRequest,
-  NonFungibleTokenAttachRequest
+  NonFungibleTokenAttachRequest,
+  TransferBaseCoinRequest,
+  TransferServiceTokenRequest,
+  TransferFungibleTokenRequest,
+  TransferNonFungibleTokenRequest,
+  BatchTransferNonFungibleTokenRequest
 } from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
@@ -240,7 +251,7 @@ export class HttpClient {
     pageRequest: PageRequest): Promise<GenericResponse<Array<ItemTokenType>>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles`;
     const requestConfig = this.pageRequestConfig(pageRequest);
-    const response = await this.instance.get(path,requestConfig);
+    const response = await this.instance.get(path, requestConfig);
     return response;
   }
 
@@ -360,7 +371,7 @@ export class HttpClient {
     contractId: string,
     tokenType: string,
     tokenIndex: string
-  ) : Promise<GenericResponse<Array<NonFungibleId>>> {
+  ): Promise<GenericResponse<Array<NonFungibleId>>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
     return await this.instance.get(path);
   }
@@ -370,7 +381,7 @@ export class HttpClient {
     tokenType: string,
     tokenIndex: string,
     request: NonFungibleTokenAttachRequest
-  ) : Promise<GenericResponse<TxResultResponse>> {
+  ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
     const response = await this.instance.post(path, request);
     return response;
@@ -380,7 +391,7 @@ export class HttpClient {
     contractId: string,
     tokenType: string,
     tokenIndex: string
-  ) : Promise<GenericResponse<TxResultResponse>> {
+  ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
     const response = await this.instance.delete(path);
     return response;
@@ -390,9 +401,164 @@ export class HttpClient {
     contractId: string,
     tokenType: string,
     tokenIndex: string
-  ) : Promise<GenericResponse<Array<NonFungibleId>>> {
+  ): Promise<GenericResponse<Array<NonFungibleId>>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/root`
     return await this.instance.get(path);
+  }
+
+  public async wallets(): Promise<GenericResponse<Array<WalletResponse>>> {
+    const path = `/v1/wallets`
+    return await this.instance.get(path);
+  }
+
+  public async walletDetail(walletAddress: string): Promise<GenericResponse<WalletResponse>> {
+    const path = `/v1/wallets/${walletAddress}`
+    return await this.instance.get(path);
+  }
+
+  public async walletTransactions(
+    walletAddress: string,
+    pageRequest: PageRequest,
+    before?: number,
+    after?: number,
+    msgType?: string // refer to constants.TransactionMsgTypes
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/transactions`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    if (before) {
+      requestConfig.params["before"] = before
+    }
+    if (after) {
+      requestConfig.params["after"] = after
+    }
+    if (msgType) {
+      requestConfig.params["msgType"] = msgType
+    }
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async baseCoinBalanceOfWallet(walletAddress: string): Promise<GenericResponse<BaseCoinBalance>> {
+    const path = `/v1/wallets/${walletAddress}/base-coin`
+    return await this.instance.get(path);
+  }
+
+  public async serviceTokenBalancesOfWallet(
+    walletAddress: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<ServiceTokenBalance>>> {
+    const path = `/v1/wallets/${walletAddress}/service-tokens`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async serviceTokenBalanceOfWallet(
+    walletAddress: string,
+    contractId: string
+  ): Promise<GenericResponse<ServiceTokenBalance>> {
+    const path = `/v1/wallets/${walletAddress}/service-tokens/${contractId}`
+    return await this.instance.get(path);
+  }
+
+  public async fungibleTokenBalancesOfWallet(
+    walletAddress: string,
+    contractId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<FungibleBalance>>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/fungibles`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async fungibleTokenBalanceOfWallet(
+    walletAddress: string,
+    contractId: string,
+    tokenType: string
+  ): Promise<GenericResponse<FungibleBalance>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/fungibles/${tokenType}`
+    return await this.instance.get(path);
+  }
+
+  public async nonFungibleTokenBalancesOfWallet(
+    walletAddress: string,
+    contractId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<NonFungibleBalance>>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async nonFungibleTokenBalancesByTypeOfWallet(
+    walletAddress: string,
+    contractId: string,
+    tokenType: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<NonFungibleBalance>>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles/${tokenType}`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async nonFungibleTokenBalanceOfWallet(
+    walletAddress: string,
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ): Promise<GenericResponse<NonFungibleBalance>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`
+    return await this.instance.get(path);
+  }
+
+  public async transferBaseCoinOfWallet(
+    walletAddress: string,
+    request: TransferBaseCoinRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/base-coin/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async transferServiceTokenOfWallet(
+    walletAddress: string,
+    contractId: string,
+    request: TransferServiceTokenRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/service-tokens/${contractId}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async transferFungibleTokenOfWallet(
+    walletAddress: string,
+    contractId: string,
+    tokenType: string,
+    request: TransferFungibleTokenRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/fungibles/${tokenType}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async transferNonFungibleTokenOfWallet(
+    walletAddress: string,
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: TransferNonFungibleTokenRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async batchTransferNonFungibleTokenOfWallet(
+    walletAddress: string,
+    contractId: string,
+    request: BatchTransferNonFungibleTokenRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles/batch-transfer`
+    const response = await this.instance.post(path, request);
+    return response;
   }
 
   private pageRequestConfig(pageRequest: PageRequest): AxiosRequestConfig {
