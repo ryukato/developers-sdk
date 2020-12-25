@@ -158,7 +158,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<ServiceTokenHolder>>> {
     const path = `/v1/service-tokens/${contractId}/holders`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     const response = await this.instance.get(path, requestConfig);
     return response;
   }
@@ -174,7 +174,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<FungibleToken>>> {
     const path = `/v1/item-tokens/${contractId}/fungibles`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     const response = await this.instance.get(path, requestConfig);
     return response;
   }
@@ -230,7 +230,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<FungibleTokenHolder>>> {
     const path = `/v1/item-tokens/${contractId}/fungibles/${tokenType}/holders`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     const response = await this.instance.get(path, requestConfig);
     return response;
   }
@@ -239,7 +239,7 @@ export class HttpClient {
     contractId: string,
     pageRequest: PageRequest): Promise<GenericResponse<Array<ItemTokenType>>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     const response = await this.instance.get(path,requestConfig);
     return response;
   }
@@ -259,7 +259,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<NonFungibleTokenType>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     const response = await this.instance.get(path, requestConfig);
     return response;
   }
@@ -311,7 +311,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<NonFungibleTokenTypeHolder>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/holders`;
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     return await this.instance.get(path, requestConfig);
   }
 
@@ -352,7 +352,7 @@ export class HttpClient {
     pageRequest: PageRequest
   ): Promise<GenericResponse<Array<NonFungibleId>>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/children`
-    const requestConfig = this.requestConfig(pageRequest);
+    const requestConfig = this.pageRequestConfig(pageRequest);
     return await this.instance.get(path, requestConfig);
   }
 
@@ -395,7 +395,7 @@ export class HttpClient {
     return await this.instance.get(path);
   }
 
-  private requestConfig(pageRequest: PageRequest): AxiosRequestConfig {
+  private pageRequestConfig(pageRequest: PageRequest): AxiosRequestConfig {
     return {
       "params": {
         "limit": pageRequest.limit,
