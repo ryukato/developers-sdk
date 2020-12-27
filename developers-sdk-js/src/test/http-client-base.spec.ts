@@ -11,8 +11,8 @@ import _ from "lodash";
 import { HttpClient } from '../lib/http-client-base';
 import { Constant } from '../lib/constants';
 import { TransactionMsgTypes } from '../lib/constants';
-import { PageRequest, OrderBy, TokenId } from '../lib/request';
-import { transactionResult } from './test-data';
+import { PageRequest, OrderBy, TokenId, RequestType } from '../lib/request';
+import { transactionResult, singleTransactionResult } from './test-data';
 
 describe('http-client-base test', () => {
   let stub: MockAdapter;
@@ -1162,7 +1162,7 @@ describe('http-client-base test', () => {
     expect(response["responseData"]["walletAddress"]).to.equal(testAddress);
   })
 
-  it('list of wallet transactions api test', async () => {
+  it('list of transactions of a wallet api test', async () => {
     const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
     const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
     const testTxHash = "D3833E2CED77A11639D03EC3DF4B0EC9B77EBFF48795B7151D5201439738031A"
@@ -1182,7 +1182,7 @@ describe('http-client-base test', () => {
     expect(response["responseData"][0]["txhash"]).to.equal(testTxHash);
   })
 
-  it('list of wallet transactions with optional params api test', async () => {
+  it('list of transactions of a wallet with optional params api test', async () => {
     const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
     const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
     const testTxHash = "D3833E2CED77A11639D03EC3DF4B0EC9B77EBFF48795B7151D5201439738031A"
@@ -1630,6 +1630,641 @@ describe('http-client-base test', () => {
         request);
     expect(response["statusCode"]).to.equal(1002);
     expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('user-detail api test', async () => {
+    const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+
+    const receivedData = {
+      "responseTime": 1585467698558,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "userId": "U556719f559479aab8b8f74c488bf6317",
+        "walletAddress": testAddress
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.userDetail(testUserId);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["walletAddress"]).to.equal(testAddress);
+    expect(response["responseData"]["userId"]).to.equal(testUserId);
+  })
+
+  it('list of transactions of a user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
+    const testTxHash = "D3833E2CED77A11639D03EC3DF4B0EC9B77EBFF48795B7151D5201439738031A"
+    const receivedData = transactionResult;
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/transactions`).reply(config => {
+      assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.userTransactions(testUserId, pageRequest);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"][0]["txhash"]).to.equal(testTxHash);
+  })
+
+  it('service-token balance of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const receivedData = {
+      "responseTime": 1585467709526,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "contractId": testContractId,
+        "name": "v2nph",
+        "symbol": "V2NPH",
+        "imgUri": "https://sample.image",
+        "decimals": 6,
+        "amount": "3520543372"
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/service-tokens/${testContractId}`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.serviceTokenBalanceOfUser(testUserId, testContractId);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["contractId"]).to.equal(testContractId);
+  })
+
+  it('fungible-token balances of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const receivedData = {
+      "responseTime": 1585467708815,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": [
+        {
+          "tokenType": testTokenType,
+          "name": "Hello",
+          "meta": "Hello",
+          "amount": "1"
+        }
+      ]
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/item-tokens/${testContractId}/fungibles`).reply(config => {
+      assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.fungibleTokenBalancesOfUser(testUserId, testContractId, pageRequest);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"][0]["tokenType"]).to.equal(testTokenType);
+  })
+
+  it('fungible-token balance of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const receivedData = {
+      "responseTime": 1585467708815,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "tokenType": testTokenType,
+        "name": "Hello",
+        "meta": "Hello",
+        "amount": "1"
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/item-tokens/${testContractId}/fungibles/${testTokenType}`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.fungibleTokenBalanceOfUser(testUserId, testContractId, testTokenType);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["tokenType"]).to.equal(testTokenType);
+  })
+
+  it('non-fungible-token balances of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
+    const testContractId = "9636a07e";
+    const testTokenIndex = "00000006"
+    const receivedData = {
+      "responseTime": 1585467701633,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": [
+        {
+          "tokenIndex": testTokenIndex,
+          "name": "as",
+          "meta": "test"
+        }
+      ]
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/item-tokens/${testContractId}/non-fungibles`).reply(config => {
+      assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.nonFungibleTokenBalancesOfUser(testUserId, testContractId, pageRequest);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"][0]["tokenIndex"]).to.equal(testTokenIndex);
+  })
+
+  it('non-fungible-token balances by type of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const pageRequest = new PageRequest(0, 10, OrderBy.DESC);
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000006"
+    const receivedData = {
+      "responseTime": 1585467701633,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": [
+        {
+          "tokenIndex": testTokenIndex,
+          "name": "as",
+          "meta": "test"
+        }
+      ]
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/users/${testUserId}/item-tokens/${testContractId}/non-fungibles/${testTokenType}`).reply(config => {
+      assertHeaders(config.headers);
+      assertPageParameters(config.params, pageRequest);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.nonFungibleTokenBalancesByTypeOfUser(testUserId, testContractId, testTokenType, pageRequest);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"][0]["tokenIndex"]).to.equal(testTokenIndex);
+  })
+
+  it('non-fungible-token balance of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const testTokenIndex = "00000006"
+    const receivedData = {
+      "responseTime": 1585467701633,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "tokenIndex": testTokenIndex,
+        "name": "as",
+        "meta": "test"
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+    const path = `/v1/users/${testUserId}/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}`;
+    stub.onGet(path).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.nonFungibleTokenBalanceOfUser(testUserId, testContractId, testTokenType, testTokenIndex);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["tokenIndex"]).to.equal(testTokenIndex);
+  })
+
+  it('tranfer service-token of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv',
+      'amount': '15'
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onPost(`/v1/users/${testUserId}/service-tokens/${testContractId}/transfer`).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response = await httpClient.transferServiceTokenOfUser(testUserId, testContractId, request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('tranfer fungible-token of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testTokenType = "0000004a";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv',
+      'amount': '15'
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onPost(`/v1/users/${testUserId}/item-tokens/${testContractId}/fungibles/${testTokenType}/transfer`).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response = await httpClient.transferFungibleTokenOfUser(testUserId, testContractId, testTokenType, request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('tranfer nonfungible-token of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testTokenIndex = "00000001";
+    const testTokenType = "0000004a";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv'
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/transfer`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.transferNonFungibleTokenOfUser(
+        testUserId,
+        testContractId,
+        testTokenType,
+        testTokenIndex,
+        request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('batch-tranfer nonfungible-token of user api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv',
+      'transferList': TokenId.fromMulti(['1000000100000001', '1000000100000002'])
+    }
+
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/item-tokens/${testContractId}/non-fungibles/batch-transfer`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.batchTransferNonFungibleTokenOfUser(
+        testUserId,
+        testContractId,
+        request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('issue session-token of a user for base-coin transfer api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testRequestSessionToken = "J4EDHA_oyCyXrtREGS4MpyoGeus";
+    const request = {
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv',
+      'amount': '15',
+      'landingUri': 'https://my.service.landing/home'
+    }
+
+    const receivedData = {
+      "responseTime": 1585484513052,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "requestSessionToken": testRequestSessionToken,
+        "redirectUri": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/base-coin/request-transfer`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.issueSessionTokenForBaseCoinTransfer(
+        testUserId,
+        RequestType.AOA,
+        request);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["requestSessionToken"]).to.equal(testRequestSessionToken);
+  })
+
+  it('issue session-token of a user for service-token transfer api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testRequestSessionToken = "J4EDHA_oyCyXrtREGS4MpyoGeus";
+    const request = {
+      'toAddress': 'tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv',
+      'amount': '15',
+      'landingUri': 'https://my.service.landing/home'
+    }
+
+    const receivedData = {
+      "responseTime": 1585484513052,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "requestSessionToken": testRequestSessionToken,
+        "redirectUri": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/service-tokens/${testContractId}/request-transfer`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.issueSessionTokenForServiceTokenTransfer(
+        testUserId,
+        testContractId,
+        RequestType.AOA,
+        request);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["requestSessionToken"]).to.equal(testRequestSessionToken);
+  })
+
+  it('issue a user proxy request for service-token api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testRequestSessionToken = "J4EDHA_oyCyXrtREGS4MpyoGeus";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'landingUri': 'https://my.service.landing/home'
+    }
+
+    const receivedData = {
+      "responseTime": 1585484513052,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "requestSessionToken": testRequestSessionToken,
+        "redirectUri": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/service-tokens/${testContractId}/request-proxy`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.issueServiceTokenProxyRequest(
+        testUserId,
+        testContractId,
+        RequestType.AOA,
+        request);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["requestSessionToken"]).to.equal(testRequestSessionToken);
+  })
+
+  it('issue a user proxy request for item-token api test', async () => {
+    const testUserId = "U556719f559479aab8b8f74c488bf6317";
+    const testContractId = "9636a07e";
+    const testRequestSessionToken = "J4EDHA_oyCyXrtREGS4MpyoGeus";
+    const request = {
+      'ownerAddress': 'tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq',
+      'landingUri': 'https://my.service.landing/home'
+    }
+
+    const receivedData = {
+      "responseTime": 1585484513052,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "requestSessionToken": testRequestSessionToken,
+        "redirectUri": null
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/users/${testUserId}/item-tokens/${testContractId}/request-proxy`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.issueItemTokenProxyRequest(
+        testUserId,
+        testContractId,
+        RequestType.AOA,
+        request);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["requestSessionToken"]).to.equal(testRequestSessionToken);
+  })
+
+  it('commit a user proxy request api test', async () => {
+    const testRequestSessionToken = "J4EDHA_oyCyXrtREGS4MpyoGeus";
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/user-requests/${testRequestSessionToken}/commit`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.commitProxyRequest(testRequestSessionToken);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('transaction result api test', async () => {
+    const testTxHash = "D3833E2CED77A11639D03EC3DF4B0EC9B77EBFF48795B7151D5201439738031A"
+    const receivedData = singleTransactionResult;
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    stub.onGet(`/v1/transactions/${testTxHash}`).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.transactionResult(testTxHash);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["txhash"]).to.equal(testTxHash);
+  })
+
+  it('creat a memo api test', async () => {
+    const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
+    const request = {
+      'walletAddress': testAddress,
+      'walletSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+      'memo': 'Show me the money'
+    }
+
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const receivedData = {
+      "responseTime": 1585467711877,
+      "statusCode": 1002,
+      "statusMessage": "Accepted",
+      "responseData": {
+        "txHash": testTxHash
+      }
+    };
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/memos`
+    stub.onPost(path).reply(config => {
+      assertHeaders(config.headers);
+      expect(config.data).to.equal(JSON.stringify(request));
+      return [200, receivedData];
+    });
+
+    const response =
+      await httpClient.createMemo(request);
+    expect(response["statusCode"]).to.equal(1002);
+    expect(response["responseData"]["txHash"]).to.equal(testTxHash);
+  })
+
+  it('query a memo api test', async () => {
+    const testTxHash = "22DF78611396824D293AF7ABA04A2A646B1E3055A19B32E731D8E03BAE743661";
+    const testMemo = "Show me the money"
+    const receivedData = {
+      "responseTime": 1585498625527,
+      "statusCode": 1000,
+      "statusMessage": "Success",
+      "responseData": {
+        "memo": testMemo
+      }
+    }
+
+    stub = new MockAdapter(httpClient.getAxiosInstance());
+
+    const path = `/v1/memos/${testTxHash}`
+    stub.onGet(path).reply(config => {
+      assertHeaders(config.headers);
+      return [200, receivedData];
+    });
+
+    const response = await httpClient.memos(testTxHash);
+    expect(response["statusCode"]).to.equal(1000);
+    expect(response["responseData"]["memo"]).to.equal(testMemo);
   })
 })
 

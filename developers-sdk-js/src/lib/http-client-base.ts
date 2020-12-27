@@ -20,9 +20,13 @@ import {
   BaseCoinBalance,
   ServiceTokenBalance,
   FungibleBalance,
-  NonFungibleBalance
+  NonFungibleBalance,
+  UserIdAddress,
+  SessionTokenResponse,
+  Memo
 } from './response';
 import {
+  RequestType,
   AbstractTransactionRequest,
   AbstractItemTokenBurnTransactionRequest,
   UpdateServiceTokenRequest,
@@ -41,7 +45,14 @@ import {
   TransferServiceTokenRequest,
   TransferFungibleTokenRequest,
   TransferNonFungibleTokenRequest,
-  BatchTransferNonFungibleTokenRequest
+  BatchTransferNonFungibleTokenRequest,
+  TransferServiceTokenProxyRequest,
+  TransferFungibleTokenProxyRequest,
+  TransferNonFungibleTokenProxyRequest,
+  BatchTransferNonFungibleTokenProxyRequest,
+  IssueTransferSessionTokenRequest,
+  UserProxyRequest,
+  MemoRequest
 } from './request';
 import { SingtureGenerator } from './signature-generator';
 import { Constant } from './constants';
@@ -559,6 +570,228 @@ export class HttpClient {
     const path = `/v1/wallets/${walletAddress}/item-tokens/${contractId}/non-fungibles/batch-transfer`
     const response = await this.instance.post(path, request);
     return response;
+  }
+
+  public async userDetail(userId: string): Promise<GenericResponse<UserIdAddress>> {
+    const path = `/v1/users/${userId}`
+    return await this.instance.get(path);
+  }
+
+  public async userTransactions(
+    userId: string,
+    pageRequest: PageRequest,
+    before?: number,
+    after?: number,
+    msgType?: string // refer to constants.TransactionMsgTypes
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/users/${userId}/transactions`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    if (before) {
+      requestConfig.params["before"] = before
+    }
+    if (after) {
+      requestConfig.params["after"] = after
+    }
+    if (msgType) {
+      requestConfig.params["msgType"] = msgType
+    }
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async baseCoinBalanceOfUser(userId: string): Promise<GenericResponse<BaseCoinBalance>> {
+    const path = `/v1/users/${userId}/base-coin`
+    return await this.instance.get(path);
+  }
+
+  public async serviceTokenBalancesOfUser(
+    userId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<ServiceTokenBalance>>> {
+    const path = `/v1/users/${userId}/service-tokens`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async serviceTokenBalanceOfUser(
+    userId: string,
+    contractId: string
+  ): Promise<GenericResponse<ServiceTokenBalance>> {
+    const path = `/v1/users/${userId}/service-tokens/${contractId}`
+    return await this.instance.get(path);
+  }
+
+  public async fungibleTokenBalancesOfUser(
+    userId: string,
+    contractId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<FungibleBalance>>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/fungibles`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async fungibleTokenBalanceOfUser(
+    userId: string,
+    contractId: string,
+    tokenType: string
+  ): Promise<GenericResponse<FungibleBalance>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/fungibles/${tokenType}`
+    return await this.instance.get(path);
+  }
+
+  public async nonFungibleTokenBalancesOfUser(
+    userId: string,
+    contractId: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<NonFungibleBalance>>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/non-fungibles`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async nonFungibleTokenBalancesByTypeOfUser(
+    userId: string,
+    contractId: string,
+    tokenType: string,
+    pageRequest: PageRequest
+  ): Promise<GenericResponse<Array<NonFungibleBalance>>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/non-fungibles/${tokenType}`
+    const requestConfig = this.pageRequestConfig(pageRequest);
+    return await this.instance.get(path, requestConfig);
+  }
+
+  public async nonFungibleTokenBalanceOfUser(
+    userId: string,
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string
+  ): Promise<GenericResponse<NonFungibleBalance>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}`
+    return await this.instance.get(path);
+  }
+
+  public async transferServiceTokenOfUser(
+    userId: string,
+    contractId: string,
+    request: TransferServiceTokenProxyRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/users/${userId}/service-tokens/${contractId}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async transferFungibleTokenOfUser(
+    userId: string,
+    contractId: string,
+    tokenType: string,
+    request: TransferFungibleTokenProxyRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/fungibles/${tokenType}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async transferNonFungibleTokenOfUser(
+    userId: string,
+    contractId: string,
+    tokenType: string,
+    tokenIndex: string,
+    request: TransferNonFungibleTokenProxyRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async batchTransferNonFungibleTokenOfUser(
+    userId: string,
+    contractId: string,
+    request: BatchTransferNonFungibleTokenProxyRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/non-fungibles/batch-transfer`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async issueSessionTokenForBaseCoinTransfer(
+    userId: string,
+    requestType: RequestType,
+    request: IssueTransferSessionTokenRequest
+  ): Promise<GenericResponse<SessionTokenResponse>> {
+    const path = `/v1/users/${userId}/base-coin/request-transfer`
+    const requestTypeParam = this.requestTypeParam(requestType)
+    const response = await this.instance.post(path, request, requestTypeParam);
+    return response;
+  }
+
+  public async issueSessionTokenForServiceTokenTransfer(
+    userId: string,
+    contractId: string,
+    requestType: RequestType,
+    request: IssueTransferSessionTokenRequest
+  ): Promise<GenericResponse<SessionTokenResponse>> {
+    const path = `/v1/users/${userId}/service-tokens/${contractId}/request-transfer`
+    const requestTypeParam = this.requestTypeParam(requestType)
+    const response = await this.instance.post(path, request, requestTypeParam);
+    return response;
+  }
+
+  public async issueServiceTokenProxyRequest(
+    userId: string,
+    contractId: string,
+    requestType: RequestType,
+    request: UserProxyRequest
+  ) {
+    const path = `/v1/users/${userId}/service-tokens/${contractId}/request-proxy`
+    const requestTypeParam = this.requestTypeParam(requestType)
+    const response = await this.instance.post(path, request, requestTypeParam);
+    return response;
+  }
+
+  public async issueItemTokenProxyRequest(
+    userId: string,
+    contractId: string,
+    requestType: RequestType,
+    request: UserProxyRequest
+  ) {
+    const path = `/v1/users/${userId}/item-tokens/${contractId}/request-proxy`
+    const requestTypeParam = this.requestTypeParam(requestType)
+    const response = await this.instance.post(path, request, requestTypeParam);
+    return response;
+  }
+
+  public async commitProxyRequest(
+    requestSessionToken: string
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/user-requests/${requestSessionToken}/commit`
+    const response = await this.instance.post(path);
+    return response;
+  }
+
+  public async transactionResult(txHash: string): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/transactions/${txHash}`
+    return await this.instance.get(path);
+  }
+
+  public async createMemo(
+    request: MemoRequest
+  ): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/memos`
+    const response = await this.instance.post(path, request);
+    return response;
+  }
+
+  public async memos(txHash: string): Promise<GenericResponse<Memo>> {
+    const path = `/v1/memos/${txHash}`
+    return await this.instance.get(path);
+  }
+
+  private requestTypeParam(requestType: RequestType): AxiosRequestConfig {
+    return {
+      "params": {
+        "requestType": requestType
+      }
+    };
   }
 
   private pageRequestConfig(pageRequest: PageRequest): AxiosRequestConfig {

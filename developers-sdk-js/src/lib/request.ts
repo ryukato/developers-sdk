@@ -82,6 +82,18 @@ export class TransferServiceTokenRequest extends AbstractTransactionRequest {
   }
 }
 
+export class TransferServiceTokenProxyRequest extends AbstractTransactionRequest {
+  constructor(
+    readonly ownerAddress: string,
+    readonly ownerSecret: string,
+    readonly amount: string,
+    readonly toAddress?: string,
+    readonly toUserId?: string
+  ) {
+    super(toAddress, toUserId);
+  }
+}
+
 export class TransferFungibleTokenRequest extends AbstractTransactionRequest {
   constructor(
     readonly walletSecret: string,
@@ -93,7 +105,7 @@ export class TransferFungibleTokenRequest extends AbstractTransactionRequest {
   }
 }
 
-export class TransferFungibleTokenOfUserRequest extends AbstractTransactionRequest {
+export class TransferFungibleTokenProxyRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
@@ -115,7 +127,7 @@ export class TransferNonFungibleTokenRequest extends AbstractTransactionRequest 
   }
 }
 
-export class TransferNonFungibleTokenOfUserRequest extends AbstractTransactionRequest {
+export class TransferNonFungibleTokenProxyRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
@@ -137,7 +149,7 @@ export class BatchTransferNonFungibleTokenRequest extends AbstractTransactionReq
   }
 }
 
-export class BatchTransferNonFungibleTokenOfUserRequest extends AbstractTransactionRequest {
+export class BatchTransferNonFungibleTokenProxyRequest extends AbstractTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
@@ -295,7 +307,21 @@ export class UserServiceTokenTransferRequest extends AbstractTransactionRequest 
   }
 }
 
-export class UserItemTokenProxyRequest {
+export class IssueTransferSessionTokenRequest extends AbstractTransactionRequest {
+  constructor(
+    readonly amount: string,
+    readonly landingUri: string,
+    readonly toAddress?: string,
+    readonly toUserId?: string
+  ) {
+    super(toAddress, toUserId);
+    if (Number(amount) <= 0) {
+      throw new Error("Invalid amount - $amount is less than zero ")
+    }
+  }
+}
+
+export class UserProxyRequest {
   constructor(
     readonly ownerAddress: string,
     readonly landingUri: string

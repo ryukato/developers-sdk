@@ -268,7 +268,7 @@ export class NonFungibleTokenHolder {
 export class UserIdAddress {
   constructor(readonly userId: string, readonly address: string) { }
 }
-export class RequestSession {
+export class SessionTokenResponse {
   constructor(readonly requestSessionToken: string, readonly redirectUri: string) { }
 }
 
