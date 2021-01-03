@@ -1,8 +1,8 @@
-# Publish open source project to maven(sonatype) repository (WIP)
+# Publish open source project to maven(sonatype) repository
 
 ## Requirements to publish
 To publish your project(mostly packaged in `jar`) to open-source repository such as maven, jcenter, you need provide your signature to prove your publication.
-And build system like maven, gradle that you're using, needs to be configured `publishing` and `signing` the publication.
+Build system like maven, gradle that you're using, needs to be configured `publishing` and `signing` the publication.
 
 ### gpg setup
 1. about [GPG](https://librewiki.net/wiki/시리즈:암호의_암도_몰라도_쉽게_하는_GPG)
@@ -10,7 +10,7 @@ And build system like maven, gradle that you're using, needs to be configured `p
   - or you can install GUI tool (https://gpgtools.org/)
 3. create key by `gpg --gen-key`
 4. check your keys by `gpg --list-keys`
-  > Check keyId
+  > Note
   >
   > If you can't figure out keyId of each key, then please install [GPG-Suite](https://gpgtools.org/).
   > Using GPG-Suite, you can see list of all keys and check the keyId via its detail.
@@ -25,14 +25,14 @@ And build system like maven, gradle that you're using, needs to be configured `p
 As you mentioned earlier, we need to configure `publishing` and `signing`, so configuration is consist of those two parts.
 
 ##### Configure publishing
-You need to fill-out the fields surrouned by `"[]"` with your information
+You need to fill-out the fields surrounded by `"[]"` with your information
 ```
 publishing {
 	publications {
 		create<MavenPublication>("mavenSDK") {
-			groupId = "com.yyoo"
-			artifactId = "link-developers-sdk-kt"
-			version = "0.0.1-SNAPSHOT"
+			groupId = "[your project groupId]"
+			artifactId = "[your project artifactId]"
+			version = "[version to publish]"
 
 			from(components["kotlin"])
 
@@ -111,16 +111,46 @@ signing {
 
 ### Setup and Publish
 #### Setup steps for Sonatype
-1. Create your JIRA account (* The account is required to create a ticket and later)
+1. Create your JIRA account (* we need an account to create a ticket and later)
 2. Create a ticket with Sonatype
   * `groupId` is required
     - `groupId` like `com.xxxx` has to refer to your own domain.
-    > If you don't have your own domain
+    > Note
     >
-    > Use `com.github.[your account name]` or `io.github.[your account name]`
+    > If you don't have your own domain, then you can use `com.github.[your account name]` or `io.github.[your account name]`
 
-  * project page is required
+  * we need a project page
     - I give them a `README` page for the project page.
   * SCM url is required
     - URL of your project git repository.
-  * And some description
+  * Some description
+
+
+## Publishing by github workflow
+Usually we need Jenkins or CircleCI to build and publish, but we can build and publish just with github workflow. 
+You can see the configured workflow on [Actions](https://github.com/ryukato/developers-sdk/actions) page. 
+
+There are some guide documents as followings.
+* [publishing-java-packages-with-gradle](https://docs.github.com/en/free-pro-team@latest/actions/guides/publishing-java-packages-with-gradle)
+
+A workflow consists of event specified by `on` and jobs with steps. You can see the workflow via [gradle-publish.yml](https://github.com/ryukato/developers-sdk/blob/master/.github/workflows/gradle-publish.yml).
+
+### Configure accounts, password and signing key.
+The required username, password or api-key for maven and bintray are configured by [Secrets](https://github.com/ryukato/developers-sdk/settings/secrets/actions), and they are passed by system environment variables. So we need to get those  by `System.getenv`.
+Not like username, password or api-key, private key for signing is a sort of tricky thing because we need some steps to use it.
+
+#### Add gpg private key to Secrets
+We already created the signing key by gpg. With the created signing key, we need to export it and set it to [Secrets](https://github.com/ryukato/developers-sdk/settings/secrets/actions).
+
+1. Export private key by `gpg --export-secret-key -a "[Your user name for the key]" > ~/private.key`
+2. Copy the exported key by `cat ~/private.key | pbcopy`
+3. Go to [Secrets](https://github.com/ryukato/developers-sdk/settings/secrets/actions)
+4. Create a new repository secret with a name - "GPG_SIGNING_KEY".
+5. Paste the copied private key.
+6. Create a new repository secret with a name - "GPG_SIGNING_PASSWORD"
+7. Copy the password of the private key and paste it to value of "GPG_SIGNING_PASSWORD"
+8. Add them to environment variables of the build job defined in [gradle-publish.yml](https://github.com/ryukato/developers-sdk/blob/master/.github/workflows/gradle-publish.yml).
+9. Configure build scripts to use them. Please refer to `signing` task defined in [build scripts](https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt/build.gradle.kts) of `developers-sdk-kt`.
+ 
+
+
