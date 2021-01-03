@@ -129,7 +129,14 @@ java {
 }
 
 signing {
-    useGpgCmd()
+    val signingKey = getProperty("GPG_SIGNING_KEY", project)
+    if (signingKey != null) {
+        val signingPass = getProperty("GPG_SIGNING_PASSWORD", project)
+       useInMemoryPgpKeys(signingKey, signingPass)
+    } else {
+        useGpgCmd()
+    }
+
     sign(publishing.publications["mavenSDK"])
 }
 
