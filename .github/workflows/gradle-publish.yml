@@ -13,6 +13,11 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+      MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+      BINTRAY_USERNAME: ${{ secrets.BIN_TRAY_USRE_NAME }}
+      BINTRAY_KEY: ${{ secrets.BIN_TRAY_API_KEY }}
 
     steps:
       - uses: actions/checkout@v2
@@ -25,23 +30,13 @@ jobs:
 
       - name: Build with Gradle
         run: gradle :developers-sdk-kt:assemble
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
-          BINTRAY_USERNAME: ${{ secrets.BIN_TRAY_USRE_NAME }}
-          BINTRAY_KEY: ${{ secrets.BIN_TRAY_API_KEY }}
 
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to maven central repository
         run: gradle :developers-sdk-kt:publish
-        env:
-          MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          MAVEN_PASSWORD: ${{ secrets.OSSRH_TOKEN }}
+
       # The USERNAME and TOKEN need to correspond to the credentials environment variables used in
       # the publishing section of your build.gradle
       - name: Publish to bintray(jcenter) repository
         run: gradle :developers-sdk-kt:bintryUpload
-        env:
-          BINTRAY_USERNAME: ${{ secrets.BIN_TRAY_USRE_NAME }}
-          BINTRAY_KEY: ${{ secrets.BIN_TRAY_API_KEY }}
