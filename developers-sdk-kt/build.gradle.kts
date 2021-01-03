@@ -66,11 +66,6 @@ dependencies {
 
 val publishVersion = version as String
 
-val mavenUserName = getProperty("MAVEN_USERNAME", project)
-val mavenPassword = getProperty("MAVEN_PASSWORD", project)
-val binTrayUserName = getProperty("BINTRAY_USERNAME", project)
-val binTrayApiKey = getProperty("BINTRAY_KEY", project)
-
 publishing {
     publications {
         create<MavenPublication>("mavenSDK") {
@@ -122,8 +117,8 @@ publishing {
         maven {
             url = releaseTargetRepoUrl(version.toString())
             credentials {
-                username = mavenUserName
-                password = mavenPassword
+                username = getProperty("MAVEN_USERNAME", project)
+                password = getProperty("MAVEN_PASSWORD", project)
             }
         }
     }
@@ -139,8 +134,8 @@ signing {
 }
 
 bintray {
-    user = binTrayUserName
-    key = binTrayApiKey
+    user = getProperty("BINTRAY_USERNAME", project)
+    key = getProperty("BINTRAY_KEY", project)
     setPublications("mavenSDK")
 
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {

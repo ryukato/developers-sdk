@@ -1,9 +1,6 @@
 import java.net.URI
 
 fun getProperty(name: String, project: org.gradle.api.Project): String? {
-    System.getenv().forEach {
-        println( "${it.key} -> ${it.value}")
-    }
     val systemProperty = System.getenv(name) ?: System.getProperty(name)
     println("systemProperty: $systemProperty with name: $name")
     return systemProperty ?: project.property(name)?.toString()
