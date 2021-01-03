@@ -2,7 +2,8 @@ import java.net.URI
 
 fun getProperty(name: String, project: org.gradle.api.Project): String? {
     val projectProperty = project.property(name)
-    return projectProperty?.toString() ?: System.getProperty(name)?.takeIf { it.isNotBlank() }
+    val systemProperty = System.getProperty(name) ?: System.getenv(name)
+    return systemProperty ?: projectProperty?.toString()
 }
 
 fun mavenReleaseRepoUrl(): URI = URI.create(releasesRepoUrl)
