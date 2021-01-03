@@ -50,7 +50,7 @@ data class TransferFungibleTokenRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
-data class TransferFungibleTokenOfUserRequest(
+data class TransferTokenOfUserRequest(
     val ownerAddress: String,
     val ownerSecret: String,
     val toAddress: String? = null,
@@ -200,7 +200,7 @@ data class UserServiceTokenTransferRequest(
     }
 }
 
-data class UserItemTokenProxyRequest(
+data class UserAssetProxyRequest(
     val ownerAddress: String,
     val landingUri: String?
 )

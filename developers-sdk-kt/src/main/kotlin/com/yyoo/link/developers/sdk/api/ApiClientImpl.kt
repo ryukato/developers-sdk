@@ -1059,6 +1059,48 @@ internal class ApiClientImpl(
         }
     }
 
+    override suspend fun issueSessionTokenForServiceTokenProxy(
+        userId: String,
+        contractId: String,
+        requestType: RequestType,
+        requestUser: UserAssetProxyRequest
+    ): GenericResponse<RequestSession> {
+        val path = ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PROXY
+            .replace("{userId}", userId)
+            .replace("{contractId}", contractId)
+        return issueSessionTokenForUserAsset(path, requestType, requestUser)
+    }
+
+    override suspend fun issueSessionTokenForItemTokenProxy(
+        userId: String,
+        contractId: String,
+        requestType: RequestType,
+        requestUser: UserAssetProxyRequest
+    ): GenericResponse<RequestSession> {
+        val path = ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY
+            .replace("{userId}", userId)
+            .replace("{contractId}", contractId)
+        return issueSessionTokenForUserAsset(path, requestType, requestUser)
+    }
+
+    private suspend fun issueSessionTokenForUserAsset(
+        path: String,
+        requestType: RequestType,
+        requestUser: UserAssetProxyRequest
+    ): GenericResponse<RequestSession> {
+        val urlString = "$baseUrl$path"
+        return coroutineScope {
+            httpClient.post<GenericResponse<RequestSession>> {
+                addTimeStampHeader(this)
+                url {
+                    takeFrom(urlString)
+                    it.parameters.append("requestType", requestType.toParameter())
+                }
+                this.body = json.write(requestUser)
+            }
+        }
+    }
+
     override suspend fun issueSessionTokenForBaseCoinTransfer(
         userId: String,
         requestType: RequestType
@@ -1099,26 +1141,15 @@ internal class ApiClientImpl(
         }
     }
 
-    override suspend fun issueSessionTokenForItemTokenProxy(
+    override suspend fun isProxyOfServiceToken(
         userId: String,
-        contractId: String,
-        requestType: RequestType,
-        requestUser: UserItemTokenProxyRequest
-    ): GenericResponse<RequestSession> {
-        val path = ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY
+        contractId: String
+    ): GenericResponse<ProxyStatus> {
+        val path = USER_SERVICE_TOKEN_IS_PROXY_PATH
             .replace("{userId}", userId)
             .replace("{contractId}", contractId)
-        val urlString = "$baseUrl$path"
-        return coroutineScope {
-            httpClient.post<GenericResponse<RequestSession>> {
-                addTimeStampHeader(this)
-                url {
-                    takeFrom(urlString)
-                    it.parameters.append("requestType", requestType.toParameter())
-                }
-                this.body = json.write(requestUser)
-            }
-        }
+
+        return isProxyOnAssetOfUser(path)
     }
 
     override suspend fun isProxyOfItemToken(userId: String, contractId: String): GenericResponse<ProxyStatus> {
@@ -1126,6 +1157,10 @@ internal class ApiClientImpl(
             .replace("{userId}", userId)
             .replace("{contractId}", contractId)
 
+        return isProxyOnAssetOfUser(path)
+    }
+
+    private suspend fun isProxyOnAssetOfUser(path: String): GenericResponse<ProxyStatus> {
         return coroutineScope {
             httpClient.get<GenericResponse<ProxyStatus>> {
                 addTimeStampHeader(this)
@@ -1134,16 +1169,35 @@ internal class ApiClientImpl(
         }
     }
 
+    override suspend fun transferServiceTokenOfUser(
+        userId: String,
+        contractId: String,
+        request: TransferTokenOfUserRequest
+    ): GenericResponse<TransactionResponse> {
+        val path = USER_SERVICE_TOKEN_TRANSFER_PATH
+            .replace("{userId}", userId)
+            .replace("{contractId}", contractId)
+
+        return transferTokenOfUser(path, request)
+    }
+
     override suspend fun transferFungibleTokenOfUser(
         userId: String,
         contractId: String,
         tokenType: String,
-        request: TransferFungibleTokenOfUserRequest
+        request: TransferTokenOfUserRequest
     ): GenericResponse<TransactionResponse> {
         val path = USER_FUNGIBLE_TOKEN_TRANSFER_PATH
             .replace("{userId}", userId)
             .replace("{contractId}", contractId)
             .replace("{tokenType}", tokenType)
+        return transferTokenOfUser(path, request)
+    }
+
+    private suspend fun transferTokenOfUser(
+        path: String,
+        request: TransferTokenOfUserRequest
+    ): GenericResponse<TransactionResponse> {
         return coroutineScope {
             httpClient.post<GenericResponse<TransactionResponse>> {
                 addTimeStampHeader(this)
@@ -1191,7 +1245,7 @@ internal class ApiClientImpl(
     }
 
     // TODO config strict mode or generous mode
-    // stric mode -> throw exception when missing pair for path variable (* currently applied
+    // strict mode -> throw exception when missing pair for path variable (* currently applied
     // generous mode -> just log missed path variable in warn log level
     private fun buildApiPath(apiPath: String, pathVariablesMap: Map<String, String>): String {
         require(pathVariablesMap.keys.filterNot { apiPath.contains("{$it}") }.isEmpty()) {

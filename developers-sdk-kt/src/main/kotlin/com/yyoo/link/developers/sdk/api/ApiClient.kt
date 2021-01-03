@@ -553,6 +553,16 @@ interface ApiClient {
     ): GenericResponse<RequestSession>
 
     /**
+     * Issue session token for service-token-proxy setting
+     */
+    suspend fun issueSessionTokenForServiceTokenProxy(
+        userId: String,
+        contractId: String,
+        requestType: RequestType,
+        requestUser: UserAssetProxyRequest
+    ): GenericResponse<RequestSession>
+
+    /**
      * Issue a session token for service token transfer
      */
     suspend fun issueSessionTokenForServiceTokenTransfer(
@@ -569,13 +579,25 @@ interface ApiClient {
         userId: String,
         contractId: String,
         requestType: RequestType,
-        requestUser: UserItemTokenProxyRequest
+        requestUser: UserAssetProxyRequest
     ): GenericResponse<RequestSession>
+
+    /**
+     * Retrieve whether the proxy set or not for service-token
+     */
+    suspend fun isProxyOfServiceToken(userId: String, contractId: String): GenericResponse<ProxyStatus>
+
 
     /**
      * Retrieve whether the proxy set or not
      */
     suspend fun isProxyOfItemToken(userId: String, contractId: String): GenericResponse<ProxyStatus>
+
+    suspend fun transferServiceTokenOfUser(
+        userId: String,
+        contractId: String,
+        request: TransferTokenOfUserRequest
+    ): GenericResponse<TransactionResponse>
 
     /**
      * Transfer a fungible (user wallet)
@@ -584,7 +606,7 @@ interface ApiClient {
         userId: String,
         contractId: String,
         tokenType: String,
-        request: TransferFungibleTokenOfUserRequest
+        request: TransferTokenOfUserRequest
     ): GenericResponse<TransactionResponse>
 
     /**

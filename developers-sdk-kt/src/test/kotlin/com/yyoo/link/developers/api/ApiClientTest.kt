@@ -1308,7 +1308,27 @@ class ApiClientTest {
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     RequestType.AOA,
-                    UserItemTokenProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
+                    UserAssetProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
+                )
+            assertNotNull(response)
+            assertEquals(1602571690000, response.responseTime)
+            assertEquals(1000, response.statusCode)
+            assertEquals("Success", response.statusMessage)
+            assertNotNull(response.responseData)
+        }
+    }
+
+    @KtorExperimentalAPI
+    @Test
+    fun issueSessionTokenForServiceTokenProxy() {
+        testRunBlocking {
+            assertNotNull(apiClient)
+            val response =
+                apiClient.issueSessionTokenForServiceTokenProxy(
+                    TEST_USER_ID,
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    RequestType.AOA,
+                    UserAssetProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1334,10 +1354,49 @@ class ApiClientTest {
 
     @KtorExperimentalAPI
     @Test
+    fun isProxyOfServiceToken() {
+        testRunBlocking {
+            assertNotNull(apiClient)
+            val response = apiClient.isProxyOfServiceToken(TEST_USER_ID, TEST_SERVICE_TOKEN_CONTRACT_ID)
+            assertNotNull(response)
+            assertEquals(1585467705781, response.responseTime)
+            assertEquals(1000, response.statusCode)
+            assertEquals("Success", response.statusMessage)
+            assertTrue(response.responseData?.isApproved ?: false)
+        }
+    }
+
+    @KtorExperimentalAPI
+    @Test
+    fun transferServiceTokenOfUser() {
+        testRunBlocking {
+            assertNotNull(apiClient)
+            val request = TransferTokenOfUserRequest(
+                ownerAddress = TEST_ADDRESS,
+                ownerSecret = TEST_WALLET_SECRET,
+                toAddress = TEST_ADDRESS,
+                amount = "1000"
+            )
+            val response =
+                apiClient.transferServiceTokenOfUser(
+                    TEST_USER_ID,
+                    TEST_SERVICE_TOKEN_CONTRACT_ID,
+                    request
+                )
+            assertNotNull(response)
+            assertEquals(1602571690000, response.responseTime)
+            assertEquals(1002, response.statusCode)
+            assertEquals("Success", response.statusMessage)
+            assertNotNull(response.responseData)
+        }
+    }
+
+    @KtorExperimentalAPI
+    @Test
     fun transferFungibleTokenOfUser() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferFungibleTokenOfUserRequest(
+            val request = TransferTokenOfUserRequest(
                 ownerAddress = TEST_ADDRESS,
                 ownerSecret = TEST_WALLET_SECRET,
                 toAddress = TEST_ADDRESS,
@@ -1744,7 +1803,10 @@ class ApiClientTest {
                             }
                             USER_ITEM_TOKEN_IS_PROXY_PATH
                                 .replace("{userId}", TEST_USER_ID)
-                                .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID) -> {
+                                .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID),
+                            USER_SERVICE_TOKEN_IS_PROXY_PATH
+                                .replace("{userId}", TEST_USER_ID)
+                                .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID)-> {
                                 respond(
                                     content = isItemTokenProxy(),
                                     headers = headers()
@@ -1837,7 +1899,10 @@ class ApiClientTest {
                                 USER_FUNGIBLE_TOKEN_TRANSFER_PATH
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_TOKEN_TYPE) -> {
+                                    .replace("{tokenType}", TEST_TOKEN_TYPE),
+                                USER_SERVICE_TOKEN_TRANSFER_PATH
+                                    .replace("{userId}", TEST_USER_ID)
+                                    .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1951,6 +2016,10 @@ class ApiClientTest {
                                     )
                                 }
                                 ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY
+                                    .replace("{userId}", TEST_USER_ID)
+                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
+                                    .plus("?requestType=aoa"),
+                                ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PROXY
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .plus("?requestType=aoa") -> {

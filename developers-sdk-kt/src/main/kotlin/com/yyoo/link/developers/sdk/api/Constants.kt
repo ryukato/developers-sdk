@@ -105,8 +105,12 @@ const val COMMIT_SESSION_TOKEN_PATH = "/v1/user-requests/{requestSessionToken}/c
 const val ISSUE_SESSION_TOKEN_FOR_BASE_COIN_PATH = "/v1/users/{userId}/base-coin/request-transfer"
 const val ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PATH =
     "/v1/users/{userId}/service-tokens/{contractId}/request-transfer"
+const val ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PROXY = "/v1/users/{userId}/service-tokens/{contractId}/request-proxy"
 const val ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY = "/v1/users/{userId}/item-tokens/{contractId}/request-proxy"
+const val USER_SERVICE_TOKEN_IS_PROXY_PATH = "/v1/users/{userId}/service-tokens/{contractId}/proxy"
 const val USER_ITEM_TOKEN_IS_PROXY_PATH = "/v1/users/{userId}/item-tokens/{contractId}/proxy"
+const val USER_SERVICE_TOKEN_TRANSFER_PATH =
+    "/v1/users/{userId}/service-tokens/{contractId}/transfer"
 const val USER_FUNGIBLE_TOKEN_TRANSFER_PATH =
     "/v1/users/{userId}/item-tokens/{contractId}/fungibles/{tokenType}/transfer"
 const val USER_NON_FUNGIBLE_TOKEN_TRANSFER_PATH =
