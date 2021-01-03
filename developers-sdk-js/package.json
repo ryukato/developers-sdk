@@ -1,6 +1,6 @@
 {
-  "name": "developers-sdk-js",
-  "version": "1.0.0",
+  "name": "link-developers-sdk",
+  "version": "0.0.4",
   "description": "developers-sdk for javascript",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
