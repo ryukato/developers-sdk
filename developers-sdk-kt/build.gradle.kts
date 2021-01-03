@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 import org.gradle.api.publish.maven.internal.artifact.FileBasedMavenArtifact
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -10,7 +12,7 @@ plugins {
     signing
 }
 
-group = "com.github.ryukato"
+group = projectGroupId
 version = "0.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
@@ -62,24 +64,12 @@ dependencies {
     testImplementation("io.ktor:ktor-client-mock-native:1.3.0")
 }
 
-val publishGroupId = "com.github.ryukato"
-val publishArtifactId = "link-developers-sdk-kt"
 val publishVersion = version as String
-val publishName = publishArtifactId
-val publishDescription = "SDK for line-blockchain in Kotlin"
-val publishProjectUrl = "https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt/README.md"
-val publishLicense = "MIT License"
-val developerList = listOf(
-    mapOf("id" to "ryukato", "name" to "Yoonyoul Yoo", "email" to "ryukato79@gmail.com")
-)
-val gitHubProjectMainSourceUrl =
-    "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt/src/main/kotlin"
 
-// TODO if run on github else on local => create buildSrc on root-project and create getProperty function
-val mavenUserName = project.property("MAVEN_USERNAME").toString()
-val mavenPassword = project.property("MAVEN_PASSWORD").toString()
-val binTrayUserName = project.property("BINTRAY_USERNAME").toString()
-val binTrayApiKey = project.property("BINTRAY_KEY").toString()
+val mavenUserName = getProperty("MAVEN_USERNAME", project)
+val mavenPassword = getProperty("MAVEN_PASSWORD", project)
+val binTrayUserName = getProperty("BINTRAY_USERNAME", project)
+val binTrayApiKey = getProperty("BINTRAY_KEY", project)
 
 publishing {
     publications {
@@ -111,9 +101,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection.set("scm:git:git://ryukato/developers-sdk.git")
-                    developerConnection.set("scm:git:ssh://ryukato/developers-sdk.git")
-                    url.set("https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-kt")
+                    connection.set(scmConnectionUrl)
+                    developerConnection.set(developerConnectionUrl)
+                    url.set(gitRepositoryUrl)
                 }
             }
 
@@ -130,9 +120,7 @@ publishing {
 
     repositories {
         maven {
-            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-            val snapshotsRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots")
-            url = if (version.toString().endsWith("SNAPSHOT")) snapshotsRepoUrl else releasesRepoUrl
+            url = releaseTargetRepoUrl(version.toString())
             credentials {
                 username = mavenUserName
                 password = mavenPassword
@@ -158,10 +146,9 @@ bintray {
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
         repo = publishGroupId
         name = publishArtifactId
-        userOrg = "ryukato79"
+        userOrg = projectGroupId
         setLicenses("MIT")
-        vcsUrl = "https://github.com/ryukato/developers-sdk.git"
-        setLicenses("MIT")
+        vcsUrl = gitRepositoryUrl
     })
 }
 
