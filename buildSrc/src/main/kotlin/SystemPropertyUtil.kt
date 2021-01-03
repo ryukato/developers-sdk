@@ -1,7 +1,7 @@
 import java.net.URI
 
 fun getProperty(name: String, project: org.gradle.api.Project): String? {
-    val systemProperty = System.getProperty(name) ?: System.getenv(name)
+    val systemProperty = System.getenv(name) ?: System.getProperty(name)
     return systemProperty ?: project.property(name)?.toString()
 }
 
