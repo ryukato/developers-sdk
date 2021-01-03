@@ -148,7 +148,7 @@ bintray {
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
         repo = publishGroupId
         name = publishArtifactId
-        userOrg = projectGroupId
+        userOrg = bintrayUserOrg
         setLicenses("MIT")
         vcsUrl = gitRepositoryUrl
     })

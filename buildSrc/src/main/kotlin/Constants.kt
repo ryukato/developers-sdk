@@ -10,6 +10,7 @@ const val developerConnectionUrl = "scm:git:ssh://ryukato/developers-sdk.git"
 const val gitRepositoryUrl = "https://github.com/ryukato/developers-sdk.git"
 const val releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
 const val snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+const val bintrayUserOrg = "ryukato79"
 val developerList = listOf(
     mapOf(
         "id" to "ryukato",
