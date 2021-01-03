@@ -10,8 +10,8 @@ plugins {
     signing
 }
 
-group = "com.yyoo"
-version = "0.0.1-SNAPSHOT"
+group = "com.github.ryukato"
+version = "0.0.2"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 buildscript {
@@ -63,9 +63,9 @@ dependencies {
 }
 
 val publishGroupId = "com.github.ryukato"
-val publishArtifactId = "developers-sdk-kt"
-val publishVersion = "0.0.1-SNAPSHOT"
-val publishName = "developers-sdk-kt"
+val publishArtifactId = "link-developers-sdk-kt"
+val publishVersion = version as String
+val publishName = publishArtifactId
 val publishDescription = "SDK for line-blockchain in Kotlin"
 val publishProjectUrl = "https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt/README.md"
 val publishLicense = "MIT License"
@@ -156,19 +156,12 @@ bintray {
     setPublications("mavenSDK")
 
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
-        repo = "com.github.ryukato"
-        name = "developers-sdk-kt"
+        repo = publishGroupId
+        name = publishArtifactId
         userOrg = "ryukato79"
-        websiteUrl = "https://blog.simon-wirtz.de"
         setLicenses("MIT")
         vcsUrl = "https://github.com/ryukato/developers-sdk.git"
         setLicenses("MIT")
-        version(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.VersionConfig> {
-            name = publishVersion
-            desc = ""
-            released = "2020/12/13"
-            vcsTag = "v1.0.0"
-        })
     })
 }
 

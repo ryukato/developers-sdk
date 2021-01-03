@@ -44,7 +44,7 @@ implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
 </properties>
 
 <dependency>
-    <groupId>com.yyoo.link.developers.sdk</groupId>
+    <groupId>com.github.ryukato.link.developers.sdk</groupId>
     <artifactId>developers-sdk-kt</artifactId>
     <version>${developers-sdk-kt.latest-version}</version>
 </dependency>
