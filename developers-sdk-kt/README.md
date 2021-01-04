@@ -25,10 +25,10 @@ This is to load `api-key` and `api-secret`. As mentioned above, Do not use `api-
 With `ApiKeySecretDecoder` and this, load the encoded or encrypted secret and use it after decoding.
 
 ## Get started   
-### Get started with Gradle
+### Gradle Kotlin DSL
 ```
 // developers-sdk
-implementation("com.yyoo.link.developers.sdk:developers-sdk-kt:${latest-version}"
+implementation("com.github.ryukato:link-developers-sdk-kt:${latest-version}")
 
 // ktor
 implementation("io.ktor:ktor-client-core:1.3.0")
@@ -36,7 +36,19 @@ implementation("io.ktor:ktor-client-cio:1.3.0")
 implementation("io.ktor:ktor-client-jackson:1.3.0")
 implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
 ```
-### Get started with Maven (not yet possible, config publishing in WIP)
+### Gradle Groovy DSL
+```
+// developers-sdk
+implementation 'com.github.ryukato:link-developers-sdk-kt:${latest-version}'
+
+// ktor
+implementation 'io.ktor:ktor-client-core:1.3.0'
+implementation 'io.ktor:ktor-client-cio:1.3.0'
+implementation 'io.ktor:ktor-client-jackson:1.3.0'
+implementation 'io.ktor:ktor-client-logging-jvm:1.3.0'
+```
+
+### Apache Maven
 ```xml
 <properties>
   <developers-sdk.version>latest-version</developers-sdk.version>
@@ -44,9 +56,9 @@ implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
 </properties>
 
 <dependency>
-    <groupId>com.github.ryukato.link.developers.sdk</groupId>
-    <artifactId>developers-sdk-kt</artifactId>
-    <version>${developers-sdk-kt.latest-version}</version>
+    <groupId>com.github.ryukato</groupId>
+    <artifactId>link-developers-sdk-kt</artifactId>
+    <version>${latest-version}</version>
 </dependency>
 <dependency>
     <groupId>io.ktor</groupId>
@@ -69,13 +81,6 @@ implementation("io.ktor:ktor-client-logging-jvm:1.3.0")
     <version>${ktor.version}</version>
 </dependency>
 ```
-### With spring-boot (// TODO move to develoeprs-sdk-kt-spring-boot-support)
-If you use `spring-boot`, then you can simple use created `ApiClient` instance by auto-configuration.
-You can define a sort of service class with `ApiClient` instance injected by spring-framework.
-For example,  
-```kotlin
-@Service
-class DevelopersApiService(apiClient: ApiClient) {
-    //do something
-}
-```
+### spring-boot support
+Please refer to [developers-sdk-kt-spring-boot-support](https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt-spring-boot-support/README.md)
+
