@@ -5,6 +5,7 @@ import com.github.ryukato.link.developers.sdk.key.ApiKeySecretDecoder
 import com.github.ryukato.link.developers.sdk.key.ApiKeySecretEncoder
 import com.github.ryukato.link.developers.sdk.key.ApiKeySecretLoader
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
@@ -44,7 +45,10 @@ class SpringAutoConfigTest {
 			val serviceTokens = apiClient.serviceTokens()
 			assertNotNull(serviceTokens)
 
-			apiClient.itemToken("323d700a")
+			val expectedContractId = "323d700a"
+			val itemTokenResponse = apiClient.itemToken(expectedContractId)
+			assertNotNull(itemTokenResponse)
+			assertEquals(expectedContractId, itemTokenResponse.responseData?.contractId)
 		}
 	}
 }
