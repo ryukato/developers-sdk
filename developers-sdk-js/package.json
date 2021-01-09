@@ -10,7 +10,7 @@
     "url": "https://github.com/ryukato/developers-sdk/tree/master/developers-sdk-js"
   },
   "license": "MIT",
-  "keywords": [],
+  "keywords": ["link-developers-sdk" ,"line blockchain", "link-developers"],
   "scripts": {
     "build": "run-p build:*",
     "build:main": "tsc -p tsconfig.json",
