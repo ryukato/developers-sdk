@@ -48,7 +48,7 @@
   "dependencies": {
     "@types/crypto-js": "^4.0.1",
     "@types/lodash": "^4.14.165",
-    "axios": "^0.21.0",
+    "axios": "^0.21.1",
     "crypto-js": "^4.0.0",
     "crypto-random-string": "^3.3.0",
     "lodash": "^4.17.20",
