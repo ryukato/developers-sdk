@@ -103,7 +103,7 @@ signing {
 bintray {
     user = getProperty("BINTRAY_USERNAME", project)
     key = getProperty("BINTRAY_KEY", project)
-    setPublications("mavenSDK")
+    setPublications(publicationName)
 
     pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
         repo = publishGroupId
