@@ -1,4 +1,4 @@
-rootProject.name = "developers-sdk-kt"
+rootProject.name = "developers-sdk"
 include("developers-sdk-kt")
 project(":developers-sdk-kt").projectDir = File("$rootDir/developers-sdk-kt")
 include("developers-sdk-kt-spring-boot-support")
