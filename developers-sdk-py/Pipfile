@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-uplink = ">=0.9.3"
-requests = "==2.23.0"
+uplink = "*"
+requests = "*"
 
 [dev-packages]
 pytest = "*"
 
 [requires]
-python_version = "3.6"
+python_version = "3.6.5"

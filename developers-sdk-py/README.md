@@ -20,6 +20,8 @@ This is written by Python to support development with Python.
 #### Using pipenv
 1. if you don't have `pipenv`, then please install it by run comment.
   - `pip install pipenv`
+2. Activate virtual environment.
+  - `pipenv shell`
 2. Run below command to setup virtual environment and install requirements.
   - `pipenv install`
 3. Run tests to see everything working fine.

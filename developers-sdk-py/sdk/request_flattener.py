@@ -1,5 +1,5 @@
 """
-This module implements generating request signature.
+This module implements flattening request.
 
 Author: Yoonyoul Yoo
 Date: 2021/01/09
@@ -34,6 +34,9 @@ class RequestBodyFlattener:
 
         Args:
             body: request body object
+
+        Returns:
+            flatten request in inlined string.
         """
         sorted_body = sorted(body.items())
         return "&".join(self.__flatten_key_value(key, value) for (key, value) in sorted_body)

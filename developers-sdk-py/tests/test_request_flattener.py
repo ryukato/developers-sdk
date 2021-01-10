@@ -1,11 +1,11 @@
 import unittest
-from sdk.request_signature import RequestBodyFlattener
-from sdk.api_client import ApiClient
+from sdk.request_flattener import RequestBodyFlattener
 
 
 class TestFlattenBody(unittest.TestCase):
     def setUp(self):
         pass
+
     def tearDown(self):
         pass
 
