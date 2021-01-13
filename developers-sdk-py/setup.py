@@ -7,7 +7,7 @@ def read(filename):
         return stream.read()
 
 
-install_requires = ["uplink>=0.9.3"]
+install_requires = ["uplink>=0.9.3", "python-dotenv>=0.15.0"]
 extras_require = {}
 setup_requires = ["pytest-runner"]
 tests_require = ["pytest==4.4.1"]
