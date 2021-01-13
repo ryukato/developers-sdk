@@ -31,6 +31,15 @@ This is written by Python to support development with Python.
 >
 > This project support `venv` and `pipenv`, then we have to update both `setup.py` and `Pipfile` whenever install a new requirement.
 
+> Attention
+>
+> To run the tests, you need to create `.env` file whose api_key, secret and base_url for developers-api.
+```
+API_BASE_URL="[base-url]"
+SERVICE_API_KEY="[your api-key]"
+SERVICE_API_SECRET="[your api-secret]" 
+```
+
 
 ## Additional resources
 This section has some resources for Python beginner like me. :)
