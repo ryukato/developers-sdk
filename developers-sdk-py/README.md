@@ -38,3 +38,6 @@ This section has some resources for Python beginner like me. :)
 * This is youtube channel for Python beginner: https://bit.ly/3q14Ddq
 ### Python3 Official document
 * Nothing better than official document: https://docs.python.org/3
+### Uplink
+* Http Client for python, which is used in this sdk.
+* document: https://uplink.readthedocs.io/en/stable/index.html
