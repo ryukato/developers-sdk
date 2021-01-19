@@ -21,18 +21,25 @@ Date: 2021/01/09
 import hmac
 import hashlib
 import base64
+import logging
+import sys
 from sdk.request_flattener import RequestBodyFlattener
+
+logging.basicConfig(stream=sys.stdout)
+simple_formatter = logging.Formatter("[%(name)s] %(message)s")
 
 
 class SignatureGenerator:
     """This is to generate signature with flatten request."""
 
+    __logger = logging.getLogger('ApiSignatureAuth')
+    __logger.setLevel(logging.DEBUG)
+
     def __createSignTarget(self, method, path, timestamp, nonce, parameters: dict = {}):
         signTarget = f'{nonce}{str(timestamp)}{method}{path}'
         if(len(parameters) > 0):
-            f'{signTarget}?'
-        else:
-            f'{signTarget}&'
+            signTarget = signTarget + "?"
+
         return signTarget
 
     def generate(self, secret: str, method: str, path: str, timestamp: int, nonce: str, query_params: dict = {}, body: dict = {}):
@@ -56,11 +63,12 @@ class SignatureGenerator:
         all_parameters.update(query_params)
         all_parameters.update(body)
 
-        signTarget = self.__createSignTarget(method, path, timestamp, nonce, all_parameters)
+        signTarget = self.__createSignTarget(method.upper(), path, timestamp, nonce, all_parameters)
 
         if (len(all_parameters) > 0):
             signTarget += body_flattener.flatten(all_parameters)
 
+        self.__logger.debug("signTarget: " + str(signTarget))
         raw_hmac = hmac.new(bytes(secret, 'utf-8'), bytes(signTarget, 'utf-8'), hashlib.sha512)
         result = base64.b64encode(raw_hmac.digest()).decode('utf-8')
 

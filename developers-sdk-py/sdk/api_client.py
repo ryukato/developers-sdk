@@ -5,7 +5,7 @@ Author: Yoonyoul Yoo
 Date: 2021/01/09
 """
 
-from uplink import Consumer, get, returns, Path
+from uplink import Consumer, put, get, post, returns, Path, json, Body
 from uplink.auth import ApiTokenHeader
 import logging
 import sys
@@ -26,7 +26,7 @@ NONCE_HEADER = "Nonce"
 class ApiSignatureAuth(ApiTokenHeader):
     """Developers api authentication Handler."""
 
-    __logger = logging.getLogger('ApiSignatureAuth')
+    __logger = logging.getLogger("ApiSignatureAuth")
     __logger.setLevel(logging.DEBUG)
 
     def __init__(self, api_key, api_secret, signature_generator):
@@ -36,12 +36,12 @@ class ApiSignatureAuth(ApiTokenHeader):
         self.signature_generator = signature_generator
 
     def __log_request(self, request_builder):
-        self.__logger.debug("request headers: " + str(request_builder.info['headers']))
-        self.__logger.debug("request params: " + str(request_builder.info['params']))
-        self.__logger.debug("request body: " + str(request_builder.info['data']))
+        self.__logger.debug("request headers: " + str(request_builder.info["headers"]))
+        self.__logger.debug("request params: " + str(request_builder.info["params"]))
+        self.__logger.debug("request body: " + str(request_builder.info["data"]))
 
     def __nonce(self):
-        return ''.join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(8))
+        return "".join(random.choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(8))
 
     def __timestamp(self):
         return str(int(round(time.time() * 1000)))
@@ -55,11 +55,11 @@ class ApiSignatureAuth(ApiTokenHeader):
         path = request_builder.relative_url
         timestamp = self.__timestamp()
         nonce = self.__nonce()
-        params = request_builder.info['params']
+        params = request_builder.info["params"]
         body = request_builder.info["data"]
         signature = self.signature_generator.generate(self.api_secret, method, path, timestamp, nonce, params, body)
         headers = self.__build_headers(nonce, timestamp, self.api_key, signature)
-        request_builder.info['headers'].update(headers)
+        request_builder.info["headers"].update(headers)
         self.__log_request(request_builder)
 
 
@@ -76,4 +76,63 @@ class ApiClient(Consumer):
     @get("/v1/services/{service_id}")
     def service_detail(self, service_id: Path("service_id")):
         """Retreives detail information of a service."""
+        pass
+
+    @returns.json
+    @get("/v1/service-tokens")
+    def service_tokens(self):
+        """List up all service tokens issued by the service with the corresponding information."""
+        pass
+
+    @returns.json
+    @get("/v1/service-tokens/{contract_id}")
+    def service_token_detail(self, contract_id: Path("contract_id")):
+        """Retrieve the information of service tokens included in the given contract."""
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/service-tokens/{contract_id}")
+    def update_service_token_detail(self, contract_id: Path("contract_id"), update_request: Body):
+        """Request to update the information of the service token with the given contract ID."""
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/service-tokens/{contract_id}/mint")
+    def mint_service_token(self, contract_id: Path("contract_id"), service_token_mint_request: Body):
+        """Request to mint the given service token and transfer it to the given wallet."""
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/service-tokens/{contract_id}/burn")
+    def burn_service_token(self, contract_id: Path("contract_id"), service_token_burn_request: Body):
+        """
+        Request to burn the service token in the owner wallet.
+
+        This endpoint will NOT be available from April 1, 2021. Use Burn a service token in user wallet instead, which can burn a service token in the owner wallet.
+        """
+        pass
+
+    # /v1/service-tokens/{contractId}/burn-from
+    @json
+    @returns.json
+    @post("/v1/service-tokens/{contract_id}/burn")
+    def burn_from_service_token(self, contract_id: Path("contract_id"), service_token_burn_from_request: Body):
+        """
+        Request to burn the service token in the user wallet.
+
+        When you’re burning a service token from the user wallet, \
+        you should use the address and secret of the contract owner wallet for the given service token, instead of the user wallet.
+        Wallet owner must approve setting the proxy <https://docs-blockchain.line.biz/glossary/?id=proxy> and complete authentication in advance.\
+
+        Refer to Issue a session token for service token proxy setting <https://docs-blockchain.line.biz/api-guide/category-users?id=v1-users-userid-service-tokens-contractid-request-proxy-post> endpoint for setting the proxy for the service token.
+        """
+        pass
+
+    @returns.json
+    @get("/v1/service-tokens/{contract_id}/holders")
+    def service_token_holders(self, contract_id: Path("contract_id")):
+        """List all holders of the service token with the given contract ID <https://docs-blockchain.line.biz/glossary/?id=contract-id>."""
         pass
