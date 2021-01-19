@@ -5,7 +5,7 @@ Author: Yoonyoul Yoo
 Date: 2021/01/09
 """
 
-from uplink import Consumer, get, returns
+from uplink import Consumer, get, returns, Path
 from uplink.auth import ApiTokenHeader
 import logging
 import sys
@@ -70,3 +70,10 @@ class ApiClient(Consumer):
     @get("/v1/time")
     def time(self):
         """Retreives the time value from server."""
+        pass
+
+    @returns.json
+    @get("/v1/services/{service_id}")
+    def service_detail(self, service_id: Path("service_id")):
+        """Retreives detail information of a service."""
+        pass
