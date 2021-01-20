@@ -1,4 +1,4 @@
-# Line developers-sdk
+# LINE Blockchain Developers SDK for Kotiln/Java
 This is the library to help developers to develop an application interacts LINE Blockchain through `LINE Blockchain Developers`, which is providing APIs for a wallet, a dApp(service) and sending transactions to LINE Blockchain system.
 
 You can find the detail of APIs `LINE Blockchain Developers` at [API-Reference](https://docs-blockchain.line.biz/api-guide/API-Reference)
@@ -83,4 +83,3 @@ implementation 'io.ktor:ktor-client-logging-jvm:1.3.0'
 ```
 ### spring-boot support
 Please refer to [developers-sdk-kt-spring-boot-support](https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-kt-spring-boot-support/README.md)
-
