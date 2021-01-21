@@ -795,12 +795,14 @@ export class HttpClient {
   }
 
   private pageRequestConfig(pageRequest: PageRequest): AxiosRequestConfig {
+    // paging parameters sorted by its key when generating signature
+    var pagingParams = {
+      "limit": pageRequest.limit,
+      "page": pageRequest.page,
+      "orderBy": pageRequest.orderBy
+    }
     return {
-      "params": {
-        "limit": pageRequest.limit,
-        "page": pageRequest.page,
-        "orderBy": pageRequest.orderBy
-      }
+      "params": Object.keys(pagingParams).sort().reduce((r, k) => (r[k] = pagingParams[k], r), {})
     };
   }
 
