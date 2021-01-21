@@ -65,8 +65,11 @@ class SignatureGenerator:
 
         signTarget = self.__createSignTarget(method.upper(), path, timestamp, nonce, all_parameters)
 
-        if (len(all_parameters) > 0):
-            signTarget += body_flattener.flatten(all_parameters)
+        if (len(query_params) > 0):
+            signTarget += '&'.join('%s=%s' % (key, value) for (key, value) in query_params.items())
+
+        if (len(body) > 0):
+            signTarget += body_flattener.flatten(body)
 
         self.__logger.debug("signTarget: " + str(signTarget))
         raw_hmac = hmac.new(bytes(secret, 'utf-8'), bytes(signTarget, 'utf-8'), hashlib.sha512)

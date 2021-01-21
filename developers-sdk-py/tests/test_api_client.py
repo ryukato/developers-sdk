@@ -25,7 +25,6 @@ class TestApiClient(unittest.TestCase):
         self.assertIsNotNone(api_client)
         response = api_client.time()
 
-        print("response: " + str(response))
         self.assertEqual(1000, response["statusCode"])
 
     def test_create_instance_and_call_service_detail_api(self):
@@ -38,7 +37,6 @@ class TestApiClient(unittest.TestCase):
         self.assertIsNotNone(api_client)
         response = api_client.service_detail("4b3f17ea-b667-4a31-a173-f10edc2c02ee")
 
-        print("response: " + str(response))
         self.assertEqual(1000, response["statusCode"])
 
     def test_create_instance_and_call_service_tokens(self):
@@ -51,7 +49,6 @@ class TestApiClient(unittest.TestCase):
         self.assertIsNotNone(api_client)
         response = api_client.service_tokens()
 
-        print("response: " + str(response))
         self.assertEqual(1000, response["statusCode"])
 
     def test_create_instance_and_call_service_token_detail(self):
@@ -64,7 +61,6 @@ class TestApiClient(unittest.TestCase):
         self.assertIsNotNone(api_client)
         response = api_client.service_token_detail("a48f097b")
 
-        print("response: " + str(response))
         self.assertEqual(1000, response["statusCode"])
 
     def test_create_instance_and_call_update_service_token_detail(self):
@@ -84,7 +80,6 @@ class TestApiClient(unittest.TestCase):
         }
         response = api_client.update_service_token_detail("a48f097b", request_body)
 
-        print("response: " + str(response))
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_mint_service_token(self):
@@ -104,7 +99,6 @@ class TestApiClient(unittest.TestCase):
         }
         response = api_client.mint_service_token("a48f097b", request_body)
 
-        print("response: " + str(response))
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_service_token(self):
@@ -123,7 +117,6 @@ class TestApiClient(unittest.TestCase):
         }
         response = api_client.burn_service_token("a48f097b", request_body)
 
-        print("response: " + str(response))
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_from_service_token(self):
@@ -144,7 +137,6 @@ class TestApiClient(unittest.TestCase):
 
         response = api_client.burn_from_service_token("a48f097b", request_body)
 
-        print("response: " + str(response))
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_service_token_holders(self):
@@ -158,5 +150,108 @@ class TestApiClient(unittest.TestCase):
 
         response = api_client.service_token_holders("a48f097b")
 
-        print("response: " + str(response))
         self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_item_token_detail(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.item_token("a48f097b")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_list_all_fungibles(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.fungible_tokens("a48f097b")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.fungible_token("a48f097b", "00000001")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_fungible_token_holders(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.fungible_token_holders("a48f097b", "00000001")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_non_fungible_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.non_fungible_tokens("a48f097b")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_non_fungible_token_type(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.non_fungible_token_type("a48f097b", "10000001")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_non_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.non_fungible_token("a48f097b", "10000001", "00000001")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_non_fungible_token_holders(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.non_fungible_token_type_holders("a48f097b", "10000001")
+        print("response: " + str(response))
+        self.assertEqual(4044, response["statusCode"])
