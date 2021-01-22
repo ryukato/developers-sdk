@@ -136,3 +136,137 @@ class ApiClient(Consumer):
     def service_token_holders(self, contract_id: Path("contract_id")):
         """List all holders of the service token with the given contract ID <https://docs-blockchain.line.biz/glossary/?id=contract-id>."""
         pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}")
+    def item_token(self, contract_id: Path("contract_id")):
+        """Retrieve the contract information of the given item token."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/fungibles")
+    def fungible_tokens(self, contract_id: Path("contract_id")):
+        """List all fungible item tokens created with the given contract and retrieve the corresponding information."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/fungibles/{token_type}")
+    def fungible_token(self, contract_id: Path("contract_id"), token_type: Path("token_type")):
+        """Retrieve the information of the fungible item token with the given Contract ID and Token Type."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/fungibles/{token_type}/holders")
+    def fungible_token_holders(self, contract_id: Path("contract_id"), token_type: Path("token_type")):
+        """List up all users who hold the fungible item token with the given Contract ID and Token Type."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles")
+    def non_fungible_tokens(self, contract_id: Path("contract_id")):
+        """List all non-fungible item tokens created with the given contract and retrieve the corresponding information."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}")
+    def non_fungible_token_type(self, contract_id: Path("contract_id"), token_type: Path("token_type")):
+        """Retrieve the information of the non-fungible item token created with the given contract ID and Token Type."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}")
+    def non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index")
+    ):
+        """Retrieve the information of the non-fungible item token with the given Contract ID, Token Type and Token Index."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}")
+    def non_fungible_token_type_holders(self, contract_id: Path("contract_id"), token_type: Path("token_type")):
+        """Retrieve the holders of the non-fungible item token with the given Contract ID and Token Type."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/holders")
+    def non_fungible_token_holders(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index")
+    ):
+        """Retrieve the holder of the non-fungible item token with the given Contract ID, Token Type and Token Index."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/children")
+    def non_fungible_token_children(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index")
+    ):
+        """List up the children of the non-fungible item token with the given Contract ID, Token Type and Token Index."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/parent")
+    def non_fungible_token_parent(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index")
+    ):
+        """Retrieve the parent of the item token with the given Contract ID, Token Type and Token Index."""
+        pass
+
+    @returns.json
+    @get("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/root")
+    def non_fungible_token_root(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index")
+    ):
+        """Retrieve the root of the given non-fungible item token."""
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/service-tokens/{contract_id}")
+    def update_fungible_token(self, contract_id: Path("contract_id"), update_request: Body):
+        """
+        Request to update the information of the service token with the given contract ID.
+
+        Body
+        Parameter 	     Type 	  Description 	                                                                Required
+        name 	         String   Name of the given item token. At least 3 characters and up to 20 characters. 	Optional
+        meta 	         String   Metadata string of the given item token 	                                    Optional
+        ownerAddress     String   Address of the contract owner service wallet 	                                Required
+        ownerSecret 	 String   Secret key of the contract owner service wallet 	                            Required
+        """
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/service-tokens/{contract_id}/{token_type}")
+    def update_non_fungible_token_type(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        update_request: Body
+    ):
+        """
+        Request to update the information of the service token with the given contract ID.
+
+        Body
+        Parameter 	      Type 	     Description 	                                                                Required
+        name 	          String 	 Name of the given token type. At least 3 characters and up to 20 characters. 	Optional
+        meta 	          String 	 Metadata string of the given token type 	                                    Optional
+        ownerAddress 	  String 	 Address of the contract owner service wallet 	                                Required
+        ownerSecret 	  String 	 Secret key of the contract owner service wallet 	                            Required
+        """
+        pass
