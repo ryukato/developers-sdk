@@ -60,8 +60,6 @@ class SignatureGenerator {
         if (count($all_parameters) > 0)
             $signTarget = $signTarget.$body_flattener->flatten($all_parameters);
 
-        //var_dump($signTarget);
-
         $raw_hmac = hash_hmac("sha512", utf8_encode($signTarget), utf8_encode($secret), true);
         $result = base64_encode($raw_hmac);
 
