@@ -17,6 +17,11 @@ This is written by Python to support development with Python.
 3. Run tests to see everything working fine.
   - `python setup.py test`
 
+> Note
+>
+> To run single test, then please refer to following commend.
+`python setup.py test -s tests.test_api_client.TestApiClient.test_create_instance_and_call_service_wallets`
+
 #### Using pipenv
 1. if you don't have `pipenv`, then please install it by run comment.
   - `pip install pipenv`
@@ -37,7 +42,7 @@ This is written by Python to support development with Python.
 ```
 API_BASE_URL="[base-url]"
 SERVICE_API_KEY="[your api-key]"
-SERVICE_API_SECRET="[your api-secret]" 
+SERVICE_API_SECRET="[your api-secret]"
 ```
 
 

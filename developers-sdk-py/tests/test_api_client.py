@@ -368,3 +368,43 @@ class TestApiClient(unittest.TestCase):
 
         print("response: " + str(response))
         self.assertEqual(4041, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallets(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+        response = api_client.service_wallets()
+
+        self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_detail(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_detail(test_wallet_address)
+
+        self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_transactions(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_transactions(wallet_address=test_wallet_address, limit=10, page=1, order_by="desc")
+
+        self.assertEqual(1000, response["statusCode"])
