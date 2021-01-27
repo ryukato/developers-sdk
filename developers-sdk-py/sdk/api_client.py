@@ -236,10 +236,15 @@ class ApiClient(Consumer):
 
     @json
     @returns.json
-    @put("/v1/service-tokens/{contract_id}")
-    def update_fungible_token(self, contract_id: Path("contract_id"), update_request: Body):
+    @put("/v1/item-tokens/{contract_id}/fungibles/{token_type}")
+    def update_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        update_request: Body
+    ):
         """
-        Request to update the information of the service token with the given contract ID.
+        Request to update the information of the fungible item token with the given Contract ID and Token Type.
 
         Body
         Parameter 	     Type 	  Description 	                                                                Required
@@ -252,7 +257,7 @@ class ApiClient(Consumer):
 
     @json
     @returns.json
-    @put("/v1/service-tokens/{contract_id}/{token_type}")
+    @put("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}")
     def update_non_fungible_token_type(
         self,
         contract_id: Path("contract_id"),
@@ -260,7 +265,7 @@ class ApiClient(Consumer):
         update_request: Body
     ):
         """
-        Request to update the information of the service token with the given contract ID.
+        Request to update the Token Type of the non-fungible item token with the given Contract ID and Token Type.
 
         Body
         Parameter 	      Type 	     Description 	                                                                Required
@@ -268,5 +273,274 @@ class ApiClient(Consumer):
         meta 	          String 	 Metadata string of the given token type 	                                    Optional
         ownerAddress 	  String 	 Address of the contract owner service wallet 	                                Required
         ownerSecret 	  String 	 Secret key of the contract owner service wallet 	                            Required
+        """
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}")
+    def update_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index"),
+        update_request: Body
+    ):
+        """
+        Request to update the information of the fungible item token with the given Contract ID, Token Type and Token Index.
+
+        Body
+        Parameter 	      Type 	  Description 	                                                                      Required
+        name 	          String  Name of the given item token type. At least 3 characters and up to 20 characters.   Optional
+        meta 	          String  Metadata string of the given item token. No fixed format up to 1,000 characters. 	  Optional
+        ownerAddress 	  String  Address of the contract owner service wallet 	                                      Required
+        ownerSecret 	  String  Secret key of the contract owner service wallet                                     Required
+        """
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/parent")
+    def attach_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index"),
+        attach_request: Body
+    ):
+        """
+        Attach the given item token to another item token. Target item token becomes a parent to the given item token.
+
+        Body
+        Parameter 	            Type 	 Description 	                                                    Required
+        parentTokenId 	        String   Token ID of the item token becoming a parent 	                    Required
+        serviceWalletAddress 	String   Address of the relevant service wallet.                            Required
+        serviceWalletSecret 	String 	 Secret of serviceWalletAddress 	                                Required
+        tokenHolderAddress      String 	 Address of the holder of selected item tokens (parent and child).  Optional
+        tokenHolderUserId       String 	 User ID of the owner of selected item tokens (parent and child) 	Optional
+        """
+        pass
+
+    @json
+    @returns.json
+    @put("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/parent")
+    def detach_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index"),
+        detach_request: Body
+    ):
+        """
+        Detach the given item token from its parent.
+
+        Body
+        Parameter               Type 	Description                                                           Required
+        serviceWalletAddress 	String 	Address of the relevant service wallet.                               Required
+        serviceWalletSecret 	String 	Secret of serviceWalletAddress                                        Required
+        tokenHolderAddress      String 	Address of the holder of selected item tokens (parent and child)      Optional
+        tokenHolderUserId       String 	User ID of the owner of selected item tokens (parent and child)       Optional
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/fungibles")
+    def create_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        create_request: Body
+    ):
+        """
+        Request to create a new Token Type of the fungible item token with the given contract.
+
+        Note
+
+        This endpoint creates a new Token Type but DOES NOT mint any tokens. To issue/mint fungibles, call the Mint a fungible endpoint.
+
+        Body
+        Parameter 	     Type 	  Description 	                                                                        Required
+        ownerAddress 	 String   Address of the item token contract owner                                              Required
+        ownerSecret 	 String   Secret of the item token contract owner                                               Required
+        name 	         String   Name of the item token type. At least 3 characters and up to 20 characters.
+                                   Lowercase and uppercase alphabets and numbers only. 	                                Required
+        meta 	         String   Metadata string of the given item token type. No fixed format up to 1,000 characters. Optional
+        """
+        pass
+
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/fungibles/{token_type}/mint")
+    def mint_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        mint_request: Body
+    ):
+        """
+        Request to mint a new fungible item token with the given Contract ID and Token Type and transfer it to the given wallet.
+
+        Note
+
+        To mint a fungible item token, it should have been created in advance. Refer to Create a fungible.
+
+        Body
+        Parameter 	   Type 	Description 	                                        Required
+        ownerAddress   String 	Address of the given contract owner 	                Required
+        ownerSecret    String 	Secret of the given contract owner 	                    Required
+        toUserId       String 	User ID of the user to receive the minted item token. 	Optional
+        toAddress      String 	Wallet address to receive the minted item token.        Optional
+        amount         String 	Amount to be minted, larger than 1 but less than 2^255. Required
+
+        Must specify either toUserId or toAddress. You will get an error when both parameters or nothing are specified
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/fungibles/{token_type}/burn")
+    def burn_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        burn_request: Body
+    ):
+        """
+        Request to burn a specific fungible item token.
+
+        Note
+
+        When you’re burning an item token from the user wallet, you should use the address and secret of the contract owner wallet for the given item token, instead of the user wallet.
+        To this end, users need to set up a proxy in the user wallet in advance. Refer to Issue a session token for item token proxy setting.
+
+        Body
+        Parameter 	   Type 	Description 	                                                    Required
+        ownerAddress   String 	Address of the given contract owner 	                            Required
+        ownerSecret    String 	Secret of the given contract owner 	                                Required
+        fromUserId     String 	User ID of the user who holds the given item token to be burnt. 	Optional
+        fromAddress    String 	Address of the wallet that holds the given item token.              Optional
+        amount         String 	Amount to be burnt, larger than 1 but less than 2^255.              Required
+
+        Must specify either fromUserId or fromAddress. You will get an error when both parameters or no parameter is specified.
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/non-fungibles")
+    def create_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        create_request: Body
+    ):
+        """
+        Request to create a new Token Type of the non-fungible item token with the given contract.
+
+        Note
+
+        You need to create a non-fungible item token first in the console to get the contract ID of the item token.
+
+        Body
+        Parameter 	   Type 	Description 	                                                    Required
+        ownerAddress   String 	Address of the given contract owner 	                            Required
+        ownerSecret    String 	Secret of the given contract owner 	                                Required
+        fromUserId     String 	User ID of the user who holds the given item token to be burnt. 	Optional
+        fromAddress    String 	Address of the wallet that holds the given item token.              Optional
+        amount         String 	Amount to be burnt, larger than 1 but less than 2^255.              Required
+
+        Must specify either fromUserId or fromAddress. You will get an error when both parameters or no parameter is specified.
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/mint")
+    def mint_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        mint_request: Body
+    ):
+        """
+        Request to mint a non-fungible item token with the given Contract ID, Token Type and Token Index, and issue it to the given wallet.
+
+        Note
+
+        To mint a non-fungible item token, it should have been created in advance. Refer to Create a non-fungible.
+
+        Body
+        Parameter 	  Type 	    Description 	                                                                    Required
+        toUserId 	  String 	User ID of the user to receive the minted item token. 	                            Optional†
+        toAddress 	  String 	Address of the wallet to receive the minted item token. 	                        Optional†
+        name 	      String 	Name of the given item token type. At least 3 characters and up to 20 characters. 	Required
+        meta 	      String 	Metadata string of the given item token. No fixed format. 	                        Optional
+        ownerAddress  String 	Address of the contract owner service wallet 	                                    Required
+        ownerSecret   String 	Secret key of the contract owner service wallet 	                                Required
+
+        Must specify either toUserId or toAddress. You will get an error when both parameters or nothing are specified
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/non-fungibles/multi-mint")
+    def multi_mint_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        multi_mint_request: Body
+    ):
+        """
+        Request to mint multiple non-fungible item tokens belonging in the given contract in batch.
+
+        Note
+
+        Selected item tokens must belong to the same contract, and tokens can be sent to one wallet each time.
+
+        Body
+        Parameter 	   Type 	            Description 	                                                            Required
+        mintList 	   Array of MintList 	Array composed of the list of selected item tokens (tokenType, name, meta) 	Required
+        toUserId 	   String 	            User ID of the user to receive minted item tokens. 	                        Optional
+        toAddress 	   String 	            Address of the wallet to receive minted item tokens. 	                    Optional
+        ownerAddress   String 	            Address of the contract owner service wallet 	                            Required
+        ownerSecret    String 	            Secret key of the contract owner service wallet 	                        Required
+
+        Must specify either toUserId or toAddress. You will get an error when both parameters or nothing are specified.
+
+        Composition of MintList object
+
+        Parameter 	Type 	Description 	                                                                              Required
+        tokenType 	String 	Token Type of the item token to be minted. 	                                                  Required
+        name 	    String 	Name of the given item token. At least 3 characters and up to 20 characters. 	              Required
+        meta 	    String 	Additional metadata string of the given item token. No fixed format up to 1,000 characters.   Optional
+        """
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/burn")
+    def burn_non_fungible_token(
+        self,
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index"),
+        burn_request: Body
+    ):
+        """
+        Request to burn a specific non-fungible item token.
+
+        Note
+
+        Unlike for service tokens, when you’re burning an item token, you should use the secret of the contract owner wallet for the given item token, instead of the user wallet.
+        To this end, users need to set up a proxy to delegate permissions to the contract owner wallet.
+
+        Body
+        Parameter 	    Type 	Description 	                                                        Required
+        fromUserId 	    String 	User ID of the user linked to the wallet with the given item token 	    Optional
+        fromAddress 	String 	Address of the wallet with the given item token 	                    Optional
+        ownerAddress 	String 	Address of the contract owner service wallet 	                        Required
+        ownerSecret 	String 	Secret of the contract owner service wallet 	                        Required
+
+        Must enter either fromUserId or fromAddress. You will get an error when both parameters are entered.
         """
         pass
