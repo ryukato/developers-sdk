@@ -70,7 +70,7 @@ import { GenericResponse, TxResultResponse } from './lib/response';
 })();
 ```
 
-### `SingtureGenerator`
+### `SignatureGenerator`
 This class provides a functionality to generate signatures for a request. 
 All API requests, except for the endpoint to retrieve the server time, must pass authentication information and be signed. 
 

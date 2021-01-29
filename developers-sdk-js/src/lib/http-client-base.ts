@@ -54,7 +54,7 @@ import {
   UserProxyRequest,
   MemoRequest
 } from './request';
-import { SingtureGenerator } from './signature-generator';
+import { SignatureGenerator } from './signature-generator';
 import { Constant } from './constants';
 
 declare module 'axios' {
@@ -124,7 +124,7 @@ export class HttpClient {
     config.headers[Constant.SERVICE_API_KEY_HEADER] = this.serviceApiKey;
     config.headers[Constant.NONCE_HEADER] = nonce;
     config.headers[Constant.SIGNATURE_HEADER] =
-      SingtureGenerator.signature(this.serviceApiSecret, method, config.url, timestamp, nonce, config.params, config.data);
+      SignatureGenerator.signature(this.serviceApiSecret, method, config.url, timestamp, nonce, config.params, config.data);
     config.headers[Constant.TIMESTAMP_HEADER] = timestamp
   }
 
