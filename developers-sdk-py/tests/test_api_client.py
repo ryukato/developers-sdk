@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 from pathlib import Path
 import os
 
-
+TEST_SERVICE_TOKEN_CONTRACT_ID = "a48f097b"
+TEST_WALLET_ADDRESS = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
+TEST_TOKEN_TYPE = "10000001"
+TEST_TOKEN_INDEX = "00000001"
 class TestApiClient(unittest.TestCase):
     def setUp(self):
         env_path = Path("tests/.env")
@@ -59,7 +62,7 @@ class TestApiClient(unittest.TestCase):
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
         self.assertIsNotNone(api_client)
-        response = api_client.service_token_detail("a48f097b")
+        response = api_client.service_token_detail(TEST_SERVICE_TOKEN_CONTRACT_ID)
 
         self.assertEqual(1000, response["statusCode"])
 
@@ -78,8 +81,8 @@ class TestApiClient(unittest.TestCase):
             "name": "dTudb9Hq5i2ieHyJFo6o",
             "meta": "bdfssdfasd"
         }
-        response = api_client.update_service_token_detail("a48f097b", request_body)
-
+        response = api_client.update_service_token_detail(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_mint_service_token(self):
@@ -97,8 +100,8 @@ class TestApiClient(unittest.TestCase):
             "toAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
             "amount": "1249051"
         }
-        response = api_client.mint_service_token("a48f097b", request_body)
-
+        response = api_client.mint_service_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_service_token(self):
@@ -115,8 +118,8 @@ class TestApiClient(unittest.TestCase):
             "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
             "amount": "31"
         }
-        response = api_client.burn_service_token("a48f097b", request_body)
-
+        response = api_client.burn_service_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_from_service_token(self):
@@ -135,8 +138,8 @@ class TestApiClient(unittest.TestCase):
             "amount": "31"
         }
 
-        response = api_client.burn_from_service_token("a48f097b", request_body)
-
+        response = api_client.burn_from_service_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_service_token_holders(self):
@@ -148,7 +151,7 @@ class TestApiClient(unittest.TestCase):
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
         self.assertIsNotNone(api_client)
 
-        response = api_client.service_token_holders("a48f097b")
+        response = api_client.service_token_holders(TEST_SERVICE_TOKEN_CONTRACT_ID)
 
         self.assertEqual(1000, response["statusCode"])
 
@@ -167,9 +170,10 @@ class TestApiClient(unittest.TestCase):
             "meta": "Strong sword is strong"
         }
 
-        response = api_client.update_fungible_token("a48f097b", "00000001", request_body)
+        response = api_client.update_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_INDEX, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_update_non_fungible_token_type(self):
@@ -187,9 +191,10 @@ class TestApiClient(unittest.TestCase):
             "meta": "New meta is comming"
         }
 
-        response = api_client.update_non_fungible_token_type("a48f097b", "10000001", request_body)
+        response = api_client.update_non_fungible_token_type(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_TYPE, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_update_non_fungible_token(self):
@@ -208,9 +213,10 @@ class TestApiClient(unittest.TestCase):
             "meta": "Burning"
         }
 
-        response = api_client.update_non_fungible_token("a48f097b", "10000001", "00000001", request_body)
+        response = api_client.update_non_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_TYPE, TEST_TOKEN_INDEX, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_create_fungible_token(self):
@@ -228,9 +234,10 @@ class TestApiClient(unittest.TestCase):
             "name": "4W1Vj9U8tYf"
         }
 
-        response = api_client.create_fungible_token("a48f097b", request_body)
+        response = api_client.create_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_mint_fungible_token(self):
@@ -249,9 +256,10 @@ class TestApiClient(unittest.TestCase):
             "amount": "5113980"
         }
 
-        response = api_client.mint_fungible_token("a48f097b", "00000001", request_body)
+        response = api_client.mint_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_INDEX, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_fungible_token(self):
@@ -270,9 +278,10 @@ class TestApiClient(unittest.TestCase):
             "amount": "1234"
         }
 
-        response = api_client.burn_fungible_token("a48f097b", "00000001", request_body)
+        response = api_client.burn_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_INDEX, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_create_non_fungible_token(self):
@@ -291,9 +300,10 @@ class TestApiClient(unittest.TestCase):
             "meta": "235v234r01234"
         }
 
-        response = api_client.create_non_fungible_token("a48f097b", request_body)
+        response = api_client.create_non_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_mint_non_fungible_token(self):
@@ -313,9 +323,10 @@ class TestApiClient(unittest.TestCase):
             "meta": "5y4bh"
         }
 
-        response = api_client.mint_non_fungible_token("a48f097b", "10000001", request_body)
+        response = api_client.mint_non_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_TYPE, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_multi_mint_non_fungible_token(self):
@@ -333,20 +344,21 @@ class TestApiClient(unittest.TestCase):
             "toAddress": "tlink1tmek3n5ak85tsqcc0wkdh6clk9th6xwf073sxm",
             "mintList": [
                 {
-                    "tokenType": "10000001",
+                    "tokenType": TEST_TOKEN_TYPE,
                     "name": "WGk",
                     "meta": "5y4bh"
                 },
                 {
-                    "tokenType": "10000001",
+                    "tokenType": TEST_TOKEN_TYPE,
                     "name": "aoU"
                 }
             ]
         }
 
-        response = api_client.multi_mint_non_fungible_token("a48f097b", request_body)
+        response = api_client.multi_mint_non_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_burn_non_fungible_token(self):
@@ -364,9 +376,10 @@ class TestApiClient(unittest.TestCase):
             "fromAddress": "tlink1yg7r3nv45qy84jhh94sdrvlsrsrgrf20wa6vaz"
         }
 
-        response = api_client.burn_non_fungible_token("a48f097b", "10000001", "00000001", request_body)
+        response = api_client.burn_non_fungible_token(TEST_SERVICE_TOKEN_CONTRACT_ID, TEST_TOKEN_TYPE, TEST_TOKEN_INDEX, request_body)
 
         print("response: " + str(response))
+        # TODO fix this
         self.assertEqual(4041, response["statusCode"])
 
     def test_create_instance_and_call_service_wallets(self):
@@ -385,7 +398,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_wallet_address = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
+        test_wallet_address = TEST_WALLET_ADDRESS
         api_client = ApiClient(
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -399,7 +412,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_wallet_address = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
+        test_wallet_address = TEST_WALLET_ADDRESS
         api_client = ApiClient(
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -408,3 +421,254 @@ class TestApiClient(unittest.TestCase):
         response = api_client.service_wallet_transactions(wallet_address=test_wallet_address, limit=10, page=1, order_by="desc")
 
         self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_base_coin(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_base_coin(test_wallet_address)
+
+        self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_service_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_service_tokens(wallet_address=test_wallet_address, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_service_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_service_token(test_wallet_address, TEST_SERVICE_TOKEN_CONTRACT_ID)
+        print("response : " + str(response))
+        self.assertEqual(1000, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_fungible_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_fungible_tokens(test_wallet_address, test_contract_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_non_fungible_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_non_fungible_tokens(test_wallet_address, test_contract_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4044, response["statusCode"])
+
+
+    def test_create_instance_and_call_service_wallet_non_fungible_token_type(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_non_fungible_token_type(
+            test_wallet_address,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            limit=10,
+            page=1,
+            order_by="desc"
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_non_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_non_fungible_token(
+            test_wallet_address,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            TEST_TOKEN_INDEX
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4044, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_transfer_basecoin(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15"
+        }
+
+        response = api_client.service_wallet_transfer_basecoin(test_wallet_address,request_body)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4083, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_transfer_service_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15"
+        }
+
+        response = api_client.service_wallet_transfer_service_token(test_wallet_address, test_contract_id, request_body)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4083, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_transfer_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15"
+        }
+
+        response = api_client.service_wallet_transfer_fungible_token(
+            test_wallet_address,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4083, response["statusCode"])
+
+    def test_create_instance_and_call_service_wallet_transfer_nonfungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15"
+        }
+
+        response = api_client.service_wallet_transfer_nonfungible_token(
+            test_wallet_address,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            TEST_TOKEN_INDEX,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4083, response["statusCode"])
+
+    #
+    def test_create_instance_and_call_service_wallet_batch_transfer_nonfungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "transferList": [
+                {
+                    "tokenId": "1000000100000001"
+                },
+                {
+                    "tokenId": "1000000100000002"
+                }
+            ]
+        }
+
+        response = api_client.service_wallet_batch_transfer_nonfungible_token(
+            test_wallet_address,
+            test_contract_id,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4083, response["statusCode"])
