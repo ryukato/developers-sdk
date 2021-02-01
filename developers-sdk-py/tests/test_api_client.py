@@ -480,6 +480,22 @@ class TestApiClient(unittest.TestCase):
         # TODO fix this
         self.assertEqual(4044, response["statusCode"])
 
+    def test_create_instance_and_call_service_wallet_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_wallet_address = TEST_WALLET_ADDRESS
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.service_wallet_fungible_token(test_wallet_address, test_contract_id, TEST_TOKEN_TYPE)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4044, response["statusCode"])
+
     def test_create_instance_and_call_service_wallet_non_fungible_tokens(self):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
@@ -672,3 +688,202 @@ class TestApiClient(unittest.TestCase):
         print("response : " + str(response))
         # TODO fix this
         self.assertEqual(4083, response["statusCode"])
+
+    def test_create_instance_and_call_user_detail(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_detail(test_user_id)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_transactions(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_transactions(user_id=test_user_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_base_coin(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        api_client = ApiClient(
+          base_url=api_base_url,
+          auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_base_coin(test_user_id)
+
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_service_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        api_client = ApiClient(
+          base_url=api_base_url,
+          auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_service_tokens(user_id=test_user_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_service_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_service_token(test_user_id, TEST_SERVICE_TOKEN_CONTRACT_ID)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_fungible_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+          base_url=api_base_url,
+          auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_fungible_tokens(test_user_id, test_contract_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+          base_url=api_base_url,
+          auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_fungible_token(test_user_id, test_contract_id, TEST_TOKEN_TYPE)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_non_fungible_tokens(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID
+        api_client = ApiClient(
+          base_url=api_base_url,
+          auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_non_fungible_tokens(test_user_id, test_contract_id, limit=10, page=1, order_by="desc")
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_non_fungible_token_type(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_non_fungible_token_type(
+            test_user_id,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            limit=10,
+            page=1,
+            order_by="desc"
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_non_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_non_fungible_token(
+            test_user_id,
+            test_contract_id,
+            TEST_TOKEN_TYPE,
+            TEST_TOKEN_INDEX
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
+
+    def test_create_instance_and_call_user_session_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_session_token = "test_user_session_token"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_session_token(test_user_session_token)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4048, response["statusCode"])
+
+    def test_create_instance_and_call_user_service_token_proxy(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.user_service_token_proxy(test_user_id, test_contract_id)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4051, response["statusCode"])
