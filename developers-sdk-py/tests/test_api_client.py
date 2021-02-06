@@ -887,3 +887,127 @@ class TestApiClient(unittest.TestCase):
         print("response : " + str(response))
         # TODO fix this
         self.assertEqual(4051, response["statusCode"])
+
+    def call_issue_session_base_coin_tranfee(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_request_type = "aoa"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15",
+            "landingUri": "https://my.service.landing/home"
+        }
+
+        response = api_client.issue_session_base_coin_transfer(
+            test_user_id,
+            request_body,
+            test_request_type
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4000, response["statusCode"])
+
+    def call_issue_session_service_token_tranfer(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_request_type = "aoa"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15",
+            "landingUri": "https://my.service.landing/home"
+        }
+
+        response = api_client.issue_session_service_token_transfer(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            request_body,
+            test_request_type
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4000, response["statusCode"])
+
+    def call_request_service_token_proxy(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_request_type = "aoa"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15",
+            "landingUri": "https://my.service.landing/home"
+        }
+
+        response = api_client.request_service_token_proxy(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            request_body,
+            test_request_type
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4000, response["statusCode"])
+
+    def call_request_item_token_proxy(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "test-user-id"
+        test_request_type = "aoa"
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        request_body = {
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "amount": "15",
+            "landingUri": "https://my.service.landing/home"
+        }
+
+        response = api_client.request_item_token_proxy(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            request_body,
+            test_request_type
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4000, response["statusCode"])
+
+    def call_commit_user_transaction(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.commit_user_transaction(
+            "tes_request_session"
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4048, response["statusCode"])

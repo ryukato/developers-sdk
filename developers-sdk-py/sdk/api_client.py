@@ -973,3 +973,127 @@ class ApiClient(Consumer):
     ):
         """Check if the proxy is set on a specific item token in the given user wallet."""
         pass
+
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/base-coin/request-transfer")
+    def issue_session_base_coin_transfer(
+        self,
+        user_id: Path("user_id"),
+        issue_session_request: Body,
+        request_type: Query = "aoa"
+    ):
+        """
+        Issue a session token for BITMAX Wallet passcode authentication to transfer base coins in the given user wallet to another wallet.
+        A new session token should be issued for each transfer, and the same token can’t be reused.
+
+        Body
+        Parameter 	Type 	Description                            Required
+        toAddress 	String 	Wallet address of the recipient        Optional
+        toUserId 	String 	User ID of the recipient 	           Optional
+        amount      String 	Amount to transfer 	                   Required
+        landingUri 	String 	                                       Optional
+
+        * landingUri: URL of the landing page for the user returning to the service after completing BITMAX Wallet authentication.
+
+        When this parameter is entered, BITMAX Wallet provides a button to redirect with this URL.
+        If not, BITMAX Wallet provides an instruction for the user to return to the service.
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/service-tokens/{contract_id}/request-transfer")
+    def issue_session_service_token_transfer(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        issue_session_request: Body,
+        request_type: Query = "aoa"
+    ):
+        """
+        Issue a session token for BITMAX Wallet passcode authentication to transfer service tokens in the given user wallet to another wallet.
+
+        Body
+        Parameter 	Type 	Description                            Required
+        toAddress 	String 	Wallet address of the recipient        Optional
+        toUserId 	String 	User ID of the recipient 	           Optional
+        amount      String 	Amount to transfer 	                   Required
+        landingUri 	String 	                                       Optional
+
+        * landingUri: URL of the landing page for the user returning to the service after completing BITMAX Wallet authentication.
+
+        When this parameter is entered, BITMAX Wallet provides a button to redirect with this URL.
+        If not, BITMAX Wallet provides an instruction for the user to return to the service.
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/service-tokens/{contract_id}/request-proxy")
+    def request_service_token_proxy(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        proxy_request: Body,
+        request_type: Query = "aoa"
+    ):
+        """
+        Issue a session token for BITMAX Wallet passcode authentication to set proxy with a specific service token in the given user wallet.
+
+        Proxy is a service wallet that has permissions to transfer, and burn a service token in the user wallet through user authentication.
+        When the proxy is set, the relevant permissions are delegated to the contract owner wallet that the given service token belongs to and this contract owner wallet can generate a transaction on behalf of the user wallet from then on.
+        Other service wallets, except for the owner wallet, don’t have permissions.
+
+        Body
+        Parameter 	 Type 	  Description                                     Required
+        ownerAddress String   Address of the contract owner service wallet    Optional
+        landingUri 	 String 	                                              Optional
+
+        * landingUri: URL of the landing page for the user returning to the service after completing BITMAX Wallet authentication.
+
+        When this parameter is entered, BITMAX Wallet provides a button to redirect with this URL.
+        If not, BITMAX Wallet provides an instruction for the user to return to the service.
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/item-tokens/{contract_id}/request-proxy")
+    def request_item_token_proxy(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        proxy_request: Body,
+        request_type: Query = "aoa"
+    ):
+        """
+        Issue a session token for BITMAX Wallet passcode authentication to set proxy with a specific service token in the given user wallet.
+
+        Proxy is a service wallet that has permissions to transfer, and burn a service token in the user wallet through user authentication.
+        When the proxy is set, the relevant permissions are delegated to the contract owner wallet that the given service token belongs to and this contract owner wallet can generate a transaction on behalf of the user wallet from then on.
+        Other service wallets, except for the owner wallet, don’t have permissions.
+
+        Body
+        Parameter 	 Type 	  Description                                     Required
+        ownerAddress String   Address of the contract owner service wallet    Optional
+        landingUri 	 String 	                                              Optional
+
+        * landingUri: URL of the landing page for the user returning to the service after completing BITMAX Wallet authentication.
+
+        When this parameter is entered, BITMAX Wallet provides a button to redirect with this URL.
+        If not, BITMAX Wallet provides an instruction for the user to return to the service.
+        """
+        pass
+
+
+    @returns.json
+    @json
+    @post("/v1/user-requests/{request_session_token}/commit")
+    def commit_user_transaction(
+        self,
+        request_session_token: Path("request_session_token")
+    ):
+        """Commit a transaction signed by the given user wallet."""
+        pass
