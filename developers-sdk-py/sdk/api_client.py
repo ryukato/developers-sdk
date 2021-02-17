@@ -1196,3 +1196,24 @@ class ApiClient(Consumer):
     def transaction_result(self, tx_hash: Path("tx_hash")):
         """Retrieve the status and information of the given transaction."""
         pass
+
+    @returns.json
+    @get("/v1/memos/{tx_hash}")
+    def get_memo(self, tx_hash: Path("tx_hash")):
+        """Retrieve the text saved in the given transaction."""
+        pass
+
+    @json
+    @returns.json
+    @post("/v1/memos")
+    def post_memo(self, memo_request: Body):
+        """
+        Save the text in the blockchain. This task is irrelevant to tokens.
+
+        Body
+        Parameter       Type 	Description                                               Required
+        walletAddress 	String 	Address of the service wallet                             Required
+        walletSecret 	String 	Wallet secret of the service wallet                       Required
+        memo            String 	Text to be saved. Free format up to 1,000 characters.     Required
+        """
+        pass

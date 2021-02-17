@@ -9,6 +9,7 @@ TEST_SERVICE_TOKEN_CONTRACT_ID = "a48f097b"
 TEST_WALLET_ADDRESS = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
 TEST_TOKEN_TYPE = "10000001"
 TEST_TOKEN_INDEX = "00000001"
+TEST_TX_HASH = "61AB8A054D47CA05E4ABE591B929282CBCD7DACD5A4C8259020C566F0EC186BE"
 class TestApiClient(unittest.TestCase):
     def setUp(self):
         env_path = Path("tests/.env")
@@ -1144,9 +1145,47 @@ class TestApiClient(unittest.TestCase):
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
         self.assertIsNotNone(api_client)
 
-        response = api_client.transaction_result(
-            "61AB8A054D47CA05E4ABE591B929282CBCD7DACD5A4C8259020C566F0EC186BE"
-        )
+        response = api_client.transaction_result(TEST_TX_HASH)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4040, response["statusCode"])
+
+
+    def call_post_memo(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        request_body = {
+            "walletAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            "walletSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "memo": "Show me the money"
+        }
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.post_memo(request_body)
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4041, response["statusCode"])
+
+
+    def call_get_memo(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.get_memo(TEST_TX_HASH)
         print("response : " + str(response))
         # TODO fix this
         self.assertEqual(4040, response["statusCode"])
