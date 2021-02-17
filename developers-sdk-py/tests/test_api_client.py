@@ -693,7 +693,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         api_client = ApiClient(
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -708,7 +708,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         api_client = ApiClient(
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -724,7 +724,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         api_client = ApiClient(
           base_url=api_base_url,
           auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -739,7 +739,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         api_client = ApiClient(
           base_url=api_base_url,
           auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -754,7 +754,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         api_client = ApiClient(
             base_url=api_base_url,
             auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
@@ -769,7 +769,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
         api_client = ApiClient(
           base_url=api_base_url,
@@ -785,7 +785,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
         api_client = ApiClient(
           base_url=api_base_url,
@@ -801,7 +801,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID
         api_client = ApiClient(
           base_url=api_base_url,
@@ -817,7 +817,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
         api_client = ApiClient(
             base_url=api_base_url,
@@ -840,7 +840,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
         api_client = ApiClient(
             base_url=api_base_url,
@@ -876,7 +876,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_contract_id = TEST_SERVICE_TOKEN_CONTRACT_ID # TODO fix this
         api_client = ApiClient(
             base_url=api_base_url,
@@ -892,7 +892,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_request_type = "aoa"
         api_client = ApiClient(
             base_url=api_base_url,
@@ -918,7 +918,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_request_type = "aoa"
         api_client = ApiClient(
             base_url=api_base_url,
@@ -945,7 +945,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_request_type = "aoa"
         api_client = ApiClient(
             base_url=api_base_url,
@@ -972,7 +972,7 @@ class TestApiClient(unittest.TestCase):
         api_base_url = os.getenv("API_BASE_URL")
         service_api_key = os.getenv("SERVICE_API_KEY")
         service_api_secret = os.getenv("SERVICE_API_SECRET")
-        test_user_id = "test-user-id"
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
         test_request_type = "aoa"
         api_client = ApiClient(
             base_url=api_base_url,
@@ -1011,3 +1011,123 @@ class TestApiClient(unittest.TestCase):
         print("response : " + str(response))
         # TODO fix this
         self.assertEqual(4048, response["statusCode"])
+
+    def call_transfer_user_service_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        request_body = {
+            "ownerAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink15lz4v6kclnxmm04kdj639ewetykh4rpf9cqcz6",
+            "amount": "999"
+        }
+
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.transfer_user_service_token(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4041, response["statusCode"])
+
+    def call_transfer_user_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        request_body = {
+            "ownerAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink15lz4v6kclnxmm04kdj639ewetykh4rpf9cqcz6",
+            "amount": "999"
+        }
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.transfer_user_fungible_token(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            TEST_TOKEN_TYPE,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4041, response["statusCode"])
+
+    def call_transfer_user_non_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        request_body = {
+            "ownerAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink15lz4v6kclnxmm04kdj639ewetykh4rpf9cqcz6"
+        }
+
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.transfer_user_non_fungible_token(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            TEST_TOKEN_TYPE,
+            TEST_TOKEN_INDEX,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4041, response["statusCode"])
+
+    def call_batch_transfer_user_non_fungible_token(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        request_body = {
+            "ownerAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            "toAddress": "tlink1s658utvasn7f5q92034h6zgv0zh2uxy9tzmtqv",
+            "transferList":     [
+                {
+                    "tokenId": "1000000100000001"
+                },
+                {
+                    "tokenId": "1000000100000002"
+                }
+            ]
+        }
+
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.batch_transfer_user_non_fungible_token(
+            test_user_id,
+            TEST_SERVICE_TOKEN_CONTRACT_ID,
+            request_body
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4041, response["statusCode"])

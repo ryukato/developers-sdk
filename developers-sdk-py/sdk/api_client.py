@@ -1097,3 +1097,96 @@ class ApiClient(Consumer):
     ):
         """Commit a transaction signed by the given user wallet."""
         pass
+
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/service-tokens/{contract_id}/transfer")
+    def transfer_user_service_token(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        transfer_request: Body
+    ):
+        """
+        Request to transfer the delegated service token in the given user wallet to another wallet.
+
+        Body
+        Parameter 	     Type 	    Description 	                                                                                   Required
+        ownerAddress     String 	Address of the service wallet that owns the contract of the service token. 	                       Required
+        ownerSecret      String 	Secret key of the contract owner service wallet 	                                               Required
+        toAddress        String 	Wallet address of the recipient 	                                                               Optional
+        toUserId         String 	User ID of the recipient 	                                                                       Optional
+        amount           String 	Amount to transfer, larger than or equal to 1 and less than 2^255, as a string in decimal numbers. Required
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/item-tokens/{contract_id}/fungibles/{token_type}/transfer")
+    def transfer_user_fungible_token(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        transfer_request: Body
+    ):
+        """
+        Request to transfer the delegated fungible item token in the given user wallet to another wallet.
+
+        Body
+        Parameter 	     Type 	    Description 	                                                                                   Required
+        ownerAddress     String 	Address of the service wallet that owns the contract of the given item token.                      Required
+        ownerSecret      String 	Secret key of the contract owner service wallet 	                                               Required
+        toAddress        String 	Wallet address of the recipient 	                                                               Optional
+        toUserId         String 	User ID of the recipient 	                                                                       Optional
+        amount           String 	Amount to transfer, larger than or equal to 1 and less than 2^255, as a string in decimal numbers. Required
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/item-tokens/{contract_id}/non-fungibles/{token_type}/{token_index}/transfer")
+    def transfer_user_non_fungible_token(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        token_type: Path("token_type"),
+        token_index: Path("token_index"),
+        transfer_request: Body
+    ):
+        """
+        Request to transfer the delegated non-fungible item token in the given user wallet to another wallet.
+
+        Body
+        Parameter 	     Type 	    Description 	                                                                                   Required
+        ownerAddress     String 	Address of the service wallet that owns the contract of the given item token.                      Required
+        ownerSecret      String 	Secret key of the contract owner service wallet 	                                               Required
+        toAddress        String 	Wallet address of the recipient 	                                                               Optional
+        toUserId         String 	User ID of the recipient 	                                                                       Optional
+        """
+        pass
+
+    @returns.json
+    @json
+    @post("/v1/users/{user_id}/item-tokens/{contract_id}/non-fungibles/batch-transfer")
+    def batch_transfer_user_non_fungible_token(
+        self,
+        user_id: Path("user_id"),
+        contract_id: Path("contract_id"),
+        transfer_request: Body
+    ):
+        """
+        Request to batch transfer multiple delegated non-fungible item tokens in the given user wallet to another wallet.
+
+        Body
+        Parameter 	     Type 	    Description 	                                                                        Required
+        ownerAddress     String 	Address of the service wallet that owns the contract of the given item token.           Required
+        ownerSecret      String 	Secret key of the contract owner service wallet 	                                    Required
+        toAddress        String 	Wallet address of the recipient 	                                                    Optional
+        toUserId         String 	User ID of the recipient 	                                                            Optional
+        transferList     Array      List of item tokens to be sent in batch.                                                Required
+                                    Array of an object including tokenId with at least one input.
+                                    tokenId: Token ID <https://docs-blockchain.line.biz/glossary/?id=token-id> of given item tokens
+        """
+        pass
