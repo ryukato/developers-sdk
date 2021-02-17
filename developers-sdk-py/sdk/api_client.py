@@ -1190,3 +1190,9 @@ class ApiClient(Consumer):
                                     tokenId: Token ID <https://docs-blockchain.line.biz/glossary/?id=token-id> of given item tokens
         """
         pass
+
+    @returns.json
+    @get("/v1/transactions/{tx_hash}")
+    def transaction_result(self, tx_hash: Path("tx_hash")):
+        """Retrieve the status and information of the given transaction."""
+        pass

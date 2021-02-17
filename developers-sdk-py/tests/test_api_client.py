@@ -1131,3 +1131,22 @@ class TestApiClient(unittest.TestCase):
         print("response : " + str(response))
         # TODO fix this
         self.assertEqual(4041, response["statusCode"])
+
+
+    def call_transaction_result(self):
+        api_base_url = os.getenv("API_BASE_URL")
+        service_api_key = os.getenv("SERVICE_API_KEY")
+        service_api_secret = os.getenv("SERVICE_API_SECRET")
+        test_user_id = "U556719f559479aab8b8f74c488bf6317"
+
+        api_client = ApiClient(
+            base_url=api_base_url,
+            auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
+        self.assertIsNotNone(api_client)
+
+        response = api_client.transaction_result(
+            "61AB8A054D47CA05E4ABE591B929282CBCD7DACD5A4C8259020C566F0EC186BE"
+        )
+        print("response : " + str(response))
+        # TODO fix this
+        self.assertEqual(4040, response["statusCode"])
