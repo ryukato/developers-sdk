@@ -49,6 +49,9 @@ class ApiSignatureAuth(ApiTokenHeader):
     def __build_headers(self, nonce, timestamp, api_key, signature):
         return {NONCE_HEADER: nonce, TIMESTAMP_HEADER: timestamp, SERVICE_API_KEY_HEADER: api_key, SIGNATURE_HEADER: signature}
 
+    def __user_agent(self, headers ={}):
+        headers['user-agent'] = "developers-sdk-py"
+
     def __call__(self, request_builder):
         """Append headers for authentication of developers api."""
         method = request_builder.method
@@ -59,6 +62,7 @@ class ApiSignatureAuth(ApiTokenHeader):
         body = request_builder.info["data"]
         signature = self.signature_generator.generate(self.api_secret, method, path, timestamp, nonce, params, body)
         headers = self.__build_headers(nonce, timestamp, self.api_key, signature)
+        self.__user_agent(headers)
         request_builder.info["headers"].update(headers)
         self.__log_request(request_builder)
 
