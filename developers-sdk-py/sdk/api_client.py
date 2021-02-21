@@ -8,14 +8,12 @@ Date: 2021/01/09
 from uplink import Consumer, put, get, post, returns, Path, Query, json, Body
 from uplink.auth import ApiTokenHeader
 import logging
+import os
 import sys
 import random
 import string
 import time
 
-# Fixme: config a sort of global loggerFactory
-logging.basicConfig(stream=sys.stdout)
-simple_formatter = logging.Formatter("[%(name)s] %(message)s")
 
 SERVICE_API_KEY_HEADER = "service-api-key"
 SIGNATURE_HEADER = "Signature"
@@ -26,8 +24,7 @@ NONCE_HEADER = "Nonce"
 class ApiSignatureAuth(ApiTokenHeader):
     """Developers api authentication Handler."""
 
-    __logger = logging.getLogger("ApiSignatureAuth")
-    __logger.setLevel(logging.DEBUG)
+    __logger = logging.getLogger(__name__)
 
     def __init__(self, api_key, api_secret, signature_generator):
         """Initialize with api_key, secret and signature_generator."""

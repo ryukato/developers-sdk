@@ -25,16 +25,12 @@ import logging
 import sys
 from sdk.request_flattener import RequestBodyFlattener
 
-logging.basicConfig(stream=sys.stdout)
-simple_formatter = logging.Formatter("[%(name)s] %(message)s")
-
 
 class SignatureGenerator:
     """This is to generate signature with flatten request."""
 
-    __logger = logging.getLogger('ApiSignatureAuth')
-    __logger.setLevel(logging.DEBUG)
-
+    __logger = logging.getLogger(__name__)
+    
     def __createSignTarget(self, method, path, timestamp, nonce, parameters: dict = {}):
         signTarget = f'{nonce}{str(timestamp)}{method}{path}'
         if(len(parameters) > 0):
