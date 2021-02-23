@@ -12,6 +12,7 @@ LOGLEVEL = level=os.environ.get('LOGLEVEL', 'INFO').upper()
 
 logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 
+
 TEST_SERVICE_TOKEN_CONTRACT_ID = "a48f097b"
 TEST_WALLET_ADDRESS = "tlink12d9vmcgvgdc0c6wdc3ggdaz7q4n8zc0m6pxlza"
 TEST_TOKEN_TYPE = "10000001"

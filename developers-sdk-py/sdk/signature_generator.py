@@ -30,7 +30,7 @@ class SignatureGenerator:
     """This is to generate signature with flatten request."""
 
     __logger = logging.getLogger(__name__)
-    
+
     def __createSignTarget(self, method, path, timestamp, nonce, parameters: dict = {}):
         signTarget = f'{nonce}{str(timestamp)}{method}{path}'
         if(len(parameters) > 0):

@@ -13,7 +13,7 @@ setup_requires = ["pytest-runner"]
 tests_require = ["pytest==4.4.1"]
 
 setup(
-    name="link_developers_sdk_py",
+    name="line-developers-sdk",
     author="Yoonyoul Yoo",
     author_email="ryukato79@gmail.com",
     url="https://github.com/ryukato/developers-sdk",
