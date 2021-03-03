@@ -319,10 +319,9 @@ export class HttpClient {
   public async mintNonFungibleToken(
     contractId: string,
     tokenType: string,
-    tokenIndex: string,
     request: NonFungibleTokenMintRequest
   ): Promise<GenericResponse<TxResultResponse>> {
-    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/mint`
+    const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/mint`
     const response = await this.instance.post(path, request);
     return response;
   }
