@@ -8,7 +8,11 @@ plugins {
 }
 
 group = projectGroupId
-version = "0.0.1"
+version = "0.0.2"
+
+repositories {
+    mavenCentral()
+}
 
 kotlinDependencies()
 ktorDependencies()
@@ -17,7 +21,7 @@ kotlinCoroutineDependencies()
 springBootDependencies()
 
 dependencies {
-    implementation(project(":developers-sdk-kt"))
+    implementation("com.github.ryukato:link-developers-sdk-kt:0.0.2")
     implementation(Libs.springBootAutoconfigure)
     // kotlin logging
     implementation("io.github.microutils:kotlin-logging:1.7.10")
