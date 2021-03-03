@@ -9,6 +9,19 @@ This is written by Python to support development with Python.
   - `cd developers_sdk_py`
 
 ### Setup environment
+
+#### environment variables
+To run the tests, you need to create `.env` file whose api_key, secret and base_url for developers-api.
+
+* API_BASE_URL="[base-url]"
+* SERVICE_API_KEY="[your api-key]"
+* SERVICE_API_SECRET="[your api-secret]"
+
+##### Sample
+API_BASE_URL="test-api.blockchain.line.me"
+SERVICE_API_KEY="test-api-key"
+SERVICE_API_SECRET="test-api-secret"
+
 #### Using `venv`
 1. Create virtual environment
   - `python3 -m venv venv`
@@ -36,15 +49,51 @@ This is written by Python to support development with Python.
 >
 > This project support `venv` and `pipenv`, then we have to update both `setup.py` and `Pipfile` whenever install a new requirement.
 
-> Attention
->
-> To run the tests, you need to create `.env` file whose api_key, secret and base_url for developers-api.
+## Examples using sdk
+### Create ApiClient
+
 ```
-API_BASE_URL="[base-url]"
-SERVICE_API_KEY="[your api-key]"
-SERVICE_API_SECRET="[your api-secret]"
+api_base_url = os.getenv("API_BASE_URL")
+service_api_key = os.getenv("SERVICE_API_KEY")
+service_api_secret = os.getenv("SERVICE_API_SECRET")
+api_client = ApiClient(
+    base_url=api_base_url,
+    auth=ApiSignatureAuth(service_api_key, service_api_secret, SignatureGenerator()))
 ```
 
+### Get time
+
+```
+response = api_client.time()
+response_time = response["responseTime"]
+```
+
+### Mint Service-token
+
+```
+request_body = {
+    "ownerAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+    "ownerSecret": "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+    "toAddress": "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+    "amount": "1249051"
+}
+response = api_client.mint_service_token("service-token-contract-id", request_body)
+statusCode = response["statusCode"]
+if (statusCode != 1002) {
+  # handling failed transaction
+} else {
+  txHash = response["responseData"]["txHash"]
+  # handling accepted transaction  
+}
+
+```
+
+### Query Service-token holders
+
+```
+response = api_client.service_token_holders("service-token-contract-id")
+holders = response["responseData"]
+```
 
 ## Additional resources
 This section has some resources for Python beginner like me. :)
