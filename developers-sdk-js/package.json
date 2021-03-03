@@ -1,6 +1,6 @@
 {
   "name": "@ryukato79/link-developers-sdk",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "developers-sdk for javascript",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
