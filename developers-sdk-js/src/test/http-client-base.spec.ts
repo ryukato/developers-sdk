@@ -772,7 +772,6 @@ describe('http-client-base test', () => {
     const testContractId = "9636a07e";
     const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
     const testTokenType = "0000004a";
-    const testTokenIndex = "00000001";
     const request = {
       'ownerAddress': testAddress,
       'ownerSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
@@ -793,14 +792,14 @@ describe('http-client-base test', () => {
 
     stub = new MockAdapter(httpClient.getAxiosInstance());
 
-    const path = `/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/${testTokenIndex}/mint`
+    const path = `/v1/item-tokens/${testContractId}/non-fungibles/${testTokenType}/mint`
     stub.onPost(path).reply(config => {
       assertHeaders(config.headers);
       expect(config.data).to.equal(JSON.stringify(request));
       return [200, receivedData];
     });
 
-    const response = await httpClient.mintNonFungibleToken(testContractId, testTokenType, testTokenIndex, request);
+    const response = await httpClient.mintNonFungibleToken(testContractId, testTokenType, request);
     expect(response["statusCode"]).to.equal(1002);
     expect(response["responseData"]["txHash"]).to.equal(testTxHash);
   })
