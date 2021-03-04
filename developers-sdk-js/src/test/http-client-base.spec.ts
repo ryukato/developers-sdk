@@ -830,7 +830,7 @@ describe('http-client-base test', () => {
       return [200, receivedData];
     });
 
-    const response = await httpClient.nunFungibleTokenTypeHolders(testContractId, testTokenType, pageRequest);
+    const response = await httpClient.nonFungibleTokenTypeHolders(testContractId, testTokenType, pageRequest);
     expect(response["statusCode"]).to.equal(1000);
     expect(response["responseData"][0]["walletAddress"]).to.equal(testAddress);
   })
@@ -858,7 +858,7 @@ describe('http-client-base test', () => {
       return [200, receivedData];
     });
 
-    const response = await httpClient.nunFungibleTokenHolder(testContractId, testTokenType, testTokenIndex);
+    const response = await httpClient.nonFungibleTokenHolder(testContractId, testTokenType, testTokenIndex);
     expect(response["statusCode"]).to.equal(1000);
     expect(response["responseData"]["walletAddress"]).to.equal(testAddress);
   })
