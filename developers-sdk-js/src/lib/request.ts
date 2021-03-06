@@ -13,8 +13,8 @@ export class AbstractItemTokenBurnTransactionRequest {
 
 export class AbstractTransactionRequest {
   constructor(
-    readonly toUserId?: string,
-    readonly toAddress?: string
+    readonly toAddress?: string,
+    readonly toUserId?: string
   ) {
     if (!toUserId && !toAddress) {
       throw new Error("toAddress or toUserId, one of them is required")
@@ -45,8 +45,8 @@ export class MintServiceTokenRequest extends AbstractTransactionRequest {
     readonly ownerAddress: string,
     readonly ownerSecret: string,
     readonly amount: string,
-    readonly toAddress?: string,
-    readonly toUserId?: string
+    toAddress?: string,
+    toUserId?: string
   ) {
     super(toAddress, toUserId);
   }
