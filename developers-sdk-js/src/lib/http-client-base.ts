@@ -41,6 +41,7 @@ import {
   NonFungibleTokenMultiMintRequest,
   NonFungibleTokenBurnRequest,
   NonFungibleTokenAttachRequest,
+  NonFungibleTokenDetachRequest,
   TransferBaseCoinRequest,
   TransferServiceTokenRequest,
   TransferFungibleTokenRequest,
@@ -79,6 +80,7 @@ export class HttpClient {
     this.serviceApiSecret = apiSecret
     this.instance.defaults.headers.post["Content-Type"] = "application/json;charset=UTF-8"
     this.instance.defaults.headers.put["Content-Type"] = "application/json;charset=UTF-8"
+    this.instance.defaults.headers.delete["Content-Type"] = "application/json;charset=UTF-8"
 
     this._initialzeResponseInterceptor();
   }
@@ -103,14 +105,23 @@ export class HttpClient {
     this.logger.debug(`response: ${JSON.stringify(data)}`);
     return data
   };
-  protected _handleError = (error: any) => Promise.reject(error);
+  protected _handleError = (error: any) => {
+    this.logger.error("error response: ", error.response.data);
+    this.logger.error("error response status: ", error.response.status);
+    return Promise.reject(error)
+  };
 
   private _handleRequest = (config: AxiosRequestConfig) => {
+    this.logger.debug("headers: ", config.headers)
+    this.logger.debug("body: ", config.data)
+    if (config.data) {
+      //clean null properties
+      config.data = _.omitBy(config.data, _.isNil)
+      this.logger.debug("body: ", config.data)
+    }
     this.addRequestHeaders(config)
     this.logger.debug(`headers: ${JSON.stringify(config.headers)}`)
-    if (config.data) {
-      this.logger.debug(`body: ${JSON.stringify(config.data)}`)
-    }
+
     if (config.params) {
       this.logger.debug(`query-params: ${JSON.stringify(config.params)}`)
     }
@@ -400,10 +411,14 @@ export class HttpClient {
   public async detachNonFungibleToken(
     contractId: string,
     tokenType: string,
-    tokenIndex: string
+    tokenIndex: string,
+    request: NonFungibleTokenDetachRequest
   ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/item-tokens/${contractId}/non-fungibles/${tokenType}/${tokenIndex}/parent`
-    const response = await this.instance.delete(path);
+    // payload in delete has no defined semantics,
+    // https://tools.ietf.org/html/rfc7231#page-29
+    const requestConfig = this.detachRequestConfig(request);
+    const response = await this.instance.delete(path, requestConfig);
     return response;
   }
 
@@ -802,6 +817,13 @@ export class HttpClient {
     }
     return {
       "params": Object.keys(pagingParams).sort().reduce((r, k) => (r[k] = pagingParams[k], r), {})
+    };
+  }
+
+  private detachRequestConfig(detachRequest: NonFungibleTokenDetachRequest): AxiosRequestConfig {
+    var detachNonFungibleParams = _.omitBy(detachRequest, _.isNil)
+    return {
+      "data": Object.keys(detachNonFungibleParams).sort().reduce((r, k) => (r[k] = detachNonFungibleParams[k], r), {})
     };
   }
 

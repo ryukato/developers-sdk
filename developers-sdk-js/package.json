@@ -23,6 +23,7 @@
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:lint": "eslint src --ext .ts --fix",
     "test-api": "mocha src/test/http-client-base.spec.ts -r ts-node/register",
+    "test:integration": "mocha src/integration-test/*.spec.ts -r ts-node/register",
     "test": "mocha src/test/**/*.ts -r ts-node/register",
     "test:lint": "eslint src --ext .ts",
     "test:prettier": "prettier \"src/**/*.ts\" --list-different",
@@ -83,6 +84,7 @@
     "open-cli": "^6.0.1",
     "prettier": "^2.1.1",
     "standard-version": "^9.0.0",
+    "ts-dotenv": "^0.8.3",
     "ts-node": "^9.1.1",
     "typescript": "^4.0.2"
   },

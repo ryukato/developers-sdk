@@ -284,8 +284,8 @@ export class NonFungibleTokenDetachRequest {
   constructor(
     readonly serviceWalletAddress: string,
     readonly serviceWalletSecret: string,
-    readonly tokenHolderAddress: string = null,
-    readonly tokenHolderUserId: string = null
+    readonly tokenHolderAddress?: string,
+    readonly tokenHolderUserId?: string
   ) {
     if (tokenHolderAddress != null || tokenHolderUserId != null) {
       throw new Error("tokenHolderAddress or tokenHolderUserId, one of them is required")
