@@ -29,6 +29,10 @@
     "sort-imports": [
       "error",
       { "ignoreDeclarationSort": true, "ignoreCase": true }
+    ],
+    "no-unused-vars": [
+      "error",
+      { "vars": "local", "args": "after-used", "ignoreRestSiblings": false }
     ]
   }
 }

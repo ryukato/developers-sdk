@@ -1048,6 +1048,7 @@ describe('http-client-base test', () => {
   })
 
   it('detach non-fungible-token api test', async () => {
+    const testAddress = "tlink1nf5uhdmtsshmkqvlmq45kn4q9atnkx4l3u4rww";
     const testContractId = "9636a07e";
     const testTokenType = "0000004a";
     const testTokenIndex = "00000001";
@@ -1070,8 +1071,14 @@ describe('http-client-base test', () => {
       return [200, receivedData];
     });
 
+      const request = {
+        'serviceWalletAddress': testAddress,
+        'serviceWalletSecret': 'PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=',
+        'tokenHolderAddress': testAddress
+      }
+
     const response =
-      await httpClient.detachNonFungibleToken(testContractId, testTokenType, testTokenIndex);
+      await httpClient.detachNonFungibleToken(testContractId, testTokenType, testTokenIndex, request);
     expect(response["statusCode"]).to.equal(1002);
     expect(response["responseData"]["txHash"]).to.equal(testTxHash);
   })

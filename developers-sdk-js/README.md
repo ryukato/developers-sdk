@@ -1,5 +1,5 @@
 # LINE Blockchain Developers SDK for JavaScript
-This is a subproject of LINE Blockchain Developers SDK. 
+This is a subproject of LINE Blockchain Developers SDK.
 See [README](../README.md) for overview.
 
 This is written by Typescript, so it supports both Typescript and JavaScript.
@@ -11,11 +11,34 @@ yarn
 yarn run build
 ```
 
-## Run all tests
+## Test
+### Run all unit tests
 Run the following command to test the library.
 
 ```
 yarn run test
+```
+
+### Run integration tests
+To run integration tests, `integration-test.env` is required with following properties.
+```
+HOST_URL=[api-url]
+SERVICE_ID=[your service-id]
+SERVICE_API_KEY=[your service-api-key]
+SERVICE_API_SECRET=[your service-api-secret]
+OWNER_ADDRESS=[your service wallet address]
+OWNER_SECRET=[your service wallet secret]
+OWNER_ADDRESS2=[your another service wallet address]
+SERVICE_TOKEN_CONTRACT_ID=[your service-token contract-id]
+ITEM_TOKEN_CONTRACT_ID=[your item-token contract-id]
+LINE_USER_ID=[your line user id]
+LINE_USER_WALLET_ADDRESS=[BitMax wallet address of the user]
+```
+
+If you have `integration-test.env` ready, then you can run integration test by below command.
+
+```
+yarn run test:integration
 ```
 
 ## Key objects and usage
@@ -71,7 +94,7 @@ import { GenericResponse, TxResultResponse } from './lib/response';
 ```
 
 ### `SignatureGenerator`
-This class provides a functionality to generate signatures for a request. 
-All API requests, except for the endpoint to retrieve the server time, must pass authentication information and be signed. 
+This class provides a functionality to generate signatures for a request.
+All API requests, except for the endpoint to retrieve the server time, must pass authentication information and be signed.
 
 Never mind, fortunately, `HttpClient` itself will import this and generate signatures before sending a request. If you do want to study how LINE Blockchain signature created, it's okay to dive into the source code.

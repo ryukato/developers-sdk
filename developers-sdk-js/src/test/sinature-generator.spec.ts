@@ -56,4 +56,25 @@ describe('signature-generator test', () => {
     expect(signature).to.equal("8vcqBHXiwGaP5+78ZvuidcoZ/UiKnR1IrgXKzUaRf+HqetD5eHMaeTEW3OvHoKn7Z512WVNuKmRQDW88DvJ1aA==")
   });
 
+  it('signature with query parameters and body test', () => {
+    // paging parameters sorted by its key when generating signature
+    let queryParameters = {
+      "requestType": "aoa"
+    };
+
+    let request_body = {
+        'ownerAddress': "tlink1ey2p39e4l78h49pm28z5ms62ycd06sgrprtps5",
+        'landingUri': 'https://my.service.landing/home'
+    }
+
+    let method = "POST"
+    let path = "/v1/users/U9fc03e78e1ae958b1bd3633cfb48acb9/service-tokens/493aba33/request-proxy"
+    let timestamp = 1615593846507
+    let secret = "7d55f1f5-0f6f-426e-909c-47913aa09e72"
+    let nonce = "fcd9cf1a"
+    // sign-target will be "KScYbbH01611243023551GET/v1/service-tokens/a48f097b/holders?limit=10&orderBy=desc&page=1"
+    let signature = SignatureGenerator.signature(secret, method, path, timestamp, nonce, queryParameters, request_body)
+    expect(signature).to.equal("hnb+iDG0PPgoByLaUCPtVv5GqcJO1fcKgTO5VolKTITqpRIux7wvCE2d07eY+xXW/553Vq5wLiZ2lX8dZBIOhw==")
+  });
+
 });

@@ -16,10 +16,17 @@ export class SignatureGenerator {
     parameters: object = {}, // query string
     body: object = {}
   ): string {
-    let obj = _.assignIn(parameters, body);
-    let signTarget = SignatureGenerator.createSignTarget(method, path, timestamp, nonce, obj);
-    if (obj && _.size(obj) > 0) {
-      signTarget += RequestBodyFlattener.flatten(obj);
+    let signTarget = SignatureGenerator.createSignTarget(method, path, timestamp, nonce, parameters, body);
+    let hasQueryParam = _.size(parameters) > 0
+    if (parameters && hasQueryParam) {
+      signTarget += RequestBodyFlattener.flatten(parameters);
+    }
+    if (body && _.size(body) > 0) {
+      if (hasQueryParam) {
+          signTarget += "&" + RequestBodyFlattener.flatten(body);
+      } else {
+          signTarget += RequestBodyFlattener.flatten(body);
+      }
     }
     logger.debug(`signature-target: ${signTarget}`)
     let hash = CryptoJS.HmacSHA512(signTarget, apiSecret);
@@ -31,10 +38,11 @@ export class SignatureGenerator {
     path: string,
     timestamp: number,
     nonce: string,
-    parameters: object = {}
+    parameters: object = {}, // query string
+    body: object = {}
   ) {
     let signTarget = `${nonce}${timestamp}${method}${path}`;
-    if (parameters && _.size(parameters) > 0) {
+    if ((parameters && _.size(parameters) > 0) || (body && _.size(body) > 0)) {
       if (signTarget.indexOf('?') < 0) {
         signTarget += '?'
       } else {

@@ -8,12 +8,12 @@ import { describe, it } from "mocha";
 
 import _ from "lodash";
 import { HttpClient } from '../lib/http-client-base';
-// import { Constant } from '../lib/constants';
-// import { TransactionMsgTypes } from '../lib/constants';
-// import { PageRequest, OrderBy } from '../lib/request';
-// import { NonFungibleTokenMintRequest } from '../lib/request';
-// import { TokenId } from '../lib/request';
-// import { RequestType } from '../lib/request';
+import { Constant } from '../lib/constants';
+import { TransactionMsgTypes } from '../lib/constants';
+import { PageRequest, OrderBy } from '../lib/request';
+import { NonFungibleTokenMintRequest } from '../lib/request';
+import { TokenId } from '../lib/request';
+import { RequestType } from '../lib/request';
 
 const env = load(
   {
@@ -26,64 +26,65 @@ const env = load(
     "OWNER_ADDRESS": String,
     "OWNER_SECRET": String,
     "OWNER_ADDRESS2": String,
-    "LINE_USER_ID": String
+    "LINE_USER_ID": String,
+    "LINE_USER_WALLET_ADDRESS": String,
   }, {
   "path": "./src/integration-test/integration-test.env"
 }
 )
 
 const HOST_URL = env.HOST_URL
-// const SERVICE_ID = env.SERVICE_ID
+const SERVICE_ID = env.SERVICE_ID
 const SERVICE_API_KEY = env.SERVICE_API_KEY
 const SERVICE_API_SECRET = env.SERVICE_API_SECRET
 const OWNER_ADDRESS = env.OWNER_ADDRESS
 const OWNER_SECRET = env.OWNER_SECRET
-// const OWNER_ADDRESS2 = env.OWNER_ADDRESS2
-// const SERVICE_TOKEN_CONTRACT_ID = env.SERVICE_TOKEN_CONTRACT_ID
-// const ITEM_TOKEN_CONTRACT_ID = env.ITEM_TOKEN_CONTRACT_ID
+const OWNER_ADDRESS2 = env.OWNER_ADDRESS2
+const SERVICE_TOKEN_CONTRACT_ID = env.SERVICE_TOKEN_CONTRACT_ID
+const ITEM_TOKEN_CONTRACT_ID = env.ITEM_TOKEN_CONTRACT_ID
 const LINE_USER_ID = env.LINE_USER_ID
 
 
 describe('http-client-base test', () => {
   const httpClient = new HttpClient(HOST_URL, SERVICE_API_KEY, SERVICE_API_SECRET);
 
-  // it('time api test', async () => {
-  //
-  //   const response = await httpClient.time();
-  //   expect(response["statusCode"]).to.equal(1000);
-  // })
-  //
-  // it('serviceDetail api test', async () => {
-  //
-  //   const response = await httpClient.serviceDetail(SERVICE_ID);
-  //   expect(response["statusCode"]).to.equal(1000);
-  // })
-  //
-  // it('serviceTokens api test', async () => {
-  //
-  //   const response = await httpClient.serviceTokens();
-  //   expect(response["statusCode"]).to.equal(1000);
-  // })
-  //
-  // it('serviceTokenDetail api test', async () => {
-  //
-  //   const response = await httpClient.serviceTokenDetail(SERVICE_TOKEN_CONTRACT_ID);
-  //   expect(response["statusCode"]).to.equal(1000);
-  // })
-  //
-  // it('updateServiceToken api test', async () => {
-  //   const request = {
-  //     "ownerAddress": OWNER_ADDRESS,
-  //     "ownerSecret": OWNER_SECRET,
-  //     "name": "yyoosvctoken11"
-  //   };
-  //
-  //   const response =
-  //     await httpClient.updateServiceToken(SERVICE_TOKEN_CONTRACT_ID, request);
-  //
-  //   console.log("response: " + JSON.stringify(response))
-  //   expect(response["statusCode"]).to.equal(1002);
-  // })
+  it('time api test', async () => {
+
+    const response = await httpClient.time();
+    expect(response["statusCode"]).to.equal(1000);
+  })
+  
+  it('serviceDetail api test', async () => {
+
+    const response = await httpClient.serviceDetail(SERVICE_ID);
+    expect(response["statusCode"]).to.equal(1000);
+  })
+
+  it('serviceTokens api test', async () => {
+
+    const response = await httpClient.serviceTokens();
+    expect(response["statusCode"]).to.equal(1000);
+  })
+
+  it('serviceTokenDetail api test', async () => {
+
+    const response = await httpClient.serviceTokenDetail(SERVICE_TOKEN_CONTRACT_ID);
+    expect(response["statusCode"]).to.equal(1000);
+  })
+
+  it('updateServiceToken api test', async () => {
+    const request = {
+      "ownerAddress": OWNER_ADDRESS,
+      "ownerSecret": OWNER_SECRET,
+      "name": "yyoosvctoken11"
+    };
+
+    const response =
+      await httpClient.updateServiceToken(SERVICE_TOKEN_CONTRACT_ID, request);
+
+    console.log("response: " + JSON.stringify(response))
+    expect(response["statusCode"]).to.equal(1002);
+  })
 
   // it('mintServiceToken api test', async () => {
   //   const request = {
@@ -589,7 +590,7 @@ describe('http-client-base test', () => {
   //   const request = {
   //     'walletSecret': OWNER_SECRET,
   //     'toAddress': OWNER_ADDRESS2,
-  //     'transferList': TokenId.fromMulti(['1000000100000001', '1000000100000002'])
+  //     'transferList': TokenId.fromMulti(['1000000200000001', '1000000200000002'])
   //   }
   //   const response =
   //     await httpClient.batchTransferNonFungibleTokenOfWallet(OWNER_ADDRESS, ITEM_TOKEN_CONTRACT_ID, request);
@@ -598,13 +599,13 @@ describe('http-client-base test', () => {
   //   expect(response["statusCode"]).to.equal(1002);
   // })
 
-  it('userDetail api test', async () => {
-    const response =
-      await httpClient.userDetail(LINE_USER_ID);
-
-    console.log("response: " + JSON.stringify(response))
-    expect(response["statusCode"]).to.equal(1000);
-  })
+  // it('userDetail api test', async () => {
+  //   const response =
+  //     await httpClient.userDetail(LINE_USER_ID);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1000);
+  // })
 
   // it('userTransactions api test', async () => {
   //   const pageRequest = new PageRequest(0, 10, OrderBy.DESC)
@@ -615,15 +616,15 @@ describe('http-client-base test', () => {
   //   expect(response["statusCode"]).to.equal(1000);
   // })
 
-  // it('baseCoinBalanceOfWallet api test', async () => {
+  // it('baseCoinBalanceOfUser api test', async () => {
   //   const response =
   //     await httpClient.baseCoinBalanceOfUser(LINE_USER_ID);
   //
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
-
-  // it('serviceTokenBalancesOfWallet api test', async () => {
+  //
+  // it('serviceTokenBalancesOfUser api test', async () => {
   //   const pageRequest = new PageRequest(0, 10, OrderBy.DESC)
   //   const response =
   //     await httpClient.serviceTokenBalancesOfUser(LINE_USER_ID, pageRequest);
@@ -631,16 +632,17 @@ describe('http-client-base test', () => {
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
-
-  // it('serviceTokenBalanceOfWallet api test', async () => {
+  //
+  //
+  // it('serviceTokenBalanceOfUser api test', async () => {
   //   const response =
   //     await httpClient.serviceTokenBalanceOfUser(LINE_USER_ID, SERVICE_TOKEN_CONTRACT_ID);
   //
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
-
-  // it('fungibleTokenBalancesOfWallet api test', async () => {
+  //
+  // it('fungibleTokenBalancesOfUser api test', async () => {
   //   const pageRequest = new PageRequest(0, 10, OrderBy.DESC)
   //   const response =
   //     await httpClient.fungibleTokenBalancesOfUser(LINE_USER_ID, ITEM_TOKEN_CONTRACT_ID, pageRequest);
@@ -649,15 +651,15 @@ describe('http-client-base test', () => {
   //   expect(response["statusCode"]).to.equal(1000);
   // })
   //
-  // it('fungibleTokenBalanceOfWallet api test', async () => {
+  // it('fungibleTokenBalanceOfUser api test', async () => {
   //   const response =
   //     await httpClient.fungibleTokenBalanceOfUser(LINE_USER_ID, ITEM_TOKEN_CONTRACT_ID, "00000002");
   //
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
-
-  // it('nonFungibleTokenBalancesOfWallet api test', async () => {
+  //
+  // it('nonFungibleTokenBalancesOfUser api test', async () => {
   //   const pageRequest = new PageRequest(0, 10, OrderBy.DESC)
   //   const response =
   //     await httpClient.nonFungibleTokenBalancesOfUser(LINE_USER_ID, ITEM_TOKEN_CONTRACT_ID, pageRequest);
@@ -665,8 +667,8 @@ describe('http-client-base test', () => {
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
-
-  // it('nonFungibleTokenBalancesByTypeOfWallet api test', async () => {
+  //
+  // it('nonFungibleTokenBalancesByTypeOfUser api test', async () => {
   //   const pageRequest = new PageRequest(0, 10, OrderBy.DESC)
   //   const response =
   //     await httpClient.nonFungibleTokenBalancesByTypeOfUser(
@@ -680,39 +682,187 @@ describe('http-client-base test', () => {
   //   expect(response["statusCode"]).to.equal(1000);
   // })
 
-  // it('nonFungibleTokenBalanceOfWallet api test', async () => {
+  // it('mintNonFungibleTokenToUser api test', async () => {
+  //   const request = {
+  //     "ownerAddress": OWNER_ADDRESS,
+  //     "ownerSecret": OWNER_SECRET,
+  //     'toUserId': LINE_USER_ID,
+  //     'name': 'Nnq8Edc',
+  //     'meta': '5y4bh'
+  //   }
+  //
+  //   const response =
+  //     await httpClient.mintNonFungibleToken(
+  //       ITEM_TOKEN_CONTRACT_ID,
+  //       "10000002",
+  //       request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('nonFungibleTokenBalanceOfUser api test', async () => {
   //   const response =
   //     await httpClient.nonFungibleTokenBalanceOfUser(
   //       LINE_USER_ID,
   //       ITEM_TOKEN_CONTRACT_ID,
   //       "10000002",
-  //       "00000002"
+  //       "00000005"
   //     );
   //
   //   console.log("response: " + JSON.stringify(response))
   //   expect(response["statusCode"]).to.equal(1000);
   // })
 
-  it('transactionResult api test', async () => {
-    const response =
-      await httpClient.transactionResult("8EBAC88AC6232F63E893170D66E8D3306C2FB3E362A9D651743DB1EAF58F7F91")
+  // it('transferServiceTokenOfWalletToUser api test', async () => {
+  //   const request = {
+  //     'walletSecret': OWNER_SECRET,
+  //     'toUserId': LINE_USER_ID,
+  //     'amount': '100'
+  //   }
+  //   const response =
+  //     await httpClient.transferServiceTokenOfWallet(OWNER_ADDRESS, SERVICE_TOKEN_CONTRACT_ID, request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
 
-    console.log("response: " + JSON.stringify(response))
-    expect(response["statusCode"]).to.equal(1000);
-  })
+  // it('issueServiceTokenProxyRequest api test', async () => {
+  //   const request = {
+  //     'ownerAddress': OWNER_ADDRESS,
+  //     'landingUri': 'https://my.service.landing/home'
+  //   }
+  //
+  //   const response =
+  //     await httpClient.issueServiceTokenProxyRequest(
+  //       LINE_USER_ID,
+  //       SERVICE_TOKEN_CONTRACT_ID,
+  //       RequestType.AOA,
+  //       request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1000);
+  // })
+
+  // it('commitProxyRequest api test', async () => {
+  //   const response =
+  //     await httpClient.commitProxyRequest(
+  //       "jrXaAqxWgsxw4U3U5OtW2BL4zqA");
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('transferServiceTokenOfUser api test', async () => {
+  //   const request = {
+  //     'ownerAddress': OWNER_ADDRESS,
+  //     'ownerSecret': OWNER_SECRET,
+  //     'toAddress': OWNER_ADDRESS2,
+  //     'amount': '1'
+  //   }
+  //   const response =
+  //     await httpClient.transferServiceTokenOfUser(LINE_USER_ID, SERVICE_TOKEN_CONTRACT_ID, request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('issueItemTokenProxyRequest api test', async () => {
+  //   const request = {
+  //     'ownerAddress': OWNER_ADDRESS,
+  //     'landingUri': 'https://my.service.landing/home'
+  //   }
+  //
+  //   const response =
+  //     await httpClient.issueItemTokenProxyRequest(
+  //       LINE_USER_ID,
+  //       ITEM_TOKEN_CONTRACT_ID,
+  //       RequestType.AOA,
+  //       request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1000);
+  // })
+
+  // it('commitProxyRequest api test', async () => {
+  //   const response =
+  //     await httpClient.commitProxyRequest(
+  //       "dpgzQZPXIKeicGEpXU27f_L--ZM");
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('transferFungibleTokenOfUser api test', async () => {
+  //   const request = {
+  //     'ownerAddress': OWNER_ADDRESS,
+  //     'ownerSecret': OWNER_SECRET,
+  //     'toAddress': OWNER_ADDRESS2,
+  //     'amount': '1'
+  //   }
+  //   const response =
+  //     await httpClient.transferFungibleTokenOfUser(LINE_USER_ID, ITEM_TOKEN_CONTRACT_ID, "00000002", request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('transferNonFungibleTokenOfUser api test', async () => {
+  //     const request = {
+  //       'ownerAddress': OWNER_ADDRESS,
+  //       'ownerSecret': OWNER_SECRET,
+  //       'toAddress': OWNER_ADDRESS2
+  //     }
+  //
+  //   const response =
+  //     await httpClient.transferNonFungibleTokenOfUser(
+  //       LINE_USER_ID,
+  //       ITEM_TOKEN_CONTRACT_ID,
+  //       "10000002",
+  //       "00000002",
+  //       request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('batchTransferNonFungibleTokenOfUser api test', async () => {
+  //   const request = {
+  //     'ownerAddress': OWNER_ADDRESS,
+  //     'ownerSecret': OWNER_SECRET,
+  //     'toAddress': OWNER_ADDRESS2,
+  //     'transferList': TokenId.fromMulti(['1000000200000002'])
+  //   }
+  //   const response =
+  //     await httpClient.batchTransferNonFungibleTokenOfUser(
+  //       LINE_USER_ID,
+  //       ITEM_TOKEN_CONTRACT_ID,
+  //       request);
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
+
+  // it('transactionResult api test', async () => {
+  //   const response =
+  //     await httpClient.transactionResult("C96F342BAA477DC18B6B085F8F55EEA27572DF37D999BE67BC5DECFA15F65FA6")
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1000);
+  // })
 
 
-  it('createMemo api test', async () => {
-    const request = {
-      'walletAddress': OWNER_ADDRESS,
-      'walletSecret': OWNER_SECRET,
-      'memo': 'Show me the money'
-    }
-    const response =
-      await httpClient.createMemo(request)
-
-    console.log("response: " + JSON.stringify(response))
-    expect(response["statusCode"]).to.equal(1002);
-  })
+  // it('createMemo api test', async () => {
+  //   const request = {
+  //     'walletAddress': OWNER_ADDRESS,
+  //     'walletSecret': OWNER_SECRET,
+  //     'memo': 'Show me the money'
+  //   }
+  //   const response =
+  //     await httpClient.createMemo(request)
+  //
+  //   console.log("response: " + JSON.stringify(response))
+  //   expect(response["statusCode"]).to.equal(1002);
+  // })
 
 })
