@@ -337,7 +337,7 @@ export class HttpClient {
     return response;
   }
 
-  public async nunFungibleTokenTypeHolders(
+  public async nonFungibleTokenTypeHolders(
     contractId: string,
     tokenType: string,
     pageRequest: PageRequest
@@ -348,7 +348,7 @@ export class HttpClient {
   }
 
   // NFT has to belong to only one holder
-  public async nunFungibleTokenHolder(
+  public async nonFungibleTokenHolder(
     contractId: string,
     tokenType: string,
     tokenIndex: string

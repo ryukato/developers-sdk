@@ -75,7 +75,7 @@ When requesting, you can use predefined request data classes in `lib/request.ts`
 ```javascript
 import { MemoRequest } from './lib/request';
 
-(aync() => {
+(async() => {
   const request = new MemoRequest('my first memo', walletAddress, walletSecret);
   const response = await httpClient.createMemo(request);
 })();
