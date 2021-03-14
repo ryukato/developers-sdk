@@ -3,6 +3,20 @@ This is a subproject of LINE Blockchain Developers SDK.
 See [README](../README.md) for overview.
 
 This is written by Typescript, so it supports both Typescript and JavaScript.
+
+## Install
+To install package of this SDK, run following commands.
+
+### npm
+```
+npm install @ryukato79/link-developers-sdk
+```
+
+### yarn
+```
+yarn add @ryukato79/link-developers-sdk
+```
+
 ## Build
 To build this library, run following commands.
 

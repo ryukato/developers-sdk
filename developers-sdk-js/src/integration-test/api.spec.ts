@@ -53,7 +53,7 @@ describe('http-client-base test', () => {
     const response = await httpClient.time();
     expect(response["statusCode"]).to.equal(1000);
   })
-  
+
   it('serviceDetail api test', async () => {
 
     const response = await httpClient.serviceDetail(SERVICE_ID);
