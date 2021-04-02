@@ -18,6 +18,7 @@ import io.ktor.client.engine.*
 import io.ktor.client.engine.mock.*
 import io.ktor.client.features.logging.*
 import io.ktor.http.*
+import io.ktor.http.content.*
 import io.ktor.util.*
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
@@ -139,14 +140,8 @@ class ApiClientTest {
     @Test
     fun updateServiceToken() {
         testRunBlocking {
-            val request = UpdateServiceTokenRequest(
-                "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                "name",
-                "meta"
-            )
             val response =
-                apiClient.updateServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, request)
+                apiClient.updateServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, updateServiceTokenRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -161,13 +156,8 @@ class ApiClientTest {
     @Test
     fun burnServiceToken() {
         testRunBlocking {
-            val request = BurnServiceTokenRequest(
-                "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                "10"
-            )
             val response =
-                apiClient.burnServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, request)
+                apiClient.burnServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, burnServiceTokenRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -182,14 +172,8 @@ class ApiClientTest {
     @Test
     fun mintServiceTokenWithToAddress() {
         testRunBlocking {
-            val request = MintServiceTokenRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = TEST_WALLET_SECRET,
-                toAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                amount = "10"
-            )
             val response =
-                apiClient.mintServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, request)
+                apiClient.mintServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, mintServiceTokenToAddressRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -204,14 +188,8 @@ class ApiClientTest {
     @Test
     fun mintServiceTokenWithToUserId() {
         testRunBlocking {
-            val request = MintServiceTokenRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                toUserId = "toUserId",
-                amount = "10"
-            )
             val response =
-                apiClient.mintServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, request)
+                apiClient.mintServiceToken(TEST_SERVICE_TOKEN_CONTRACT_ID, mintServiceTokenToUserIdRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -243,12 +221,7 @@ class ApiClientTest {
     fun submitMemo() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = MemoRequest(
-                "test-memo",
-                "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff"
-            )
-            val response = apiClient.saveMemo(request)
+            val response = apiClient.saveMemo(memoRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -363,13 +336,8 @@ class ApiClientTest {
     fun transferBaseCoin() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferBaseCoinRequest(
-                walletSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
-                apiClient.transferBaseCoin(TEST_ADDRESS, request)
+                apiClient.transferBaseCoin(TEST_ADDRESS, transferBaseCoinRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -383,13 +351,12 @@ class ApiClientTest {
     fun transferServiceToken() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferServiceTokenRequest(
-                walletSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
-                apiClient.transferServiceToken(TEST_ADDRESS, TEST_SERVICE_TOKEN_CONTRACT_ID, request)
+                apiClient.transferServiceToken(
+                    TEST_ADDRESS,
+                    TEST_SERVICE_TOKEN_CONTRACT_ID,
+                    transferServiceTokenRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -436,17 +403,12 @@ class ApiClientTest {
     fun transferFungibleToken() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferFungibleTokenRequest(
-                walletSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
                 apiClient.transferFungibleTokenOfWallet(
                     TEST_ADDRESS,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_TOKEN_TYPE,
-                    request
+                    transferFungibleTokenRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -515,17 +477,13 @@ class ApiClientTest {
     fun transferNonFungibleToken() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferNonFungibleRequest(
-                walletSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS
-            )
             val response =
                 apiClient.transferNonFungibleTokenOfWallet(
                     TEST_ADDRESS,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_TOKEN_TYPE,
                     TEST_TOKEN_INDEX,
-                    request
+                    transferNonFungibleRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -540,16 +498,11 @@ class ApiClientTest {
     fun batchTransferNonFungibleToken() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = BatchTransferNonFungibleRequest(
-                walletSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                transferList = listOf(TokenId(TEST_TOKEN_TYPE + TEST_TOKEN_INDEX))
-            )
             val response =
                 apiClient.batchTransferNonFungibleTokenOfWallet(
                     TEST_ADDRESS,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
-                    request
+                    batchTransferNonFungibleRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -625,13 +578,8 @@ class ApiClientTest {
     @Test
     fun createFungibleToken() {
         testRunBlocking {
-            val request = FungibleTokenCreateUpdateRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                name = "4W1Vj9U8tYf"
-            )
             val response =
-                apiClient.createFungible(TEST_ITEM_TOKEN_CONTRACT_ID, request)
+                apiClient.createFungible(TEST_ITEM_TOKEN_CONTRACT_ID, fungibleTokenCreateUpdateRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -645,13 +593,12 @@ class ApiClientTest {
     @Test
     fun updateFungibleToken() {
         testRunBlocking {
-            val request = FungibleTokenCreateUpdateRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                name = "4W1Vj9U8tYf"
-            )
             val response =
-                apiClient.updateFungible(TEST_ITEM_TOKEN_CONTRACT_ID, TEST_FUNGIBLE_TOKEN_TYPE, request)
+                apiClient.updateFungible(
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    TEST_FUNGIBLE_TOKEN_TYPE,
+                    fungibleTokenCreateUpdateRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -665,14 +612,12 @@ class ApiClientTest {
     @Test
     fun mintFungibleToken() {
         testRunBlocking {
-            val request = FungibleTokenMintRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
-                apiClient.mintFungible(TEST_ITEM_TOKEN_CONTRACT_ID, TEST_FUNGIBLE_TOKEN_TYPE, request)
+                apiClient.mintFungible(
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    TEST_FUNGIBLE_TOKEN_TYPE,
+                    fungibleTokenMintRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -686,14 +631,12 @@ class ApiClientTest {
     @Test
     fun burnFungibleToken() {
         testRunBlocking {
-            val request = FungibleTokenItemTokenBurnRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                fromAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
-                apiClient.burnFungible(TEST_ITEM_TOKEN_CONTRACT_ID, TEST_FUNGIBLE_TOKEN_TYPE, request)
+                apiClient.burnFungible(
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    TEST_FUNGIBLE_TOKEN_TYPE,
+                    fungibleTokenItemTokenBurnRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -729,14 +672,11 @@ class ApiClientTest {
     @Test
     fun createNonFungible() {
         testRunBlocking {
-            val request = NonFungibleTokenCreateUpdateRequest(
-                ownerAddress = "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
-                ownerSecret = "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
-                name = "yVvznw2RICXtz11Lw",
-                meta = "235v234r01234"
-            )
             val response =
-                apiClient.createNonFungibleType(TEST_ITEM_TOKEN_CONTRACT_ID, request)
+                apiClient.createNonFungibleType(
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    nonFungibleTokenCreateUpdateRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -775,17 +715,11 @@ class ApiClientTest {
     @Test
     fun updateNonFungibleTokenType() {
         testRunBlocking {
-            val request = NonFungibleTokenCreateUpdateRequest(
-                ownerAddress = "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
-                ownerSecret = "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
-                name = "yVvznw2RICXtz11Lw",
-                meta = "235v234r01234"
-            )
             val response =
                 apiClient.updateNonFungibleTokenType(
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_NON_FUNGIBLE_TOKEN_TYPE,
-                    request
+                    nonFungibleTokenCreateUpdateRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -824,18 +758,12 @@ class ApiClientTest {
     @Test
     fun updateNonFungibleToken() {
         testRunBlocking {
-            val request = NonFungibleTokenCreateUpdateRequest(
-                ownerAddress = "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
-                ownerSecret = "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
-                name = "yVvznw2RICXtz11Lw",
-                meta = "235v234r01234"
-            )
             val response =
                 apiClient.updateNonFungibleToken(
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_NON_FUNGIBLE_TOKEN_TYPE,
                     TEST_NON_FUNGIBLE_TOKEN_INDEX,
-                    request
+                    nonFungibleTokenCreateUpdateRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -850,15 +778,12 @@ class ApiClientTest {
     @Test
     fun mintNonFungibleToken() {
         testRunBlocking {
-            val request = NonFungibleTokenMintRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                toAddress = TEST_ADDRESS,
-                name = TEST_NON_FUNGIBLE_TOKEN_NAME,
-                meta = TEST_NON_FUNGIBLE_TOKEN_META
-            )
             val response =
-                apiClient.mintNonFungible(TEST_ITEM_TOKEN_CONTRACT_ID, TEST_NON_FUNGIBLE_TOKEN_TYPE, request)
+                apiClient.mintNonFungible(
+                    TEST_ITEM_TOKEN_CONTRACT_ID,
+                    TEST_NON_FUNGIBLE_TOKEN_TYPE,
+                    nonFungibleTokenMintRequest
+                )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -912,20 +837,8 @@ class ApiClientTest {
     @Test
     fun multiMintNonFungibleToken() {
         testRunBlocking {
-            val request = NonFungibleTokenMultiMintRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                toAddress = TEST_ADDRESS,
-                mintList = listOf(
-                    MultiMintNonFungible(
-                        tokenType = TEST_NON_FUNGIBLE_TOKEN_TYPE,
-                        name = TEST_NON_FUNGIBLE_TOKEN_NAME,
-                        meta = TEST_NON_FUNGIBLE_TOKEN_META
-                    )
-                )
-            )
             val response =
-                apiClient.multiMintNonFungible(TEST_ITEM_TOKEN_CONTRACT_ID, request)
+                apiClient.multiMintNonFungible(TEST_ITEM_TOKEN_CONTRACT_ID, nonFungibleTokenMultiMintRequest)
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
             assertEquals(1002, response.statusCode)
@@ -939,17 +852,12 @@ class ApiClientTest {
     @Test
     fun burnNonFungibleToken() {
         testRunBlocking {
-            val request = NonFungibleTokenItemTokenBurnRequest(
-                ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
-                ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
-                fromAddress = TEST_ADDRESS
-            )
             val response =
                 apiClient.burnNonFungible(
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_NON_FUNGIBLE_TOKEN_TYPE,
                     TEST_NON_FUNGIBLE_TOKEN_INDEX,
-                    request
+                    nonFungibleTokenItemTokenBurnRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1036,18 +944,12 @@ class ApiClientTest {
     @Test
     fun attachNonFungibleToken() {
         testRunBlocking {
-            val request = NonFungibleTokenItemTokenAttachRequest(
-                parentTokenId = TEST_NON_FUNGIBLE_TOKEN_TYPE + TEST_NON_FUNGIBLE_TOKEN_INDEX,
-                serviceWalletAddress = TEST_ADDRESS,
-                serviceWalletSecret = TEST_SECRET,
-                tokenHolderAddress = TEST_ADDRESS
-            )
             val response =
                 apiClient.attachNonFungible(
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_NON_FUNGIBLE_TOKEN_TYPE,
                     TEST_NON_FUNGIBLE_TOKEN_INDEX,
-                    request
+                    nonFungibleTokenItemTokenAttachRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1284,11 +1186,7 @@ class ApiClientTest {
                     TEST_USER_ID,
                     TEST_SERVICE_TOKEN_CONTRACT_ID,
                     RequestType.AOA,
-                    UserServiceTokenTransferRequest(
-                        toAddress = TEST_ADDRESS,
-                        amount = TEST_AMOUNT,
-                        landingUri = TEST_REDIRECT_URI
-                    )
+                    userServiceTokenTransferRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1308,7 +1206,7 @@ class ApiClientTest {
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     RequestType.AOA,
-                    UserAssetProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
+                    userAssetProxyRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1328,7 +1226,7 @@ class ApiClientTest {
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     RequestType.AOA,
-                    UserAssetProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
+                    userAssetProxyRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1371,17 +1269,11 @@ class ApiClientTest {
     fun transferServiceTokenOfUser() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferTokenOfUserRequest(
-                ownerAddress = TEST_ADDRESS,
-                ownerSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
                 apiClient.transferServiceTokenOfUser(
                     TEST_USER_ID,
                     TEST_SERVICE_TOKEN_CONTRACT_ID,
-                    request
+                    transferTokenOfUserRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1396,18 +1288,12 @@ class ApiClientTest {
     fun transferFungibleTokenOfUser() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferTokenOfUserRequest(
-                ownerAddress = TEST_ADDRESS,
-                ownerSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                amount = "1000"
-            )
             val response =
                 apiClient.transferFungibleTokenOfUser(
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_TOKEN_TYPE,
-                    request
+                    transferTokenOfUserRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1422,18 +1308,13 @@ class ApiClientTest {
     fun transferNonFungibleTokenOfUser() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = TransferNonFungibleOfUserRequest(
-                ownerAddress = TEST_ADDRESS,
-                ownerSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS
-            )
             val response =
                 apiClient.transferNonFungibleTokenOfUser(
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
                     TEST_TOKEN_TYPE,
                     TEST_TOKEN_INDEX,
-                    request
+                    transferNonFungibleOfUserRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1448,17 +1329,11 @@ class ApiClientTest {
     fun batchTransferNonFungibleTokenOfUser() {
         testRunBlocking {
             assertNotNull(apiClient)
-            val request = BatchTransferNonFungibleOfUserRequest(
-                ownerAddress = TEST_ADDRESS,
-                ownerSecret = TEST_WALLET_SECRET,
-                toAddress = TEST_ADDRESS,
-                transferList = listOf(TokenId(TEST_TOKEN_TYPE + TEST_TOKEN_INDEX))
-            )
             val response =
                 apiClient.batchTransferNonFungibleTokenOfUser(
                     TEST_USER_ID,
                     TEST_ITEM_TOKEN_CONTRACT_ID,
-                    request
+                    batchTransferNonFungibleOfUserRequest
                 )
             assertNotNull(response)
             assertEquals(1602571690000, response.responseTime)
@@ -1467,8 +1342,6 @@ class ApiClientTest {
             assertNotNull(response.responseData)
         }
     }
-
-
 
 
     companion object {
@@ -1511,6 +1384,158 @@ class ApiClientTest {
         private const val TEST_REQUEST_SESSION_TOKEN = "PeCfp-wcx55qygg8TwSe_b52szQ"
         private const val TEST_REDIRECT_URI = ""
 
+        private val nonFungibleTokenCreateUpdateRequest = NonFungibleTokenCreateUpdateRequest(
+            ownerAddress = "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",
+            ownerSecret = "PCSO7JBIH1gWPNNR5vT58Hr2SycFSUb9nzpNapNjJFU=",
+            name = "yVvznw2RICXtz11Lw",
+            meta = "235v234r01234"
+        )
+
+        private val updateServiceTokenRequest = UpdateServiceTokenRequest(
+            "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            "name",
+            "meta"
+        )
+
+        private val fungibleTokenCreateUpdateRequest = FungibleTokenCreateUpdateRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            name = "4W1Vj9U8tYf"
+        )
+
+        private val memoRequest = MemoRequest(
+            "test-memo",
+            "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff"
+        )
+
+        private val burnServiceTokenRequest = BurnServiceTokenRequest(
+            "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            "10"
+        )
+
+        private val fungibleTokenItemTokenBurnRequest = FungibleTokenItemTokenBurnRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            fromAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val batchTransferNonFungibleOfUserRequest = BatchTransferNonFungibleOfUserRequest(
+            ownerAddress = TEST_ADDRESS,
+            ownerSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            transferList = listOf(TokenId(TEST_TOKEN_TYPE + TEST_TOKEN_INDEX))
+        )
+
+        private val nonFungibleTokenItemTokenAttachRequest = NonFungibleTokenItemTokenAttachRequest(
+            parentTokenId = TEST_NON_FUNGIBLE_TOKEN_TYPE + TEST_NON_FUNGIBLE_TOKEN_INDEX,
+            serviceWalletAddress = TEST_ADDRESS,
+            serviceWalletSecret = TEST_SECRET,
+            tokenHolderAddress = TEST_ADDRESS
+        )
+
+        private val transferTokenOfUserRequest = TransferTokenOfUserRequest(
+            ownerAddress = TEST_ADDRESS,
+            ownerSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val transferFungibleTokenRequest = TransferFungibleTokenRequest(
+            walletSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val transferNonFungibleOfUserRequest = TransferNonFungibleOfUserRequest(
+            ownerAddress = TEST_ADDRESS,
+            ownerSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS
+        )
+
+        private val mintServiceTokenToAddressRequest = MintServiceTokenRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = TEST_WALLET_SECRET,
+            toAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            amount = "10"
+        )
+
+        private val transferBaseCoinRequest = TransferBaseCoinRequest(
+            walletSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val mintServiceTokenToUserIdRequest = MintServiceTokenRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            toUserId = "toUserId",
+            amount = "10"
+        )
+
+        private val nonFungibleTokenItemTokenBurnRequest = NonFungibleTokenItemTokenBurnRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            fromAddress = TEST_ADDRESS
+        )
+
+        private val userAssetProxyRequest = UserAssetProxyRequest(TEST_ADDRESS, TEST_REDIRECT_URI)
+
+        private val nonFungibleTokenMultiMintRequest = NonFungibleTokenMultiMintRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            toAddress = TEST_ADDRESS,
+            mintList = listOf(
+                MultiMintNonFungible(
+                    tokenType = TEST_NON_FUNGIBLE_TOKEN_TYPE,
+                    name = TEST_NON_FUNGIBLE_TOKEN_NAME,
+                    meta = TEST_NON_FUNGIBLE_TOKEN_META
+                )
+            )
+        )
+
+        private val userServiceTokenTransferRequest = UserServiceTokenTransferRequest(
+            toAddress = TEST_ADDRESS,
+            amount = TEST_AMOUNT,
+            landingUri = TEST_REDIRECT_URI
+        )
+
+        private val transferServiceTokenRequest = TransferServiceTokenRequest(
+            walletSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val nonFungibleTokenMintRequest = NonFungibleTokenMintRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            toAddress = TEST_ADDRESS,
+            name = TEST_NON_FUNGIBLE_TOKEN_NAME,
+            meta = TEST_NON_FUNGIBLE_TOKEN_META
+        )
+
+        private val batchTransferNonFungibleRequest = BatchTransferNonFungibleRequest(
+            walletSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS,
+            transferList = listOf(TokenId(TEST_TOKEN_TYPE + TEST_TOKEN_INDEX))
+        )
+
+        private val fungibleTokenMintRequest = FungibleTokenMintRequest(
+            ownerAddress = "tlink1zakxz8fhzzc4zzhegeg92kr682pvtglhfywls8",
+            ownerSecret = "ab3YseZ7Vy0mUY/C+B+KWR6NcWs5MQ9ljBAUdi4aoff",
+            toAddress = TEST_ADDRESS,
+            amount = "1000"
+        )
+
+        private val transferNonFungibleRequest = TransferNonFungibleRequest(
+            walletSecret = TEST_WALLET_SECRET,
+            toAddress = TEST_ADDRESS
+        )
+
+        @Suppress("BlockingMethodInNonBlockingContext")
         private fun mockEngineConfig(): MockEngineConfig {
             return MockEngineConfig().apply {
                 addHandler { request ->
@@ -1806,7 +1831,7 @@ class ApiClientTest {
                                 .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID),
                             USER_SERVICE_TOKEN_IS_PROXY_PATH
                                 .replace("{userId}", TEST_USER_ID)
-                                .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID)-> {
+                                .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID) -> {
                                 respond(
                                     content = isItemTokenProxy(),
                                     headers = headers()
@@ -1816,8 +1841,9 @@ class ApiClientTest {
                             else -> error("Unhandled ${request.url}")
                         }
                         HttpMethod.Put -> {
-                            when (request.url.fullPath) {
-                                SERVICE_TOKEN_PATH.replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID) -> {
+                            when (request.url.fullPath to (request.body as TextContent).text) {
+                                SERVICE_TOKEN_PATH.replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID)
+                                        to objectMapper.writeValueAsString(updateServiceTokenRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1825,7 +1851,8 @@ class ApiClientTest {
                                 }
                                 FUNGIBLE_TOKEN_UPDATE_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_FUNGIBLE_TOKEN_TYPE) -> {
+                                    .replace("{tokenType}", TEST_FUNGIBLE_TOKEN_TYPE)
+                                        to objectMapper.writeValueAsString(fungibleTokenCreateUpdateRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1833,7 +1860,8 @@ class ApiClientTest {
                                 }
                                 NON_FUNGIBLE_TOKEN_TYPE_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE) -> {
+                                    .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE)
+                                        to objectMapper.writeValueAsString(nonFungibleTokenCreateUpdateRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1842,7 +1870,8 @@ class ApiClientTest {
                                 NON_FUNGIBLE_TOKEN_ID_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE)
-                                    .replace("{tokenIndex}", TEST_NON_FUNGIBLE_TOKEN_INDEX) -> {
+                                    .replace("{tokenIndex}", TEST_NON_FUNGIBLE_TOKEN_INDEX)
+                                        to objectMapper.writeValueAsString(nonFungibleTokenCreateUpdateRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1852,11 +1881,11 @@ class ApiClientTest {
                             }
                         }
                         HttpMethod.Post -> {
-                            when (request.url.fullPath) {
+                            when (request.url.fullPath to if (request.body is TextContent) (request.body as TextContent).text else "") {
                                 SERVICE_TOKEN_BURN_PATH.replace(
                                     "{contractId}",
                                     TEST_SERVICE_TOKEN_CONTRACT_ID
-                                ) -> {
+                                ) to objectMapper.writeValueAsString(burnServiceTokenRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1865,20 +1894,32 @@ class ApiClientTest {
                                 SERVICE_TOKEN_MINT_PATH.replace(
                                     "{contractId}",
                                     TEST_SERVICE_TOKEN_CONTRACT_ID
-                                ) -> {
+                                ) to objectMapper.writeValueAsString(mintServiceTokenToAddressRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
                                     )
                                 }
-                                MEMO_PATH -> {
+                                SERVICE_TOKEN_MINT_PATH.replace(
+                                    "{contractId}",
+                                    TEST_SERVICE_TOKEN_CONTRACT_ID
+                                ) to objectMapper.writeValueAsString(mintServiceTokenToUserIdRequest) -> {
+                                    respond(
+                                        content = transactionResponse(),
+                                        headers = headers()
+                                    )
+                                }
+                                MEMO_PATH to objectMapper.writeValueAsString(memoRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
                                     )
                                 }
                                 BASE_COIN_TRANSFER_PATH
-                                    .replace("{walletAddress}", TEST_ADDRESS) -> {
+                                    .replace(
+                                        "{walletAddress}",
+                                        TEST_ADDRESS
+                                    ) to objectMapper.writeValueAsString(transferBaseCoinRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1886,7 +1927,10 @@ class ApiClientTest {
                                 }
                                 SERVICE_TOKEN_TRANSFER_PATH
                                     .replace("{walletAddress}", TEST_ADDRESS)
-                                    .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_SERVICE_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(transferServiceTokenRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1895,14 +1939,19 @@ class ApiClientTest {
                                 WALLET_FUNGIBLE_TOKEN_TRANSFER_PATH
                                     .replace("{walletAddress}", TEST_ADDRESS)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_TOKEN_TYPE),
+                                    .replace("{tokenType}", TEST_TOKEN_TYPE)
+                                        to objectMapper.writeValueAsString(transferFungibleTokenRequest),
                                 USER_FUNGIBLE_TOKEN_TRANSFER_PATH
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_TOKEN_TYPE),
+                                    .replace("{tokenType}", TEST_TOKEN_TYPE)
+                                        to objectMapper.writeValueAsString(transferTokenOfUserRequest),
                                 USER_SERVICE_TOKEN_TRANSFER_PATH
                                     .replace("{userId}", TEST_USER_ID)
-                                    .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_SERVICE_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(transferTokenOfUserRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1913,12 +1962,18 @@ class ApiClientTest {
                                     .replace("{walletAddress}", TEST_ADDRESS)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .replace("{tokenType}", TEST_TOKEN_TYPE)
-                                    .replace("{tokenIndex}", TEST_TOKEN_INDEX),
+                                    .replace(
+                                        "{tokenIndex}",
+                                        TEST_TOKEN_INDEX
+                                    ) to objectMapper.writeValueAsString(transferNonFungibleRequest),
                                 USER_NON_FUNGIBLE_TOKEN_TRANSFER_PATH
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .replace("{tokenType}", TEST_TOKEN_TYPE)
-                                    .replace("{tokenIndex}", TEST_TOKEN_INDEX) -> {
+                                    .replace(
+                                        "{tokenIndex}",
+                                        TEST_TOKEN_INDEX
+                                    ) to objectMapper.writeValueAsString(transferNonFungibleOfUserRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1926,17 +1981,26 @@ class ApiClientTest {
                                 }
                                 WALLET_NON_FUNGIBLE_TOKEN_BATCH_TRANSFER_PATH
                                     .replace("{walletAddress}", TEST_ADDRESS)
-                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID),
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_ITEM_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(batchTransferNonFungibleRequest),
                                 USER_NON_FUNGIBLE_TOKEN_BATCH_TRANSFER_PATH
                                     .replace("{userId}", TEST_USER_ID)
-                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_ITEM_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(batchTransferNonFungibleOfUserRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
                                     )
                                 }
                                 FUNGIBLE_TOKEN_CREATE_PATH
-                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_ITEM_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(fungibleTokenCreateUpdateRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1944,7 +2008,10 @@ class ApiClientTest {
                                 }
                                 FUNGIBLE_TOKEN_MINT_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_FUNGIBLE_TOKEN_TYPE) -> {
+                                    .replace(
+                                        "{tokenType}",
+                                        TEST_FUNGIBLE_TOKEN_TYPE
+                                    ) to objectMapper.writeValueAsString(fungibleTokenMintRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1952,14 +2019,20 @@ class ApiClientTest {
                                 }
                                 FUNGIBLE_TOKEN_BURN_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_FUNGIBLE_TOKEN_TYPE) -> {
+                                    .replace(
+                                        "{tokenType}",
+                                        TEST_FUNGIBLE_TOKEN_TYPE
+                                    ) to objectMapper.writeValueAsString(fungibleTokenItemTokenBurnRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
                                     )
                                 }
                                 NON_FUNGIBLE_TOKENS_PATH
-                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_ITEM_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(nonFungibleTokenCreateUpdateRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1967,14 +2040,20 @@ class ApiClientTest {
                                 }
                                 NON_FUNGIBLE_TOKEN_MINT_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE) -> {
+                                    .replace(
+                                        "{tokenType}",
+                                        TEST_NON_FUNGIBLE_TOKEN_TYPE
+                                    ) to objectMapper.writeValueAsString(nonFungibleTokenMintRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
                                     )
                                 }
                                 NON_FUNGIBLE_TOKEN_MULTI_MINT_PATH
-                                    .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID) -> {
+                                    .replace(
+                                        "{contractId}",
+                                        TEST_ITEM_TOKEN_CONTRACT_ID
+                                    ) to objectMapper.writeValueAsString(nonFungibleTokenMultiMintRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1983,7 +2062,10 @@ class ApiClientTest {
                                 NON_FUNGIBLE_TOKEN_BURN_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE)
-                                    .replace("{tokenIndex}", TEST_NON_FUNGIBLE_TOKEN_INDEX) -> {
+                                    .replace(
+                                        "{tokenIndex}",
+                                        TEST_NON_FUNGIBLE_TOKEN_INDEX
+                                    ) to objectMapper.writeValueAsString(nonFungibleTokenItemTokenBurnRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -1992,7 +2074,10 @@ class ApiClientTest {
                                 NON_FUNGIBLE_TOKEN_PARENT_PATH
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
                                     .replace("{tokenType}", TEST_NON_FUNGIBLE_TOKEN_TYPE)
-                                    .replace("{tokenIndex}", TEST_NON_FUNGIBLE_TOKEN_INDEX) -> {
+                                    .replace(
+                                        "{tokenIndex}",
+                                        TEST_NON_FUNGIBLE_TOKEN_INDEX
+                                    ) to objectMapper.writeValueAsString(nonFungibleTokenItemTokenAttachRequest) -> {
                                     respond(
                                         content = transactionResponse(),
                                         headers = headers()
@@ -2000,7 +2085,7 @@ class ApiClientTest {
                                 }
                                 ISSUE_SESSION_TOKEN_FOR_BASE_COIN_PATH
                                     .replace("{userId}", TEST_USER_ID)
-                                    .plus("?requestType=aoa") -> {
+                                    .plus("?requestType=aoa") to "" -> {
                                     respond(
                                         content = requestSession(),
                                         headers = headers()
@@ -2009,7 +2094,8 @@ class ApiClientTest {
                                 ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PATH
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_SERVICE_TOKEN_CONTRACT_ID)
-                                    .plus("?requestType=aoa") -> {
+                                    .plus("?requestType=aoa")
+                                        to objectMapper.writeValueAsString(userServiceTokenTransferRequest) -> {
                                     respond(
                                         content = requestSession(),
                                         headers = headers()
@@ -2018,11 +2104,13 @@ class ApiClientTest {
                                 ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .plus("?requestType=aoa"),
+                                    .plus("?requestType=aoa")
+                                        to objectMapper.writeValueAsString(userAssetProxyRequest),
                                 ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PROXY
                                     .replace("{userId}", TEST_USER_ID)
                                     .replace("{contractId}", TEST_ITEM_TOKEN_CONTRACT_ID)
-                                    .plus("?requestType=aoa") -> {
+                                    .plus("?requestType=aoa")
+                                        to objectMapper.writeValueAsString(userAssetProxyRequest) -> {
                                     respond(
                                         content = requestSession(),
                                         headers = headers()

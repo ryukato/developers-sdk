@@ -59,7 +59,7 @@ internal class ApiClientRequestFeature(val config: Config) {
                 if (this.context.headers[TIMESTAMP] == null) {
                     context.headers.append(TIMESTAMP, timestamp)
                 }
-                proceedWith(json.write(this.context.body))
+                proceed()
             }
         }
     }
