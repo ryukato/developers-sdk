@@ -342,3 +342,16 @@ export class PageRequest {
     readonly limit: number = 10,
     readonly orderBy: OrderBy = OrderBy.ASC) { }
 }
+
+/*
+This is for query-parameters to search transactions of a wallet and a user.
+* after and before is time-stampe values
+* available msgType can be found at constants.TransactionMsgTypes
+*/
+export class OptionalTransactionSearchParameters {
+  constructor(
+    readonly after?: number,
+    readonly before?: number,
+    readonly msgType?: string
+  ){}
+}

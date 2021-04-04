@@ -33,6 +33,7 @@ import {
   MintServiceTokenRequest,
   BurnServiceTokenRequest,
   PageRequest,
+  OptionalTransactionSearchParameters,
   FungibleTokenCreateUpdateRequest,
   FungibleTokenMintRequest,
   FungibleTokenBurnRequest,
@@ -444,21 +445,11 @@ export class HttpClient {
   public async walletTransactions(
     walletAddress: string,
     pageRequest: PageRequest,
-    before?: number,
-    after?: number,
-    msgType?: string // refer to constants.TransactionMsgTypes
+    optionalTransactionSearchParameters?: OptionalTransactionSearchParameters,
   ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/wallets/${walletAddress}/transactions`
-    const requestConfig = this.pageRequestConfig(pageRequest);
-    if (before) {
-      requestConfig.params["before"] = before
-    }
-    if (after) {
-      requestConfig.params["after"] = after
-    }
-    if (msgType) {
-      requestConfig.params["msgType"] = msgType
-    }
+    const requestConfig = this.pageRequestConfig(pageRequest, optionalTransactionSearchParameters);
+
     return await this.instance.get(path, requestConfig);
   }
 
@@ -594,21 +585,10 @@ export class HttpClient {
   public async userTransactions(
     userId: string,
     pageRequest: PageRequest,
-    before?: number,
-    after?: number,
-    msgType?: string // refer to constants.TransactionMsgTypes
+    optionalTransactionSearchParameters?: OptionalTransactionSearchParameters,
   ): Promise<GenericResponse<TxResultResponse>> {
     const path = `/v1/users/${userId}/transactions`
-    const requestConfig = this.pageRequestConfig(pageRequest);
-    if (before) {
-      requestConfig.params["before"] = before
-    }
-    if (after) {
-      requestConfig.params["after"] = after
-    }
-    if (msgType) {
-      requestConfig.params["msgType"] = msgType
-    }
+    const requestConfig = this.pageRequestConfig(pageRequest, optionalTransactionSearchParameters);
     return await this.instance.get(path, requestConfig);
   }
 
@@ -808,13 +788,28 @@ export class HttpClient {
     };
   }
 
-  private pageRequestConfig(pageRequest: PageRequest): AxiosRequestConfig {
+  private pageRequestConfig(
+    pageRequest: PageRequest,
+    optionalTransactionSearchParameters?: OptionalTransactionSearchParameters
+  ): AxiosRequestConfig {
     // paging parameters sorted by its key when generating signature
     var pagingParams = {
       "limit": pageRequest.limit,
       "page": pageRequest.page,
       "orderBy": pageRequest.orderBy
     }
+    if (optionalTransactionSearchParameters) {
+      if (optionalTransactionSearchParameters.before) {
+        pagingParams["before"] = optionalTransactionSearchParameters.before
+      }
+      if (optionalTransactionSearchParameters.after) {
+        pagingParams["after"] = optionalTransactionSearchParameters.after
+      }
+      if (optionalTransactionSearchParameters.msgType) {
+        pagingParams["msgType"] = optionalTransactionSearchParameters.msgType
+      }
+    }
+
     return {
       "params": Object.keys(pagingParams).sort().reduce((r, k) => (r[k] = pagingParams[k], r), {})
     };
