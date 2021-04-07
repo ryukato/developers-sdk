@@ -19,7 +19,6 @@ internal class ApiClientRequestFeature(val config: Config) {
     fun timestamp(): String = System.currentTimeMillis().toString()
 
     companion object Feature : HttpClientFeature<Config, ApiClientRequestFeature> {
-        private val json = io.ktor.client.features.json.defaultSerializer()
         private const val SERVICE_API_KEY_HEADER = "service-api-key"
         private const val SIGNATURE = "Signature"
         private const val TIMESTAMP = "Timestamp"
@@ -40,18 +39,13 @@ internal class ApiClientRequestFeature(val config: Config) {
                 val nonce = feature.nonce()
                 val timestamp = this.context.headers[TIMESTAMP] ?: feature.timestamp()
 
-                @Suppress("UNCHECKED_CAST") val body = when (this.context.body) {
-                    is Map<*, *> -> this.context.body as Map<String, Any>
-                    else -> emptyMap()
-                }
-
                 val signature = signature(
                     config.serviceApiSecret!!,
                     context.method.value,
                     context.url.encodedPath,
                     timestamp.toLong(),
                     nonce,
-                    body
+                    bodyAsMap(context)
                 )
                 context.headers.append(SERVICE_API_KEY_HEADER, serviceApiKey)
                 context.headers.append(SIGNATURE, signature)
@@ -60,6 +54,14 @@ internal class ApiClientRequestFeature(val config: Config) {
                     context.headers.append(TIMESTAMP, timestamp)
                 }
                 proceed()
+            }
+        }
+
+        @Suppress("UNCHECKED_CAST")
+        private fun bodyAsMap(context: HttpRequestBuilder): Map<String, Any> {
+            return when (context.body) {
+                is Map<*, *> -> context.body as Map<String, Any>
+                else -> emptyMap()
             }
         }
     }
