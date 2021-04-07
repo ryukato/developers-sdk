@@ -21,7 +21,7 @@ fun signature(
     @Suppress("UNCHECKED_CAST") val data = if (bodyTreeMap.isEmpty()) {
         "$nonce$timestamp$httpMethod$pathWithQueryParam"
     } else {
-        val concatenatedBody = bodyTreeMap.map { (k, v) ->
+        val concatenatedBody = bodyTreeMap.filterValues { it != null }.map { (k, v) ->
             when (v) {
                 is String -> "$k=$v"
                 is List<*> -> {
