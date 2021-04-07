@@ -1,8 +1,11 @@
 package com.github.ryukato.link.developers.sdk.http
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
+import io.ktor.http.content.*
 import io.ktor.util.*
 import org.apache.commons.lang3.RandomStringUtils
 
@@ -57,11 +60,11 @@ internal class ApiClientRequestFeature(val config: Config) {
             }
         }
 
-        @Suppress("UNCHECKED_CAST")
         private fun bodyAsMap(context: HttpRequestBuilder): Map<String, Any> {
-            return when (context.body) {
-                is Map<*, *> -> context.body as Map<String, Any>
-                else -> emptyMap()
+            return if (context.body is TextContent) {
+                jacksonObjectMapper().readValue((context.body as TextContent).text)
+            } else {
+                emptyMap()
             }
         }
     }
