@@ -1,8 +1,11 @@
 package com.github.ryukato.link.developers.sdk.http
 
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import io.ktor.client.*
 import io.ktor.client.features.*
 import io.ktor.client.request.*
+import io.ktor.http.content.*
 import io.ktor.util.*
 import org.apache.commons.lang3.RandomStringUtils
 
@@ -19,7 +22,6 @@ internal class ApiClientRequestFeature(val config: Config) {
     fun timestamp(): String = System.currentTimeMillis().toString()
 
     companion object Feature : HttpClientFeature<Config, ApiClientRequestFeature> {
-        private val json = io.ktor.client.features.json.defaultSerializer()
         private const val SERVICE_API_KEY_HEADER = "service-api-key"
         private const val SIGNATURE = "Signature"
         private const val TIMESTAMP = "Timestamp"
@@ -40,18 +42,13 @@ internal class ApiClientRequestFeature(val config: Config) {
                 val nonce = feature.nonce()
                 val timestamp = this.context.headers[TIMESTAMP] ?: feature.timestamp()
 
-                @Suppress("UNCHECKED_CAST") val body = when (this.context.body) {
-                    is Map<*, *> -> this.context.body as Map<String, Any>
-                    else -> emptyMap()
-                }
-
                 val signature = signature(
                     config.serviceApiSecret!!,
                     context.method.value,
                     context.url.encodedPath,
                     timestamp.toLong(),
                     nonce,
-                    body
+                    bodyAsMap(context)
                 )
                 context.headers.append(SERVICE_API_KEY_HEADER, serviceApiKey)
                 context.headers.append(SIGNATURE, signature)
@@ -60,6 +57,14 @@ internal class ApiClientRequestFeature(val config: Config) {
                     context.headers.append(TIMESTAMP, timestamp)
                 }
                 proceed()
+            }
+        }
+
+        private fun bodyAsMap(context: HttpRequestBuilder): Map<String, Any> {
+            return if (context.body is TextContent) {
+                jacksonObjectMapper().readValue((context.body as TextContent).text)
+            } else {
+                emptyMap()
             }
         }
     }
