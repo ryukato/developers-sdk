@@ -2,22 +2,28 @@ package com.github.ryukato.link.developers.sdk.api
 
 import com.github.ryukato.link.developers.sdk.model.request.*
 import com.github.ryukato.link.developers.sdk.model.response.*
+import retrofit2.http.GET
+import retrofit2.http.Path
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 interface ApiClient {
+    @GET(TIME_API_PATH)
     suspend fun time(): GenericResponse<Unit>
-    suspend fun userRequests(requestSessionToken: String): GenericResponse<UserRequestStatus>
+
+    @GET(USER_REQUESTS_PATH)
+    suspend fun userRequests(@Path("requestSessionToken") requestSessionToken: String): GenericResponse<UserRequestStatus>
 
     /**
      * Retrieve service information
      */
-    suspend fun serviceDetail(serviceId: String): GenericResponse<ServiceDetail>
+    @GET(SERVICE_DETAIL_API_PATH)
+    suspend fun serviceDetail(@Path("serviceId") serviceId: String): GenericResponse<ServiceDetail>
 
-    // service-token
     /**
      * List all service tokens
      */
+    @GET(SERVICE_TOKENS_PATH)
     suspend fun serviceTokens(): GenericResponse<Collection<ServiceToken>>
 
     /**

@@ -1,5 +1,10 @@
 package com.github.ryukato.link.developers.sdk.api
 
+const val SERVICE_API_KEY_HEADER = "service-api-key"
+const val SIGNATURE_HEADER = "Signature"
+const val TIMESTAMP_HEADER = "Timestamp"
+const val NONCE_HEADER = "Nonce"
+
 const val USER_REQUESTS_PATH = "/v1/user-requests/{requestSessionToken}"
 
 // time

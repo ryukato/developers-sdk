@@ -22,12 +22,22 @@ dependencies {
     // bouncy-castle
     implementation("org.bouncycastle:bcprov-jdk15on:1.64")
 
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.4")
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-jackson:2.9.0")
+    implementation("com.squareup.retrofit2:converter-jaxb:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.9.0")
+
     // kotlin logging
     implementation("io.github.microutils:kotlin-logging:1.7.10")
     // logging
     implementation("ch.qos.logback:logback-core:1.2.3")
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
+    testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
 
 }
 
