@@ -1,5 +1,6 @@
 package com.github.ryukato.link.developers.sdk.security
 
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -30,7 +31,9 @@ class DefaultRequestBodyFlattenerTest {
                 )
             )
         )
+        val flatten = requestBodyFlattener.flatten(requestParams)
+        val expectedFlatten = "mintList.meta=,New nft 2 meta information&mintList.name=NewNFT,NewNFT2&mintList.tokenType=10000001,10000003&ownerAddress=tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq&ownerSecret=uhbdnNvIqQFnnIFDDG8EuVxtqkwsLtDR/owKInQIYmo=&toAddress=tlink18zxqds28mmg8mwduk32csx5xt6urw93ycf8jwp"
 
-
+        assertEquals(expectedFlatten, flatten)
     }
 }
