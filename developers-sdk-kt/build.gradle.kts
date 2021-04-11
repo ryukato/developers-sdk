@@ -37,7 +37,10 @@ dependencies {
     implementation("ch.qos.logback:logback-core:1.2.3")
     implementation("ch.qos.logback:logback-classic:1.2.3")
 
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:5.3.1")
     testImplementation("com.squareup.okhttp3:mockwebserver:4.9.0")
+    testImplementation("org.mockito:mockito-core:2.21.0")
+    testImplementation("org.mockito:mockito-junit-jupiter:2.23.0")
 
 }
 

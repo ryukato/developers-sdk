@@ -1,9 +1,13 @@
 package com.github.ryukato.link.developers.sdk.security
 
+import mu.KotlinLogging
 import org.apache.commons.codec.binary.Base64
+import java.lang.StringBuilder
 import java.util.TreeMap
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+
+private val logger = KotlinLogging.logger { }
 
 interface SignatureGenerator {
     fun generate(
@@ -12,7 +16,7 @@ interface SignatureGenerator {
         path: String,
         timestamp: Long,
         nonce: String,
-        pathWithQueryParam: String,
+        flatQueryParam: String,
         body: Map<String, Any?> = emptyMap(),
     ): String
 
@@ -22,13 +26,14 @@ interface SignatureGenerator {
         path: String,
         timestamp: Long,
         nonce: String,
-        queryParam: Map<String, Any?> = emptyMap(),
+        queryParam: Map<String, List<String?>> = emptyMap(),
         body: Map<String, Any?> = emptyMap(),
     ): String
 }
 
 
 class DefaultSignatureGenerator(
+    private val queryParameterFlattener: QueryParameterFlattener,
     private val requestBodyFlattener: RequestBodyFlattener,
 ) : SignatureGenerator {
     override fun generate(
@@ -37,10 +42,11 @@ class DefaultSignatureGenerator(
         path: String,
         timestamp: Long,
         nonce: String,
-        queryParam: Map<String, Any?>,
+        queryParam: Map<String, List<String?>>,
         body: Map<String, Any?>,
     ): String {
-        val flattenQueryParam = requestBodyFlattener.flatten(queryParam)
+        val flattenQueryParam = queryParameterFlattener.flatten(queryParam)
+
         return generate(
             serviceApiSecret,
             httpMethod,
@@ -58,25 +64,48 @@ class DefaultSignatureGenerator(
         path: String,
         timestamp: Long,
         nonce: String,
-        pathWithQueryParam: String,
+        flatQueryParam: String,
         body: Map<String, Any?>,
     ): String {
-        val bodyTreeMap = TreeMap<String, Any?>()
-        bodyTreeMap.putAll(body)
-        val flattenBody = requestBodyFlattener.flatten(body)
+        val data = signatureTarget(body, nonce, timestamp, httpMethod, path, flatQueryParam)
+        logger.debug { "signature data:$data, from serviceApiSecret: $serviceApiSecret, httpMethod$httpMethod, path: $path, timestamp: $timestamp, nonce:$nonce, flatQueryParam: $flatQueryParam, body: $body" }
+        val rawHmac = rawSignature(serviceApiSecret, data)
+        return Base64.encodeBase64String(rawHmac)
+    }
 
-        val data = if ("?" in pathWithQueryParam) {
-            "$nonce$timestamp$httpMethod$pathWithQueryParam&$flattenBody"
+    private fun rawSignature(serviceApiSecret: String, data: String): ByteArray? {
+        val signingKey = SecretKeySpec(serviceApiSecret.toByteArray(), HNAC_512_SECRET_ALGORITHM)
+        val mac = Mac.getInstance(HNAC_512_SECRET_ALGORITHM)
+        mac.init(signingKey)
+        return mac.doFinal(data.toByteArray())
+    }
+
+    private fun signatureTarget(body: Map<String, Any?>, nonce: String, timestamp: Long, httpMethod: String, path: String, flatQueryParam: String): String {
+        val bodyTreeMap = sortBody(body)
+        val flattenBody = requestBodyFlattener.flatten(bodyTreeMap)
+        val stringBuilder = StringBuilder()
+        stringBuilder.append("$nonce$timestamp$httpMethod$path")
+
+        if ("?" in flatQueryParam) {
+            stringBuilder.append(flatQueryParam)
         } else {
-            "$nonce$timestamp$httpMethod$pathWithQueryParam?$flattenBody"
+            stringBuilder.append("?").append(flatQueryParam)
         }
 
+        if (flattenBody.isNotBlank()) {
+            stringBuilder.append("&").append(flattenBody)
+        }
 
-        val hmac512 = "HmacSHA512"
-        val signingKey = SecretKeySpec(serviceApiSecret.toByteArray(), hmac512)
-        val mac = Mac.getInstance(hmac512)
-        mac.init(signingKey)
-        val rawHmac = mac.doFinal(data.toByteArray())
-        return Base64.encodeBase64String(rawHmac)
+        return stringBuilder.toString()
+    }
+
+    private fun sortBody(body: Map<String, Any?>): TreeMap<String, Any?> {
+        val bodyTreeMap = TreeMap<String, Any?>()
+        bodyTreeMap.putAll(body)
+        return bodyTreeMap
+    }
+
+    companion object {
+        private const val HNAC_512_SECRET_ALGORITHM = "HmacSHA512"
     }
 }

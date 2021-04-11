@@ -91,9 +91,9 @@ class DefaultRequestHeadersAppendInterceptorTest {
                 path: String,
                 timestamp: Long,
                 nonce: String,
-                pathWithQueryParam: String,
+                flatQueryParam: String,
                 body: Map<String, Any?>): String {
-                capturedQueryParams.add(pathWithQueryParam)
+                capturedQueryParams.add(flatQueryParam)
                 return "test"
             }
 
@@ -103,7 +103,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
                 path: String,
                 timestamp: Long,
                 nonce: String,
-                queryParam: Map<String, Any?>,
+                queryParam: Map<String, List<String?>>,
                 body: Map<String, Any?>): String {
                 capturedQueryParams.add(queryParam.toSortedMap().map { "${it.key}=${it.value}" }.joinToString("&"))
                 return "test"
@@ -334,7 +334,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
                 path: String,
                 timestamp: Long,
                 nonce: String,
-                pathWithQueryParam: String,
+                flatQueryParam: String,
                 body: Map<String, Any?>): String {
                 return "test"
             }
@@ -345,7 +345,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
                 path: String,
                 timestamp: Long,
                 nonce: String,
-                queryParam: Map<String, Any?>,
+                queryParam: Map<String, List<String?>>,
                 body: Map<String, Any?>): String {
                 return "test"
             }
@@ -364,7 +364,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
                     path: String,
                     timestamp: Long,
                     nonce: String,
-                    pathWithQueryParam: String,
+                    flatQueryParam: String,
                     body: Map<String, Any?>): String {
                     capturedRequestBody.putAll(body)
                     return "test"
@@ -376,7 +376,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
                     path: String,
                     timestamp: Long,
                     nonce: String,
-                    queryParam: Map<String, Any?>,
+                    queryParam: Map<String, List<String?>>,
                     body: Map<String, Any?>): String {
                     capturedRequestBody.putAll(body)
                     return "test"

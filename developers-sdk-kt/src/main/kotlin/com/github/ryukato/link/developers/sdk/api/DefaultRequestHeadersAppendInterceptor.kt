@@ -25,7 +25,7 @@ class DefaultRequestHeadersAppendInterceptor(
         val timestamp = applicationClock.instant().toEpochMilli()
         val nonce = nonceGenerator.newNonce()
         val request = chain.request()
-        val queryParams: Map<String, Any> = request.url.queryParameterNames.map {
+        val queryParams: Map<String, List<String?>> = request.url.queryParameterNames.map {
             it to request.url.queryParameterValues(it)
         }.toMap()
         val body: Map<String, Any> = if (request.method == "GET") {
