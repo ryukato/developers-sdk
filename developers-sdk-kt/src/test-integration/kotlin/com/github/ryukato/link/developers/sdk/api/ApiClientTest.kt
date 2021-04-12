@@ -31,8 +31,8 @@ class ApiClientTest {
 
     @BeforeAll
     fun setUpAll() {
-        serviceApiKey = "397089dd-c6a6-4863-9ac2-3e9b54825bdc"//System.getenv()["service-api-key"]!!
-        serviceApiSecret = "7d55f1f5-0f6f-426e-909c-47913aa09e72"//System.getenv()["service-api-secret"]!!
+        serviceApiKey = System.getenv()["service-api-key"]!!
+        serviceApiSecret = System.getenv()["service-api-secret"]!!
         ownerAddress1 = System.getenv()["owner-address1"]!!
         ownerAddress1Secret = System.getenv()["owner-address1-secret"]!!
         ownerAddress2 = System.getenv()["owner-address2"]!!
