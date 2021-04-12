@@ -30,25 +30,6 @@ class SignatureGeneratorTest {
     }
 
     @Test
-    fun test_simple_case() {
-        `when`(requestBodyFlattener.flatten(emptyMap())).thenAnswer { "" }
-        `when`(queryParameterFlattener.flatten(emptyMap())).thenAnswer { "" }
-        val serviceApiSecret = "7d55f1f5-0f6f-426e-909c-47913aa09e72"
-        val httpMethod = "GET"
-        val path = "/v1/services/5016b367-eae8-44cb-8052-6672b498d894"
-        val timestamp = 1618244401785
-        val nonce = "xwhkW0cS"
-        val signature = signatureGenerator.generate(
-            serviceApiSecret,
-            httpMethod,
-            path, timestamp, nonce, emptyMap(), emptyMap()
-        )
-        assertNotNull(signature)
-        val expectedSignature = "ezIPpr5iAJXItD7wvg2NiIzZk4H6eYWVdfIY/sn5GndZe71I5GEzdnS2MTxSoxRcnO7e1lVDhhhW9/A1GCrpzA=="
-        assertEquals(expectedSignature, signature)
-    }
-
-    @Test
     fun test() {
         `when`(requestBodyFlattener.flatten(emptyMap())).thenAnswer { "" }
         val serviceApiSecret = "test-api-secret"
