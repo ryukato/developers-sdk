@@ -11,6 +11,20 @@ plugins {
 group = projectGroupId
 version = "0.0.4"
 
+sourceSets {
+    create("integrationTest") {
+        java.srcDir(file("src/test-integration/java"))
+        withConvention(org.jetbrains.kotlin.gradle.plugin.KotlinSourceSet::class) {
+            kotlin.srcDir("src/test-integration/kotlin")
+        }
+
+        resources.srcDir(file("src/test-integration/resources"))
+
+        compileClasspath += sourceSets["main"].output + configurations["testRuntimeClasspath"]
+        runtimeClasspath += output + compileClasspath
+    }
+}
+
 kotlinDependencies()
 ktorDependencies()
 junitDependencies()
@@ -42,6 +56,17 @@ dependencies {
     testImplementation("org.mockito:mockito-core:2.21.0")
     testImplementation("org.mockito:mockito-junit-jupiter:2.23.0")
 
+}
+
+tasks {
+    register<Test>("integrationTest") {
+        description = "Runs the integration tests."
+        group = "verification"
+        testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+        classpath = sourceSets["integrationTest"].runtimeClasspath
+        useJUnitPlatform()
+        mustRunAfter(test)
+    }
 }
 
 val publishVersion = version as String
@@ -121,37 +146,9 @@ signing {
     sign(publishing.publications["mavenSDK"])
 }
 
-bintray {
-    user = getProperty("BINTRAY_USERNAME", project)
-    key = getProperty("BINTRAY_KEY", project)
-    setPublications("mavenSDK")
-
-    pkg(delegateClosureOf<com.jfrog.bintray.gradle.BintrayExtension.PackageConfig> {
-        repo = publishGroupId
-        name = Sdk.publishArtifactId
-        userOrg = bintrayUserOrg
-        setLicenses("MIT")
-        vcsUrl = gitRepositoryUrl
-    })
-}
-
 tasks.javadoc {
     if (JavaVersion.current().isJava9Compatible) {
         (options as StandardJavadocDocletOptions).addBooleanOption("html5", true)
     }
 }
 
-tasks.withType<com.jfrog.bintray.gradle.tasks.BintrayUploadTask> {
-    doFirst {
-        publishing.publications
-            .filterIsInstance<MavenPublication>()
-            .forEach { publication ->
-                val moduleFile = buildDir.resolve("publications/${publication.name}/module.json")
-                if (moduleFile.exists()) {
-                    publication.artifact(object : FileBasedMavenArtifact(moduleFile) {
-                        override fun getDefaultExtension() = "module"
-                    })
-                }
-            }
-    }
-}

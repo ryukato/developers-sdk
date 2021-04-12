@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.github.ryukato.link.developers.sdk.exception.InvalidResponseValueException
 import java.math.BigInteger
-import java.util.*
+import java.util.Date
 
 
 data class GenericResponse<T>(

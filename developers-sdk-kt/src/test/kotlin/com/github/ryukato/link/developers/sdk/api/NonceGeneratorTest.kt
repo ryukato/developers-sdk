@@ -1,4 +1,4 @@
-package com.github.ryukato.link.developers.sdk.security
+package com.github.ryukato.link.developers.sdk.api
 
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach

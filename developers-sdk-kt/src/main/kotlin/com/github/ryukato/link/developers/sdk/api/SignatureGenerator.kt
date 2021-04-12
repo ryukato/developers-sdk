@@ -1,8 +1,7 @@
-package com.github.ryukato.link.developers.sdk.security
+package com.github.ryukato.link.developers.sdk.api
 
 import mu.KotlinLogging
 import org.apache.commons.codec.binary.Base64
-import java.lang.StringBuilder
 import java.util.TreeMap
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
@@ -68,7 +67,7 @@ class DefaultSignatureGenerator(
         body: Map<String, Any?>,
     ): String {
         val data = signatureTarget(body, nonce, timestamp, httpMethod, path, flatQueryParam)
-        logger.debug { "signature data:$data, from serviceApiSecret: $serviceApiSecret, httpMethod$httpMethod, path: $path, timestamp: $timestamp, nonce:$nonce, flatQueryParam: $flatQueryParam, body: $body" }
+        logger.debug { "signature data:$data, from httpMethod$httpMethod, path: $path, timestamp: $timestamp, nonce:$nonce, flatQueryParam: $flatQueryParam, body: $body" }
         val rawHmac = rawSignature(serviceApiSecret, data)
         return Base64.encodeBase64String(rawHmac)
     }
@@ -85,14 +84,17 @@ class DefaultSignatureGenerator(
         val flattenBody = requestBodyFlattener.flatten(bodyTreeMap)
         val stringBuilder = StringBuilder()
         stringBuilder.append("$nonce$timestamp$httpMethod$path")
-
-        if ("?" in flatQueryParam) {
-            stringBuilder.append(flatQueryParam)
-        } else {
-            stringBuilder.append("?").append(flatQueryParam)
+        if (flatQueryParam.isNotBlank()) {
+            if ("?" in flatQueryParam) {
+                stringBuilder.append(flatQueryParam)
+            } else {
+                stringBuilder.append("?").append(flatQueryParam)
+            }
         }
-
         if (flattenBody.isNotBlank()) {
+            if (!stringBuilder.contains('?')) {
+                stringBuilder.append("?")
+            }
             stringBuilder.append("&").append(flattenBody)
         }
 

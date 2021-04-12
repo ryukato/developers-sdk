@@ -2,8 +2,7 @@ package com.github.ryukato.link.developers.sdk.api
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
-import com.github.ryukato.link.developers.sdk.security.NonceGenerator
-import com.github.ryukato.link.developers.sdk.security.SignatureGenerator
+
 import okhttp3.FormBody
 import okhttp3.Headers
 import okhttp3.Interceptor
@@ -13,31 +12,43 @@ import okhttp3.Response
 import okio.Buffer
 import java.time.Clock
 
-class DefaultRequestHeadersAppendInterceptor(
+interface RequestHeadersAppender: Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+        val request = chain.request()
+        val headers = createNewHeaders(request)
+        return chain.proceed(request.newBuilder().headers(headers).build())
+    }
+
+    fun createNewHeaders(request: Request): Headers
+}
+
+class DefaultRequestHeadersAppender(
     private val applicationClock: Clock,
     private val signatureGenerator: SignatureGenerator,
     private val nonceGenerator: NonceGenerator,
     private val serviceApiKey: String,
     private val serviceApiSecret: String,
-) : Interceptor {
-    override fun intercept(chain: Interceptor.Chain): Response {
+) : RequestHeadersAppender {
+    override fun createNewHeaders(request: Request): Headers {
         @Suppress("DuplicatedCode")
         val timestamp = applicationClock.instant().toEpochMilli()
         val nonce = nonceGenerator.newNonce()
-        val request = chain.request()
-        val queryParams: Map<String, List<String?>> = request.url.queryParameterNames.map {
-            it to request.url.queryParameterValues(it)
-        }.toMap()
-        val body: Map<String, Any> = if (request.method == "GET") {
-            emptyMap()
-        } else {
-            if (request.body?.contentLength() ?: 0 < 0) {
-                emptyMap()
-            } else {
-                extractBodyFromRequest(request)
-            }
-        }
-        val signature = signatureGenerator.generate(
+
+        val queryParams: Map<String, List<String?>> = queryParameters(request)
+        val body: Map<String, Any> = requestBody(request)
+        val signature = signature(request, timestamp, nonce, queryParams, body)
+
+        return newHeaders(request, signature, nonce, timestamp)
+    }
+
+    private fun signature(
+        request: Request,
+        timestamp: Long,
+        nonce: String,
+        queryParams: Map<String, List<String?>>,
+        body: Map<String, Any>
+    ): String {
+        return signatureGenerator.generate(
             serviceApiSecret,
             request.method,
             request.url.encodedPath,
@@ -46,11 +57,24 @@ class DefaultRequestHeadersAppendInterceptor(
             queryParams,
             body,
         )
+    }
 
-        @Suppress("DuplicatedCode")
-        val headers = newHeaders(request, signature, nonceGenerator.newNonce(), timestamp)
+    private fun requestBody(request: Request): Map<String, Any> {
+        return if (request.method == "GET") {
+            emptyMap()
+        } else {
+            if (request.body?.contentLength() ?: 0 < 0) {
+                emptyMap()
+            } else {
+                extractBodyFromRequest(request)
+            }
+        }
+    }
 
-        return chain.proceed(request.newBuilder().headers(headers).build())
+    private fun queryParameters(request: Request): Map<String, List<String?>> {
+        return request.url.queryParameterNames.map {
+            it to request.url.queryParameterValues(it)
+        }.toMap()
     }
 
     private fun newHeaders(request: Request, signature: String, nonce: String, timestamp: Long): Headers {

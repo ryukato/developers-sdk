@@ -1,9 +1,64 @@
+@file:Suppress("unused")
+
 package com.github.ryukato.link.developers.sdk.api
 
-import com.github.ryukato.link.developers.sdk.model.request.*
-import com.github.ryukato.link.developers.sdk.model.response.*
+import com.github.ryukato.link.developers.sdk.model.request.BatchTransferNonFungibleOfUserRequest
+import com.github.ryukato.link.developers.sdk.model.request.BatchTransferNonFungibleRequest
+import com.github.ryukato.link.developers.sdk.model.request.BurnServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenCreateUpdateRequest
+import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenItemTokenBurnRequest
+import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenMintRequest
+import com.github.ryukato.link.developers.sdk.model.request.MemoRequest
+import com.github.ryukato.link.developers.sdk.model.request.MintServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenCreateUpdateRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenAttachRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenBurnRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenDetachRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMintRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMultiMintRequest
+import com.github.ryukato.link.developers.sdk.model.request.OrderBy
+import com.github.ryukato.link.developers.sdk.model.request.TransferBaseCoinRequest
+import com.github.ryukato.link.developers.sdk.model.request.TransferFungibleTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.TransferNonFungibleOfUserRequest
+import com.github.ryukato.link.developers.sdk.model.request.TransferNonFungibleRequest
+import com.github.ryukato.link.developers.sdk.model.request.TransferServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.TransferTokenOfUserRequest
+import com.github.ryukato.link.developers.sdk.model.request.UpdateServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.UserAssetProxyRequest
+import com.github.ryukato.link.developers.sdk.model.request.UserServiceTokenTransferRequest
+import com.github.ryukato.link.developers.sdk.model.response.BaseCoinBalance
+import com.github.ryukato.link.developers.sdk.model.response.FungibleBalance
+import com.github.ryukato.link.developers.sdk.model.response.FungibleToken
+import com.github.ryukato.link.developers.sdk.model.response.FungibleTokenHolder
+import com.github.ryukato.link.developers.sdk.model.response.GenericResponse
+import com.github.ryukato.link.developers.sdk.model.response.ItemToken
+import com.github.ryukato.link.developers.sdk.model.response.ItemTokenType
+import com.github.ryukato.link.developers.sdk.model.response.Memo
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleBalance
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleId
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleTokenHolder
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleTokenType
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleTokenTypeHolder
+import com.github.ryukato.link.developers.sdk.model.response.ProxyStatus
+import com.github.ryukato.link.developers.sdk.model.response.RequestSession
+import com.github.ryukato.link.developers.sdk.model.response.RequestSessionStatus
+import com.github.ryukato.link.developers.sdk.model.response.ServiceDetail
+import com.github.ryukato.link.developers.sdk.model.response.ServiceToken
+import com.github.ryukato.link.developers.sdk.model.response.ServiceTokenBalance
+import com.github.ryukato.link.developers.sdk.model.response.ServiceTokenHolder
+import com.github.ryukato.link.developers.sdk.model.response.TokenIndex
+import com.github.ryukato.link.developers.sdk.model.response.TransactionResponse
+import com.github.ryukato.link.developers.sdk.model.response.TxResultResponse
+import com.github.ryukato.link.developers.sdk.model.response.UserIdAddress
+import com.github.ryukato.link.developers.sdk.model.response.UserRequestStatus
+import com.github.ryukato.link.developers.sdk.model.response.WalletResponse
+import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
+import retrofit2.http.Query
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
@@ -29,610 +84,714 @@ interface ApiClient {
     /**
      * Retrieve service token information
      */
-    suspend fun serviceToken(contractId: String): GenericResponse<ServiceToken>
+    @GET(SERVICE_TOKEN_PATH)
+    suspend fun serviceToken(@Path("contractId") contractId: String): GenericResponse<ServiceToken>
 
     /**
      * List all service token holders
      */
+    @GET(SERVICE_TOKEN_HOLDERS_PATH)
     suspend fun serviceTokenHolders(
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<ServiceTokenHolder>>
 
     /**
      * Update service token information
      */
+    @PUT(SERVICE_TOKEN_PATH)
     suspend fun updateServiceToken(
-        contractId: String,
-        request: UpdateServiceTokenRequest
+        @Path("contractId") contractId: String,
+        @Body request: UpdateServiceTokenRequest
     ): GenericResponse<TransactionResponse>
 
     /**
      * Mint a service token
      */
+    @POST(SERVICE_TOKEN_MINT_PATH)
     suspend fun mintServiceToken(
-        contractId: String,
-        request: MintServiceTokenRequest
+        @Path("contractId") contractId: String,
+        @Body request: MintServiceTokenRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Burn a service token
      */
+    @POST(SERVICE_TOKEN_BURN_PATH)
     suspend fun burnServiceToken(
-        contractId: String,
-        request: BurnServiceTokenRequest
+        @Path("contractId") contractId: String,
+        @Body request: BurnServiceTokenRequest,
     ): GenericResponse<TransactionResponse>
 
-    // transaction
-    suspend fun transaction(txHash: String): GenericResponse<TxResultResponse>
+    /**
+     * Retrieve transaction detail
+     */
+    @GET(TRANSACTION_PATH)
+    suspend fun transaction(@Path("txHash") txHash: String): GenericResponse<TxResultResponse>
 
     // memo
     /**
      * Save the text
      */
-    suspend fun saveMemo(request: MemoRequest): GenericResponse<TransactionResponse>
-    suspend fun queryMemo(txHash: String): GenericResponse<Memo>
+    @POST(MEMO_PATH)
+    suspend fun saveMemo(@Body request: MemoRequest): GenericResponse<TransactionResponse>
+
+    /**
+     * Query memo of a transaction by tx-hash
+     */
+    @GET(MEMO_PATH)
+    suspend fun queryMemo(@Path("txHash") txHash: String): GenericResponse<Memo>
 
     // wallet
     /**
      * List all service wallets
      */
+    @GET(WALLET_LIST_PATH)
     suspend fun wallets(): GenericResponse<Collection<WalletResponse>>
 
     /**
      * Retrieve service wallet information
      */
-    suspend fun wallet(walletAddress: String): GenericResponse<WalletResponse>
+    @GET(WALLET_PATH)
+    suspend fun wallet(@Path("walletAddress") walletAddress: String): GenericResponse<WalletResponse>
 
     /**
      * Retrieve service wallet transaction history
      * By default 1 day transactions of given wallet will be returned
      */
+    @GET(WALLET_TRANSACTIONS_PATH)
     suspend fun transactionOfWallet(
-        walletAddress: String,
-        after: Long? = LocalDateTime.now().minusDays(1).toEpochMilli(),
-        before: Long? = LocalDateTime.now().toEpochMilli(),
-        limit: Int = 10,
-        msgType: String? = null,
-        orderBy: OrderBy = OrderBy.ASC,
-        page: Int = 1
+        @Path("walletAddress") walletAddress: String,
+        @Query("after") after: Long? = LocalDateTime.now().minusDays(1).toEpochMilli(),
+        @Query("before") before: Long? = LocalDateTime.now().toEpochMilli(),
+        @Query("msgType") msgType: String? = null,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<TxResultResponse>>
-    // wallet-balance
 
+    // wallet-balance
     /**
      * Retrieve base coin balance (service wallet)
      * Only for Cashew
      */
-    suspend fun baseCoinBalanceOfWallet(walletAddress: String): GenericResponse<BaseCoinBalance>
+    @GET(WALLET_BASE_COIN_BALANCE_PATH)
+    suspend fun baseCoinBalanceOfWallet(@Path("walletAddress") walletAddress: String): GenericResponse<BaseCoinBalance>
 
     /**
      * Transfer base coins (service wallet)
      */
+    @POST(BASE_COIN_TRANSFER_PATH)
     suspend fun transferBaseCoin(
-        walletAddress: String,
-        request: TransferBaseCoinRequest
+        @Path("walletAddress") walletAddress: String,
+        @Body request: TransferBaseCoinRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve balance of all service tokens (service wallet)
      */
+    @GET(WALLET_SERVICE_TOKENS_BALANCE_PATH)
     suspend fun serviceTokenBalancesOfWallet(
-        walletAddress: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("walletAddress") walletAddress: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<ServiceTokenBalance>>
 
     /**
      * Retrieve balance of a specific service token (service wallet)
      */
+    @GET(WALLET_SERVICE_TOKEN_BALANCE_PATH)
     suspend fun serviceTokenBalanceOfWallet(
-        walletAddress: String,
-        contractId: String
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
     ): GenericResponse<ServiceTokenBalance>
 
     /**
      * Transfer service tokens (service wallet)
      */
+    @POST(SERVICE_TOKEN_TRANSFER_PATH)
     suspend fun transferServiceToken(
-        walletAddress: String,
-        contractId: String,
-        request: TransferServiceTokenRequest
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Body request: TransferServiceTokenRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve balance of all fungibles (service wallet)
      */
+    @GET(WALLET_FUNGIBLE_TOKENS_BALANCE_PATH)
     suspend fun fungibleTokensBalanceOfWallet(
-        walletAddress: String,
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<FungibleBalance>>
 
     /**
      * Retrieve balance of a specific fungible (service wallet)
      */
+    @GET(WALLET_FUNGIBLE_TOKEN_BALANCE_PATH)
     suspend fun fungibleTokenBalanceOfWallet(
-        walletAddress: String,
-        contractId: String,
-        tokenType: String
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
     ): GenericResponse<FungibleBalance>
 
     /**
      * Transfer a fungible (service wallet)
      */
+    @POST(WALLET_FUNGIBLE_TOKEN_TRANSFER_PATH)
     suspend fun transferFungibleTokenOfWallet(
-        walletAddress: String,
-        contractId: String,
-        tokenType: String,
-        request: TransferFungibleTokenRequest
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: TransferFungibleTokenRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve balance of all non-fungibles (service wallet)
      */
+    @GET(WALLET_NON_FUNGIBLE_TOKENS_BALANCE_PATH)
     suspend fun nonFungibleTokenBalancesOfWallet(
-        walletAddress: String,
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<NonFungibleBalance>>
 
     /**
      * Retrieve balance of specific type of non-fungibles (service wallet)
      */
+    @GET(WALLET_NON_FUNGIBLE_TOKEN_BALANCES_BY_TYPE_PATH)
     suspend fun nonFungibleTokenBalancesOfWalletByType(
-        walletAddress: String,
-        contractId: String,
-        tokenType: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<TokenIndex>>
 
     /**
      * Retrieve balance of a specific non-fungible (service wallet)
      */
+    @GET(WALLET_NON_FUNGIBLE_TOKEN_BALANCE_PATH)
     suspend fun nonFungibleTokenBalanceOfWallet(
-        walletAddress: String,
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
     ): GenericResponse<TokenIndex>
 
     /**
      * Transfer a non-fungible (service wallet)
      */
+    @POST(WALLET_NON_FUNGIBLE_TOKEN_TRANSFER_PATH)
     suspend fun transferNonFungibleTokenOfWallet(
-        walletAddress: String,
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: TransferNonFungibleRequest
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: TransferNonFungibleRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Batch transfer non-fungibles (service wallet)
      */
+    @POST(WALLET_NON_FUNGIBLE_TOKEN_BATCH_TRANSFER_PATH)
     suspend fun batchTransferNonFungibleTokenOfWallet(
-        walletAddress: String,
-        contractId: String,
-        request: BatchTransferNonFungibleRequest
+        @Path("walletAddress") walletAddress: String,
+        @Path("contractId") contractId: String,
+        @Body request: BatchTransferNonFungibleRequest,
     ): GenericResponse<TransactionResponse>
 
     // item-tokens
     /**
      * Retrieve item token contract information
      */
-    suspend fun itemToken(contractId: String): GenericResponse<ItemToken>
+    @GET(ITEM_TOKEN_PATH)
+    suspend fun itemToken(
+        @Path("contractId") contractId: String,
+    ): GenericResponse<ItemToken>
 
     // fungibles
     /**
      * List all fungibles
      */
+    @GET(FUNGIBLE_TOKENS_PATH)
     suspend fun fungibleTokens(
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<FungibleToken>>
 
     /**
      * Retrieve fungible information
      */
-    suspend fun fungibleToken(contractId: String, tokenType: String): GenericResponse<FungibleToken>
+    @GET(FUNGIBLE_TOKEN_PATH)
+    suspend fun fungibleToken(
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+    ): GenericResponse<FungibleToken>
 
     /**
      * Retrieve all fungible holders
      */
+    @GET(FUNGIBLE_TOKEN_HOLDERS_PATH)
     suspend fun fungibleTokenHolders(
-        contractId: String,
-        tokenType: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<FungibleTokenHolder>>
 
     /**
      * Create a fungible
      */
+    @POST(FUNGIBLE_TOKEN_CREATE_PATH)
     suspend fun createFungible(
-        contractId: String,
-        request: FungibleTokenCreateUpdateRequest
+        @Path("contractId") contractId: String,
+        @Body request: FungibleTokenCreateUpdateRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Update fungible information
      */
+    @PUT(FUNGIBLE_TOKEN_UPDATE_PATH)
     suspend fun updateFungible(
-        contractId: String,
-        tokenType: String,
-        request: FungibleTokenCreateUpdateRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: FungibleTokenCreateUpdateRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Mint a fungible
      */
+    @POST(FUNGIBLE_TOKEN_MINT_PATH)
     suspend fun mintFungible(
-        contractId: String,
-        tokenType: String,
-        request: FungibleTokenMintRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: FungibleTokenMintRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Burn a fungible
      */
+    @POST(FUNGIBLE_TOKEN_BURN_PATH)
     suspend fun burnFungible(
-        contractId: String,
-        tokenType: String,
-        request: FungibleTokenItemTokenBurnRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: FungibleTokenItemTokenBurnRequest
     ): GenericResponse<TransactionResponse>
 
     // non-fungibles
     /**
      * List all non-fungibles
      */
+    @GET(NON_FUNGIBLE_TOKENS_PATH)
     suspend fun nonFungibleTokenTypes(
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<ItemTokenType>>
 
     /**
      * Create a non-fungible
      */
+    @POST(NON_FUNGIBLE_TOKENS_PATH)
     suspend fun createNonFungibleType(
-        contractId: String,
-        request: NonFungibleTokenCreateUpdateRequest
+        @Path("contractId") contractId: String,
+        @Body request: NonFungibleTokenCreateUpdateRequest
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve a non-fungible token type
      */
+    @GET(NON_FUNGIBLE_TOKEN_TYPE_PATH)
     suspend fun nonFungibleTokenType(
-        contractId: String,
-        tokenType: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<NonFungibleTokenType>
 
     /**
      * Update a non-fungible token type
      */
+    @PUT(NON_FUNGIBLE_TOKEN_TYPE_PATH)
     suspend fun updateNonFungibleTokenType(
-        contractId: String,
-        tokenType: String,
-        request: NonFungibleTokenCreateUpdateRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: NonFungibleTokenCreateUpdateRequest
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve non-fungible information
      */
+    @GET(NON_FUNGIBLE_TOKEN_ID_PATH)
     suspend fun nonFungibleToken(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
     ): GenericResponse<NonFungibleId>
 
     /**
      * Update non-fungible information
      */
+    @PUT(NON_FUNGIBLE_TOKEN_ID_PATH)
     suspend fun updateNonFungibleToken(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: NonFungibleTokenCreateUpdateRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: NonFungibleTokenCreateUpdateRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Mint a non-fungible
      */
+    @POST(NON_FUNGIBLE_TOKEN_MINT_PATH)
     suspend fun mintNonFungible(
-        contractId: String,
-        tokenType: String,
-        request: NonFungibleTokenMintRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: NonFungibleTokenMintRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Retrieve holders of a specific non-fungible token type
      */
+    @GET(NON_FUNGIBLE_TOKEN_TYPE_HOLDERS_PATH)
     suspend fun nonFungibleTokenTypeHolders(
-        contractId: String,
-        tokenType: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<NonFungibleTokenTypeHolder>>
 
     /**
      * Retrieve the holder of a specific non-fungible
      */
+    @GET(NON_FUNGIBLE_TOKEN_HOLDER_PATH)
     suspend fun nonFungibleTokenHolder(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String
     ): GenericResponse<NonFungibleTokenHolder>
 
     /**
      * Mint multiple non-fungibles
      */
+    @POST(NON_FUNGIBLE_TOKEN_MULTI_MINT_PATH)
     suspend fun multiMintNonFungible(
-        contractId: String,
-        request: NonFungibleTokenMultiMintRequest
+        @Path("contractId") contractId: String,
+        @Body request: NonFungibleTokenMultiMintRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Burn a non-fungible
      */
+    @POST(NON_FUNGIBLE_TOKEN_BURN_PATH)
     suspend fun burnNonFungible(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: NonFungibleTokenItemTokenBurnRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: NonFungibleTokenItemTokenBurnRequest
     ): GenericResponse<TransactionResponse>
 
     /**
      * List the children of a non-fungible
      */
+    @GET(NON_FUNGIBLE_TOKEN_CHILDREN_PATH)
     suspend fun nonFungibleTokenChildren(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<NonFungibleId>>
 
     /**
      * Retrieve the parent of a non-fungible
      */
+    @GET(NON_FUNGIBLE_TOKEN_PARENT_PATH)
     suspend fun nonFungibleTokenParent(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
     ): GenericResponse<NonFungibleId>
 
     /**
      * Retrieve the root of a non-fungible
      */
+    @GET(NON_FUNGIBLE_TOKEN_ROOT_PATH)
     suspend fun nonFungibleTokenRoot(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
     ): GenericResponse<NonFungibleId>
 
     /**
      * Attach a non-fungible to another
      */
+    @POST(NON_FUNGIBLE_TOKEN_PARENT_PATH)
     suspend fun attachNonFungible(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: NonFungibleTokenItemTokenAttachRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: NonFungibleTokenItemTokenAttachRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Detach a non-fungible from the parent
      */
+    @DELETE(NON_FUNGIBLE_TOKEN_PARENT_PATH)
     suspend fun detachNonFungible(
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: NonFungibleTokenItemTokenDetachRequest
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: NonFungibleTokenItemTokenDetachRequest,
+    ): GenericResponse<TransactionResponse>
+
+    @DELETE(NON_FUNGIBLE_TOKEN_PARENT_PATH)
+    suspend fun detachNonFungible(
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Query("serviceWalletAddress") serviceWalletAddress: String,
+        @Query("serviceWalletSecret") serviceWalletSecret: String,
+        @Query("tokenHolderAddress") tokenHolderAddress: String? = null,
+        @Query("tokenHolderUserId") tokenHolderUserId: String? = null,
     ): GenericResponse<TransactionResponse>
 
     // user api
     /**
      * Retrieve user information
      */
-    suspend fun userDetail(userId: String): GenericResponse<UserIdAddress>
+    @GET(USER_DETAIL_PATH)
+    suspend fun userDetail(
+        @Path("userId") userId: String,
+    ): GenericResponse<UserIdAddress>
 
     /**
      * Retrieve user wallet transaction history
      */
+    @GET(USER_TRANSACTIONS_PATH)
     suspend fun transactionOfUser(
-        userId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("userId") userId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<TxResultResponse>>
 
     /**
      * Retrieve base coin balance (user wallet)
      */
+    @GET(USER_BASE_COIN_BALANCE_PATH)
     suspend fun baseCoinBalanceOfUser(userId: String): GenericResponse<BaseCoinBalance>
 
     /**
      * Retrieve balance of all service tokens (user wallet)
      */
+    @GET(USER_SERVICE_TOKENS_BALANCE_PATH)
     suspend fun serviceTokenBalancesOfUser(
-        userId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("userId") userId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<ServiceTokenBalance>>
 
     /**
      * Retrieve balance of a specific service token (user wallet)
      */
+    @GET(USER_SERVICE_TOKEN_BALANCE_PATH)
     suspend fun serviceTokenBalanceOfUser(
-        userId: String,
+        @Path("userId") userId: String,
         contractId: String
     ): GenericResponse<ServiceTokenBalance>
 
     /**
      * Retrieve balance of all fungibles (user wallet)
      */
+    @GET(USER_FUNGIBLE_TOKENS_BALANCE_PATH)
     suspend fun fungibleTokenBalancesOfUser(
-        userId: String,
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<FungibleBalance>>
 
     /**
      * Retrieve balance of a specific fungible (user wallet)
      */
+    @GET(USER_FUNGIBLE_TOKEN_BALANCE_PATH)
     suspend fun fungibleTokenBalanceOfUser(
-        userId: String,
-        contractId: String,
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
         tokenType: String
     ): GenericResponse<FungibleBalance>
 
     /**
      * Retrieve balance of all non-fungibles (user wallet)
      */
+    @GET(USER_NON_FUNGIBLE_TOKENS_BALANCE_PATH)
     suspend fun nonFungibleTokenBalancesOfUser(
-        userId: String,
-        contractId: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<NonFungibleBalance>>
 
     /**
      * Retrieve balance of specific type of non-fungibles (user wallet)
      */
+    @GET(USER_NON_FUNGIBLE_TOKEN_BALANCES_BY_TYPE_PATH)
     suspend fun nonFungibleTokenBalancesOfUser(
-        userId: String,
-        contractId: String,
-        tokenType: String,
-        limit: Int = 10,
-        page: Int = 1,
-        orderBy: OrderBy = OrderBy.ASC
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Query("limit") limit: Int = 10,
+        @Query("page") page: Int = 1,
+        @Query("orderBy") orderBy: OrderBy = OrderBy.ASC,
     ): GenericResponse<Collection<TokenIndex>>
 
     /**
      * Retrieve balance of a specific non-fungible (service wallet)
      */
+    @GET(USER_NON_FUNGIBLE_TOKEN_BALANCE_PATH)
     suspend fun nonFungibleTokenBalanceOfUser(
-        userId: String,
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
     ): GenericResponse<TokenIndex>
 
     /**
      * Retrieve the status of a session token
      */
-    suspend fun requestSessionToken(requestSessionToken: String): GenericResponse<RequestSessionStatus>
+    @GET(REQUEST_SESSION_TOKEN_PATH)
+    suspend fun requestSessionToken(
+        @Path("requestSessionToken") requestSessionToken: String,
+    ): GenericResponse<RequestSessionStatus>
 
     /**
      * Commit a transaction signed by a user wallet
      */
-    suspend fun commitRequestSession(requestSessionToken: String): GenericResponse<TransactionResponse>
+    @POST(COMMIT_SESSION_TOKEN_PATH)
+    suspend fun commitRequestSession(
+        @Path("requestSessionToken") requestSessionToken: String,
+    ): GenericResponse<TransactionResponse>
 
     /**
      * Issue a session token for base coin transfer
      */
+    @POST(ISSUE_SESSION_TOKEN_FOR_BASE_COIN_PATH)
     suspend fun issueSessionTokenForBaseCoinTransfer(
-        userId: String,
-        requestType: RequestType
+        @Path("userId") userId: String,
+        @Query("requestType") requestType: String,
     ): GenericResponse<RequestSession>
 
     /**
      * Issue session token for service-token-proxy setting
      */
+    @POST(ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY)
     suspend fun issueSessionTokenForServiceTokenProxy(
-        userId: String,
-        contractId: String,
-        requestType: RequestType,
-        requestUser: UserAssetProxyRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Query("requestType") requestType: String,
+        @Body requestUser: UserAssetProxyRequest,
     ): GenericResponse<RequestSession>
 
     /**
      * Issue a session token for service token transfer
      */
+    @POST(ISSUE_SESSION_TOKEN_FOR_SERVICE_TOKEN_PATH)
     suspend fun issueSessionTokenForServiceTokenTransfer(
-        userId: String,
-        contractId: String,
-        requestType: RequestType,
-        request: UserServiceTokenTransferRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Query("requestType") requestType: String,
+        @Body request: UserServiceTokenTransferRequest,
     ): GenericResponse<RequestSession>
 
     /**
      * Issue a session token for proxy setting
      */
+    @POST(ISSUE_SESSION_TOKEN_FOR_ITEM_TOKEN_PROXY)
     suspend fun issueSessionTokenForItemTokenProxy(
-        userId: String,
-        contractId: String,
-        requestType: RequestType,
-        requestUser: UserAssetProxyRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Query("requestType") requestType: String,
+        @Body requestUser: UserAssetProxyRequest
     ): GenericResponse<RequestSession>
 
     /**
      * Retrieve whether the proxy set or not for service-token
      */
-    suspend fun isProxyOfServiceToken(userId: String, contractId: String): GenericResponse<ProxyStatus>
+    @GET(USER_SERVICE_TOKEN_IS_PROXY_PATH)
+    suspend fun isProxyOfServiceToken(
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+    ): GenericResponse<ProxyStatus>
 
 
     /**
      * Retrieve whether the proxy set or not
      */
-    suspend fun isProxyOfItemToken(userId: String, contractId: String): GenericResponse<ProxyStatus>
+    @GET(USER_ITEM_TOKEN_IS_PROXY_PATH)
+    suspend fun isProxyOfItemToken(
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+    ): GenericResponse<ProxyStatus>
 
+    @POST(USER_SERVICE_TOKEN_TRANSFER_PATH)
     suspend fun transferServiceTokenOfUser(
-        userId: String,
-        contractId: String,
-        request: TransferTokenOfUserRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Body request: TransferTokenOfUserRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Transfer a fungible (user wallet)
      */
+    @POST(USER_FUNGIBLE_TOKEN_TRANSFER_PATH)
     suspend fun transferFungibleTokenOfUser(
-        userId: String,
-        contractId: String,
-        tokenType: String,
-        request: TransferTokenOfUserRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Body request: TransferTokenOfUserRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Transfer a non-fungible (user wallet)
      */
+    @POST(USER_NON_FUNGIBLE_TOKEN_TRANSFER_PATH)
     suspend fun transferNonFungibleTokenOfUser(
-        userId: String,
-        contractId: String,
-        tokenType: String,
-        tokenIndex: String,
-        request: TransferNonFungibleOfUserRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Path("tokenType") tokenType: String,
+        @Path("tokenIndex") tokenIndex: String,
+        @Body request: TransferNonFungibleOfUserRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
      * Batch transfer non-fungibles (user wallet)
      */
+    @POST(USER_NON_FUNGIBLE_TOKEN_BATCH_TRANSFER_PATH)
     suspend fun batchTransferNonFungibleTokenOfUser(
-        userId: String,
-        contractId: String,
-        request: BatchTransferNonFungibleOfUserRequest
+        @Path("userId") userId: String,
+        @Path("contractId") contractId: String,
+        @Body request: BatchTransferNonFungibleOfUserRequest,
     ): GenericResponse<TransactionResponse>
 
 }

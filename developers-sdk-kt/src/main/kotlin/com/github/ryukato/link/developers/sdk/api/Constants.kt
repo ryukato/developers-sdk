@@ -121,7 +121,3 @@ const val USER_FUNGIBLE_TOKEN_TRANSFER_PATH =
 const val USER_NON_FUNGIBLE_TOKEN_TRANSFER_PATH =
     "/v1/users/{userId}/item-tokens/{contractId}/non-fungibles/{tokenType}/{tokenIndex}/transfer"
 const val USER_NON_FUNGIBLE_TOKEN_BATCH_TRANSFER_PATH = "/v1/users/{userId}/item-tokens/{contractId}/non-fungibles/batch-transfer"
-
-
-// headers
-const val TIME_STAMP_HEADER = "Timestamp"

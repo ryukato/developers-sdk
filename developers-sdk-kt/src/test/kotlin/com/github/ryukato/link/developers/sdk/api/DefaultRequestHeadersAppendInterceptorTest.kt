@@ -2,8 +2,6 @@ package com.github.ryukato.link.developers.sdk.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.github.ryukato.link.developers.sdk.model.request.OrderBy
-import com.github.ryukato.link.developers.sdk.security.NonceGenerator
-import com.github.ryukato.link.developers.sdk.security.SignatureGenerator
 import okhttp3.FormBody
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
@@ -48,7 +46,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
 
     @Test
     fun test_without_body_query_params() {
-        interceptor = DefaultRequestHeadersAppendInterceptor(
+        interceptor = DefaultRequestHeadersAppender(
             clock,
             defaultSignatureGenerator,
             nonceGenerator,
@@ -110,7 +108,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
             }
         }
 
-        interceptor = DefaultRequestHeadersAppendInterceptor(
+        interceptor = DefaultRequestHeadersAppender(
             clock,
             signatureGenerator,
             nonceGenerator,
@@ -162,7 +160,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
         val capturedRequestBody = mutableMapOf<String, Any?>()
         val signatureGenerator = createCaptureBodySignatureGenerator(capturedRequestBody)
 
-        interceptor = DefaultRequestHeadersAppendInterceptor(
+        interceptor = DefaultRequestHeadersAppender(
             clock,
             signatureGenerator,
             nonceGenerator,
@@ -214,7 +212,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
         val capturedRequestBody = mutableMapOf<String, Any?>()
         val signatureGenerator = createCaptureBodySignatureGenerator(capturedRequestBody)
 
-        interceptor = DefaultRequestHeadersAppendInterceptor(
+        interceptor = DefaultRequestHeadersAppender(
             clock,
             signatureGenerator,
             nonceGenerator,
@@ -269,7 +267,7 @@ class DefaultRequestHeadersAppendInterceptorTest {
         val capturedRequestBody = mutableMapOf<String, Any?>()
         val signatureGenerator = createCaptureBodySignatureGenerator(capturedRequestBody)
 
-        interceptor = DefaultRequestHeadersAppendInterceptor(
+        interceptor = DefaultRequestHeadersAppender(
             clock,
             signatureGenerator,
             nonceGenerator,
