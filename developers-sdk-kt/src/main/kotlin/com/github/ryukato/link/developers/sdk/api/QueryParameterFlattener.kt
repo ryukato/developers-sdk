@@ -16,8 +16,6 @@ interface QueryParameterOrderer {
 class DefaultOrderedQueryParameterFlattener: QueryParameterFlattener, QueryParameterOrderer {
     override fun flatten(queryParams: Map<String, List<String?>>): String {
         val orderedMap = order(queryParams)
-
-        @Suppress("UNCHECKED_CAST")
         return if (orderedMap.isEmpty()) {
             ""
         } else {

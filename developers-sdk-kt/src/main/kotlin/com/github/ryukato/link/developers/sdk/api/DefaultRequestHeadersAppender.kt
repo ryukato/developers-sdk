@@ -30,7 +30,6 @@ class DefaultRequestHeadersAppender(
     private val serviceApiSecret: String,
 ) : RequestHeadersAppender {
     override fun createNewHeaders(request: Request): Headers {
-        @Suppress("DuplicatedCode")
         val timestamp = applicationClock.instant().toEpochMilli()
         val nonce = nonceGenerator.newNonce()
 
