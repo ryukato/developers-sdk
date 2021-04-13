@@ -28,10 +28,10 @@ import {
 import {
   RequestType,
   AbstractTransactionRequest,
-  AbstractItemTokenBurnTransactionRequest,
+  AbstractTokenBurnTransactionRequest,
   UpdateServiceTokenRequest,
   MintServiceTokenRequest,
-  BurnServiceTokenRequest,
+  BurnFromServiceTokenRequest,
   PageRequest,
   OptionalTransactionSearchParameters,
   FungibleTokenCreateUpdateRequest,
@@ -179,10 +179,10 @@ export class HttpClient {
     return response;
   }
 
-  public async burnServiceToken(
+  public async burnFromServiceToken(
     contractId: string,
-    request: BurnServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
-    const path = `/v1/service-tokens/${contractId}/burn`;
+    request: BurnFromServiceTokenRequest): Promise<GenericResponse<TxResultResponse>> {
+    const path = `/v1/service-tokens/${contractId}/burn-from`;
     const response = await this.instance.post(path, request);
     return response;
   }
@@ -829,7 +829,7 @@ export class HttpClient {
     }
   }
 
-  private assertItemTokenBurnTransactionRequest(request: AbstractItemTokenBurnTransactionRequest) {
+  private assertItemTokenBurnTransactionRequest(request: AbstractTokenBurnTransactionRequest) {
     if (!request.fromUserId && !request.fromAddress) {
       this.logger.error("fromAddress or fromUserId, one of them is required");
       throw new Error("fromAddress or fromUserId, one of them is required")
