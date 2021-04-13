@@ -4,15 +4,15 @@ package com.github.ryukato.link.developers.sdk.api
 
 import com.github.ryukato.link.developers.sdk.model.request.BatchTransferNonFungibleOfUserRequest
 import com.github.ryukato.link.developers.sdk.model.request.BatchTransferNonFungibleRequest
-import com.github.ryukato.link.developers.sdk.model.request.BurnServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.BurnFromServiceTokenRequest
 import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenCreateUpdateRequest
-import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenItemTokenBurnRequest
+import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenBurnRequest
 import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenMintRequest
 import com.github.ryukato.link.developers.sdk.model.request.MemoRequest
 import com.github.ryukato.link.developers.sdk.model.request.MintServiceTokenRequest
 import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenCreateUpdateRequest
 import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenAttachRequest
-import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenBurnRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenBurnRequest
 import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenDetachRequest
 import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMintRequest
 import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMultiMintRequest
@@ -120,9 +120,9 @@ interface ApiClient {
      * Burn a service token
      */
     @POST(SERVICE_TOKEN_BURN_PATH)
-    suspend fun burnServiceToken(
+    suspend fun burnFromServiceToken(
         @Path("contractId") contractId: String,
-        @Body request: BurnServiceTokenRequest,
+        @Body requestFrom: BurnFromServiceTokenRequest,
     ): GenericResponse<TransactionResponse>
 
     /**
@@ -141,7 +141,7 @@ interface ApiClient {
     /**
      * Query memo of a transaction by tx-hash
      */
-    @GET(MEMO_PATH)
+    @GET(MEMO_BY_TX_HASH_PATH)
     suspend fun queryMemo(@Path("txHash") txHash: String): GenericResponse<Memo>
 
     // wallet
@@ -388,7 +388,7 @@ interface ApiClient {
     suspend fun burnFungible(
         @Path("contractId") contractId: String,
         @Path("tokenType") tokenType: String,
-        @Body request: FungibleTokenItemTokenBurnRequest
+        @Body request: FungibleTokenBurnRequest
     ): GenericResponse<TransactionResponse>
 
     // non-fungibles
@@ -504,7 +504,7 @@ interface ApiClient {
         @Path("contractId") contractId: String,
         @Path("tokenType") tokenType: String,
         @Path("tokenIndex") tokenIndex: String,
-        @Body request: NonFungibleTokenItemTokenBurnRequest
+        @Body request: NonFungibleTokenBurnRequest
     ): GenericResponse<TransactionResponse>
 
     /**

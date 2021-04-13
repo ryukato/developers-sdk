@@ -1,13 +1,20 @@
 package com.github.ryukato.link.developers.sdk.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.ryukato.link.developers.sdk.model.request.BurnFromServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.MemoRequest
+import com.github.ryukato.link.developers.sdk.model.request.MintServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.OrderBy
+import com.github.ryukato.link.developers.sdk.model.request.UpdateServiceTokenRequest
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.BeforeAll
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
 import java.time.Clock
+import java.time.LocalDateTime
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ApiClientTest {
@@ -28,6 +35,7 @@ class ApiClientTest {
     )
 
     private lateinit var requestHeadersAppender: RequestHeadersAppender
+    private lateinit var requestQueryParameterOrderer: RequestQueryParameterOrderer
 
     @BeforeAll
     fun setUpAll() {
@@ -44,9 +52,12 @@ class ApiClientTest {
             serviceApiKey,
             serviceApiSecret
         )
+        requestQueryParameterOrderer = DefaultRequestQueryParameterOrderer()
+
         apiClient = ApiClientFactory().build(
             HOST_URL,
             requestHeadersAppender,
+            requestQueryParameterOrderer,
             true,
             jacksonObjectMapper()
         )
@@ -62,6 +73,141 @@ class ApiClientTest {
     fun testServiceDetail(): Unit = runBlocking {
         val response = apiClient.serviceDetail(SERVICE_ID)
         assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testServiceTokens(): Unit = runBlocking {
+        val response = apiClient.serviceTokens()
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testServiceToken(): Unit = runBlocking {
+        val response = apiClient.serviceToken("493aba33")
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testServiceTokenHolders(): Unit = runBlocking {
+        val response = apiClient.serviceTokenHolders(
+            "493aba33",
+            10,
+            1,
+            OrderBy.DESC
+        )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testUpdateServiceToken(): Unit = runBlocking {
+        val response = apiClient.updateServiceToken(
+            "493aba33",
+            UpdateServiceTokenRequest(
+                ownerAddress1,
+                ownerAddress1Secret,
+                "yyoosvctoken12"
+            )
+        )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testMintServiceToken(): Unit = runBlocking {
+        val response = apiClient.mintServiceToken(
+            "493aba33",
+            MintServiceTokenRequest(
+                ownerAddress = ownerAddress1,
+                ownerSecret = ownerAddress1Secret,
+                toAddress = ownerAddress2,
+                amount = "1000"
+            )
+        )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testBurnServiceToken(): Unit = runBlocking {
+        val response = apiClient.burnFromServiceToken(
+            "493aba33",
+            BurnFromServiceTokenRequest(
+                ownerAddress = ownerAddress1,
+                ownerSecret = ownerAddress1Secret,
+                fromAddress = ownerAddress1,
+                amount = "1"
+            )
+        )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+
+    @Test
+    fun testQueryTransaction(): Unit = runBlocking {
+        val response =
+            apiClient.transaction("C96F342BAA477DC18B6B085F8F55EEA27572DF37D999BE67BC5DECFA15F65FA6")
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testSaveMemoAndQuery(): Unit {
+        val testMemo = "test"
+        runBlocking {
+            val response =
+                apiClient.saveMemo(
+                    MemoRequest(
+                        memo = testMemo,
+                        walletAddress = ownerAddress1,
+                        walletSecret = ownerAddress1Secret
+                    )
+                )
+            assertNotNull(response)
+            assertEquals(1002, response.statusCode)
+//            val txHash = response.responseData?.txHash!!
+//
+//            delay(2000)
+//            val memoResponse = apiClient.queryMemo(txHash)
+//            val actualMemo = memoResponse.responseData?.memo
+//            assertEquals(testMemo, actualMemo)
+        }
+    }
+
+    @Test
+    fun testQueryWallets(): Unit = runBlocking {
+        val response =
+            apiClient.wallets()
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testQueryWallet(): Unit = runBlocking {
+        val response =
+            apiClient.wallet(ownerAddress1)
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testQueryWalletTransactions(): Unit = runBlocking {
+        val response =
+            apiClient.transactionOfWallet(
+                walletAddress = ownerAddress1,
+                after = LocalDateTime.now().minusYears(1).toEpochMilli(),
+                before = LocalDateTime.now().toEpochMilli(),
+                msgType = "token/MsgMint",
+                limit = 10,
+                page = 1,
+                orderBy = OrderBy.DESC
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
     }
 
     companion object {

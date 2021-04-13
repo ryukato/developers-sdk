@@ -16,7 +16,7 @@ const val SERVICE_DETAIL_API_PATH = "/v1/services/{serviceId}"
 // service-token
 const val SERVICE_TOKENS_PATH = "/v1/service-tokens"
 const val SERVICE_TOKEN_PATH = "/v1/service-tokens/{contractId}"
-const val SERVICE_TOKEN_BURN_PATH = "/v1/service-tokens/{contractId}/burn"
+const val SERVICE_TOKEN_BURN_PATH = "/v1/service-tokens/{contractId}/burn-from"
 const val SERVICE_TOKEN_MINT_PATH = "/v1/service-tokens/{contractId}/mint"
 const val SERVICE_TOKEN_HOLDERS_PATH = "$SERVICE_TOKEN_PATH/holders"
 

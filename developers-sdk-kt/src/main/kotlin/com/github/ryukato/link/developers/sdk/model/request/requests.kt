@@ -1,20 +1,26 @@
 package com.github.ryukato.link.developers.sdk.model.request
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import java.math.BigInteger
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class UpdateServiceTokenRequest(
     val ownerAddress: String,
     val ownerSecret: String,
     val name: String?,
-    val meta: String?
+    val meta: String? = null
 )
 
-data class BurnServiceTokenRequest(
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class BurnFromServiceTokenRequest(
     val ownerAddress: String,
     val ownerSecret: String,
+    val fromAddress: String? = null,
+    val fromUserId: String? = null,
     val amount: String
-)
+): AbstractBurnTransactionRequest(fromUserId, fromAddress)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class MintServiceTokenRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -29,6 +35,7 @@ data class MemoRequest(
     val walletSecret: String
 )
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferBaseCoinRequest(
     val walletSecret: String,
     val toAddress: String? = null,
@@ -36,6 +43,7 @@ data class TransferBaseCoinRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferServiceTokenRequest(
     val walletSecret: String,
     val toAddress: String? = null,
@@ -43,6 +51,7 @@ data class TransferServiceTokenRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferFungibleTokenRequest(
     val walletSecret: String,
     val toAddress: String? = null,
@@ -50,6 +59,7 @@ data class TransferFungibleTokenRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferTokenOfUserRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -58,12 +68,14 @@ data class TransferTokenOfUserRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferNonFungibleRequest(
     val walletSecret: String,
     val toAddress: String? = null,
     val toUserId: String? = null
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class TransferNonFungibleOfUserRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -71,6 +83,7 @@ data class TransferNonFungibleOfUserRequest(
     val toUserId: String? = null
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class BatchTransferNonFungibleRequest(
     val walletSecret: String,
     val toAddress: String? = null,
@@ -78,6 +91,7 @@ data class BatchTransferNonFungibleRequest(
     val transferList: Collection<TokenId>
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class BatchTransferNonFungibleOfUserRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -103,6 +117,7 @@ data class FungibleTokenCreateUpdateRequest(
     val meta: String? = null
 )
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class FungibleTokenMintRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -111,14 +126,16 @@ data class FungibleTokenMintRequest(
     val amount: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
-data class FungibleTokenItemTokenBurnRequest(
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class FungibleTokenBurnRequest(
     val ownerAddress: String,
     val ownerSecret: String,
     val fromUserId: String? = null,
     val fromAddress: String? = null,
     val amount: String
-) : AbstractItemTokenBurnTransactionRequest(fromUserId, fromAddress)
+) : AbstractBurnTransactionRequest(fromUserId, fromAddress)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenCreateUpdateRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -126,6 +143,7 @@ data class NonFungibleTokenCreateUpdateRequest(
     val meta: String? = null
 )
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenMintRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -135,6 +153,7 @@ data class NonFungibleTokenMintRequest(
     val meta: String
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenMultiMintRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -143,19 +162,22 @@ data class NonFungibleTokenMultiMintRequest(
     val mintList: Collection<MultiMintNonFungible>
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class MultiMintNonFungible(
     val tokenType: String,
     val name: String,
     val meta: String?
 )
 
-data class NonFungibleTokenItemTokenBurnRequest(
+@JsonInclude(JsonInclude.Include.NON_NULL)
+data class NonFungibleTokenBurnRequest(
     val ownerAddress: String,
     val ownerSecret: String,
     val fromUserId: String? = null,
     val fromAddress: String? = null
-) : AbstractItemTokenBurnTransactionRequest(fromUserId, fromAddress)
+) : AbstractBurnTransactionRequest(fromUserId, fromAddress)
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenItemTokenAttachRequest(
     val parentTokenId: String,
     val serviceWalletAddress: String,
@@ -170,6 +192,7 @@ data class NonFungibleTokenItemTokenAttachRequest(
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenItemTokenDetachRequest(
     val serviceWalletAddress: String,
     val serviceWalletSecret: String,
@@ -183,6 +206,7 @@ data class NonFungibleTokenItemTokenDetachRequest(
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class UserServiceTokenTransferRequest(
     val toAddress: String? = null,
     val toUserId: String? = null,
@@ -200,12 +224,13 @@ data class UserServiceTokenTransferRequest(
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class UserAssetProxyRequest(
     val ownerAddress: String,
     val landingUri: String?
 )
 
-abstract class AbstractItemTokenBurnTransactionRequest(
+abstract class AbstractBurnTransactionRequest(
     fromUserId: String?,
     fromAddress: String?
 ) {

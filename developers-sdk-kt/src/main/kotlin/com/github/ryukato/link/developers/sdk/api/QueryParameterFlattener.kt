@@ -6,13 +6,6 @@ interface QueryParameterFlattener {
     fun flatten(queryParams: Map<String, List<String?>>): String
 }
 
-interface QueryParameterOrderer {
-    fun sort(queryParams: Map<String, List<String?>>): Map<String, List<String?>>
-    fun order(queryParams: Map<String, List<String?>>): Map<String, List<String?>> {
-        return sort(queryParams)
-    }
-}
-
 class DefaultOrderedQueryParameterFlattener: QueryParameterFlattener, QueryParameterOrderer {
     override fun flatten(queryParams: Map<String, List<String?>>): String {
         val orderedMap = order(queryParams)

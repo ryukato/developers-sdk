@@ -93,9 +93,10 @@ class DefaultSignatureGenerator(
         }
         if (flattenBody.isNotBlank()) {
             if (!stringBuilder.contains('?')) {
-                stringBuilder.append("?")
+                stringBuilder.append("?").append(flattenBody)
+            } else {
+                stringBuilder.append("&").append(flattenBody)
             }
-            stringBuilder.append("&").append(flattenBody)
         }
 
         return stringBuilder.toString()

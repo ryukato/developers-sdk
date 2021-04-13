@@ -12,11 +12,12 @@ open class ApiClientFactory {
     fun build(
         baseUrl: String,
         requestHeadersAppender: RequestHeadersAppender,
+        requestQueryParameterOrderer: RequestQueryParameterOrderer = DefaultRequestQueryParameterOrderer(),
         enableLogging: Boolean,
         jacksonObjectMapper: ObjectMapper = jacksonObjectMapper(),
     ): ApiClient {
         val okHttp3Client: OkHttpClient =
-            httpClient(requestHeadersAppender, enableLogging)
+            httpClient(requestHeadersAppender, requestQueryParameterOrderer, enableLogging)
         val retrofit = retrofit(baseUrl, okHttp3Client, jacksonObjectMapper)
         return retrofit.create(ApiClient::class.java)
     }
@@ -36,6 +37,7 @@ open class ApiClientFactory {
 
     open fun httpClient(
         requestHeadersAppender: RequestHeadersAppender,
+        requestQueryParameterOrderer: RequestQueryParameterOrderer,
         enableLogging: Boolean,
     ): OkHttpClient {
         val logLevel = if (!enableLogging) HttpLoggingInterceptor.Level.NONE else HttpLoggingInterceptor.Level.BODY
@@ -44,6 +46,7 @@ open class ApiClientFactory {
 
         return OkHttpClient.Builder()
             .addInterceptor(requestHeadersAppender)
+            .addInterceptor(requestQueryParameterOrderer)
             .addInterceptor(loggingInterceptor).build()
     }
 }
