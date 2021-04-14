@@ -1,5 +1,6 @@
 import _ from "lodash";
-export class AbstractItemTokenBurnTransactionRequest {
+
+export class AbstractTokenBurnTransactionRequest {
 
   constructor(
     readonly fromUserId?: string,
@@ -32,12 +33,16 @@ export class UpdateServiceTokenRequest {
   ) { }
 }
 
-export class BurnServiceTokenRequest {
+export class BurnFromServiceTokenRequest extends AbstractTokenBurnTransactionRequest{
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
-    readonly amount: string
-  ) { }
+    readonly amount: string,
+    fromUserId?: string,
+    fromAddress?: string,
+  ) {
+    super(fromUserId, fromAddress)
+  }
 }
 
 export class MintServiceTokenRequest extends AbstractTransactionRequest {
@@ -201,7 +206,7 @@ export class FungibleTokenMintRequest extends AbstractTransactionRequest {
   }
 }
 
-export class FungibleTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
+export class FungibleTokenBurnRequest extends  AbstractTokenBurnTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
@@ -255,7 +260,7 @@ export class MultiMintNonFungible {
   ) { }
 }
 
-export class NonFungibleTokenBurnRequest extends AbstractItemTokenBurnTransactionRequest {
+export class NonFungibleTokenBurnRequest extends  AbstractTokenBurnTransactionRequest {
   constructor(
     readonly ownerAddress: string,
     readonly ownerSecret: string,
