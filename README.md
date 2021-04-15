@@ -16,11 +16,11 @@ For more details, see [developers-sdk-kt/README](https://github.com/ryukato/deve
 
 ## SDK for JavaScript
 This is a library project to support development with Typescript and JavaScript languages.
-For more details, see [developers-sdk-js/README](https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-js/README.md).
+For more details, see [developers-sdk-js/README](https://github.com/ryukato/developers-sdk-js/blob/master/README.md).
 
 ## SDK for Python
 SDK is for Python is coming!
-For more details, see [developers-sdk-py/README](https://github.com/ryukato/developers-sdk/blob/master/developers-sdk-py/README.md).
+For more details, see [developers-sdk-py/README](https://github.com/ryukato/developers-sdk-py/blob/master/README.md).
 
 ## How to contribute
 Any suggestions or questions?
