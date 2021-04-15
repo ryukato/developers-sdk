@@ -108,6 +108,14 @@ data class TokenId(val tokenId: String) {
         require(tokenId.length == tokenIdLength) { "Invalid tokenId: length of token-id has to be 16" }
         require(tokenIdFormat.matches(tokenId)) { "Invalid tokenId: invalid format of tokenId, valid format is $tokenIdFormat" }
     }
+
+    companion object {
+        fun fromMulti(identifiers: Set<String>): Collection<TokenId> {
+            return identifiers.map {
+                TokenId(it)
+            }
+        }
+    }
 }
 
 data class FungibleTokenCreateUpdateRequest(
