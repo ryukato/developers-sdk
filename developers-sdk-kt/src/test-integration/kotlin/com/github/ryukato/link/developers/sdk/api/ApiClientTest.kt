@@ -707,14 +707,6 @@ class ApiClientTest {
 
     @Test
     fun testNonFungibleTokenParent(): Unit = runBlocking {
-//        val response =
-//            apiClient.nonFungibleTokenParent(
-//                contractId = ITEM_TOKEN_CONTRACT_ID,
-//                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
-//                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
-//            )
-//        assertNotNull(response)
-//        assertEquals(4047, response.statusCode)
         val wrappedResponse : ResultWrapper<GenericResponse<NonFungibleId>> =
         ApiClientWrapper(jacksonObjectMapper()).invoke {
             apiClient.nonFungibleTokenParent(
@@ -728,6 +720,7 @@ class ApiClientTest {
         assertEquals(404, (wrappedResponse as ResultWrapper.GenericError).code)
         assertEquals(4047, wrappedResponse.error?.statusCode)
 
+        @Suppress("USELESS_IS_CHECK")
         println(
             when(wrappedResponse) {
                 is ResultWrapper.NetworkError -> Unit // do some error handling
