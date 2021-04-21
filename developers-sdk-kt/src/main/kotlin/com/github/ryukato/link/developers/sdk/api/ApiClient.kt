@@ -55,6 +55,7 @@ import com.github.ryukato.link.developers.sdk.model.response.WalletResponse
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
+import retrofit2.http.HTTP
 import retrofit2.http.POST
 import retrofit2.http.PUT
 import retrofit2.http.Path
@@ -554,23 +555,12 @@ interface ApiClient {
     /**
      * Detach a non-fungible from the parent
      */
-    @DELETE(NON_FUNGIBLE_TOKEN_PARENT_PATH)
+    @HTTP(method = "DELETE", hasBody = true, path = NON_FUNGIBLE_TOKEN_PARENT_PATH)
     suspend fun detachNonFungible(
         @Path("contractId") contractId: String,
         @Path("tokenType") tokenType: String,
         @Path("tokenIndex") tokenIndex: String,
         @Body request: NonFungibleTokenItemTokenDetachRequest,
-    ): GenericResponse<TransactionResponse>
-
-    @DELETE(NON_FUNGIBLE_TOKEN_PARENT_PATH)
-    suspend fun detachNonFungible(
-        @Path("contractId") contractId: String,
-        @Path("tokenType") tokenType: String,
-        @Path("tokenIndex") tokenIndex: String,
-        @Query("serviceWalletAddress") serviceWalletAddress: String,
-        @Query("serviceWalletSecret") serviceWalletSecret: String,
-        @Query("tokenHolderAddress") tokenHolderAddress: String? = null,
-        @Query("tokenHolderUserId") tokenHolderUserId: String? = null,
     ): GenericResponse<TransactionResponse>
 
     // user api

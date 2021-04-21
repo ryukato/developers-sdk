@@ -118,6 +118,7 @@ data class TokenId(val tokenId: String) {
     }
 }
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 data class FungibleTokenCreateUpdateRequest(
     val ownerAddress: String,
     val ownerSecret: String,
@@ -158,7 +159,7 @@ data class NonFungibleTokenMintRequest(
     val toAddress: String? = null,
     val toUserId: String? = null,
     val name: String,
-    val meta: String
+    val meta: String? = null
 ) : AbstractTransactionRequest(toAddress, toUserId)
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -174,15 +175,15 @@ data class NonFungibleTokenMultiMintRequest(
 data class MultiMintNonFungible(
     val tokenType: String,
     val name: String,
-    val meta: String?
+    val meta: String? = null
 )
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 data class NonFungibleTokenBurnRequest(
     val ownerAddress: String,
     val ownerSecret: String,
-    val fromUserId: String? = null,
-    val fromAddress: String? = null
+    val fromAddress: String? = null,
+    val fromUserId: String? = null
 ) : AbstractBurnTransactionRequest(fromUserId, fromAddress)
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

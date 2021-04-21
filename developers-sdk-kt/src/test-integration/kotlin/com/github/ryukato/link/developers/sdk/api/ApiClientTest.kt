@@ -1,12 +1,21 @@
 package com.github.ryukato.link.developers.sdk.api
 
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.github.ryukato.link.developers.sdk.api.wrapper.ApiClientWrapper
 import com.github.ryukato.link.developers.sdk.model.request.BatchTransferNonFungibleRequest
 import com.github.ryukato.link.developers.sdk.model.request.BurnFromServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenBurnRequest
 import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenCreateUpdateRequest
 import com.github.ryukato.link.developers.sdk.model.request.FungibleTokenMintRequest
 import com.github.ryukato.link.developers.sdk.model.request.MemoRequest
 import com.github.ryukato.link.developers.sdk.model.request.MintServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.request.MultiMintNonFungible
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenBurnRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenCreateUpdateRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenAttachRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenItemTokenDetachRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMintRequest
+import com.github.ryukato.link.developers.sdk.model.request.NonFungibleTokenMultiMintRequest
 import com.github.ryukato.link.developers.sdk.model.request.OrderBy
 import com.github.ryukato.link.developers.sdk.model.request.TokenId
 import com.github.ryukato.link.developers.sdk.model.request.TransferBaseCoinRequest
@@ -14,9 +23,14 @@ import com.github.ryukato.link.developers.sdk.model.request.TransferFungibleToke
 import com.github.ryukato.link.developers.sdk.model.request.TransferNonFungibleRequest
 import com.github.ryukato.link.developers.sdk.model.request.TransferServiceTokenRequest
 import com.github.ryukato.link.developers.sdk.model.request.UpdateServiceTokenRequest
+import com.github.ryukato.link.developers.sdk.model.response.GenericResponse
+import com.github.ryukato.link.developers.sdk.model.response.NonFungibleId
+import com.github.ryukato.link.developers.sdk.model.response.ResultWrapper
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertNotNull
+import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.TestInstance
@@ -358,7 +372,7 @@ class ApiClientTest {
                 walletAddress = ownerAddress1,
                 contractId = ITEM_TOKEN_CONTRACT_ID,
                 tokenType = NON_FUNGIBLE_TOKEN_TYPE,
-                tokenIndex =NON_FUNGIBLE_TOKEN_INDEX,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2,
             )
         assertNotNull(response)
         assertEquals(1000, response.statusCode)
@@ -371,7 +385,7 @@ class ApiClientTest {
                 walletAddress = ownerAddress1,
                 contractId = SERVICE_TOKEN_CONTRACT_ID,
                 tokenType = NON_FUNGIBLE_TOKEN_TYPE,
-                tokenIndex =NON_FUNGIBLE_TOKEN_INDEX,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX,
                 TransferNonFungibleRequest(
                     walletSecret = ownerAddress1Secret,
                     toAddress = ownerAddress2
@@ -491,6 +505,284 @@ class ApiClientTest {
         assertEquals(1002, response.statusCode)
     }
 
+    @Test
+    fun testBurnFungible(): Unit = runBlocking {
+        val response =
+            apiClient.burnFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = FUNGIBLE_TOKEN_TYPE,
+                request = FungibleTokenBurnRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    fromAddress = ownerAddress2,
+                    amount = "1"
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testQueryNonFungibleTokenTypes(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenTypes(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                page = 1,
+                limit = 10,
+                orderBy = OrderBy.DESC
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testQueryNonFungibleTokenType(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenType(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                page = 1,
+                limit = 10,
+                orderBy = OrderBy.DESC
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testCreateNonFungibleType(): Unit = runBlocking {
+        val response =
+            apiClient.createNonFungibleType(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                request = NonFungibleTokenCreateUpdateRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    name = "nftType1"
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testUpdateNonFungibleTokenType(): Unit = runBlocking {
+        val response =
+            apiClient.updateNonFungibleTokenType(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                request = NonFungibleTokenCreateUpdateRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    name = "nft022"
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testQueryNonFungibleToken(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleToken(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testUpdateNonFungibleToken(): Unit = runBlocking {
+        val response =
+            apiClient.updateNonFungibleToken(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2,
+                request = NonFungibleTokenCreateUpdateRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    name = "nft022"
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testMintNonFungible(): Unit = runBlocking {
+        val response =
+            apiClient.mintNonFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                request = NonFungibleTokenMintRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    toAddress = ownerAddress2,
+                    name = "nft100"
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testQueryNonFungibleTokenTypeHolders(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenTypeHolders(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                page = 1,
+                limit = 2,
+                orderBy = OrderBy.ASC
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testQueryNonFungibleTokenHolder(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenHolder(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testMultiMintNonFungible(): Unit = runBlocking {
+        val response =
+            apiClient.multiMintNonFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                request = NonFungibleTokenMultiMintRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    toAddress = ownerAddress2,
+                    mintList = listOf(
+                        MultiMintNonFungible(
+                            tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                            name = "nft300"
+                        )
+                    )
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testBurnNonFungible(): Unit = runBlocking {
+        val response =
+            apiClient.burnNonFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2,
+                request = NonFungibleTokenBurnRequest(
+                    ownerAddress = ownerAddress1,
+                    ownerSecret = ownerAddress1Secret,
+                    fromAddress = ownerAddress2
+                )
+            )
+        assertNotNull(response)
+        assertEquals(1002, response.statusCode)
+    }
+
+    @Test
+    fun testNonFungibleTokenChildren(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenChildren(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2,
+                page = 1,
+                limit = 2,
+                orderBy = OrderBy.ASC
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testNonFungibleTokenParent(): Unit = runBlocking {
+//        val response =
+//            apiClient.nonFungibleTokenParent(
+//                contractId = ITEM_TOKEN_CONTRACT_ID,
+//                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+//                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
+//            )
+//        assertNotNull(response)
+//        assertEquals(4047, response.statusCode)
+        val wrappedResponse : ResultWrapper<GenericResponse<NonFungibleId>> =
+        ApiClientWrapper(jacksonObjectMapper()).invoke {
+            apiClient.nonFungibleTokenParent(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
+            )
+        }
+
+        assertTrue(wrappedResponse is ResultWrapper.GenericError)
+        assertEquals(404, (wrappedResponse as ResultWrapper.GenericError).code)
+        assertEquals(4047, wrappedResponse.error?.statusCode)
+
+        println(
+            when(wrappedResponse) {
+                is ResultWrapper.NetworkError -> Unit // do some error handling
+                is ResultWrapper.GenericError -> wrappedResponse.error // do some error handling
+                is ResultWrapper.Success -> wrappedResponse.value // // do handle successful response
+            }
+        )
+    }
+
+    @Test
+    fun testNonFungibleTokenRoot(): Unit = runBlocking {
+        val response =
+            apiClient.nonFungibleTokenRoot(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX2
+            )
+        assertNotNull(response)
+        assertEquals(1000, response.statusCode)
+    }
+
+    @Test
+    fun testAttachAndDetachNonFungible(): Unit = runBlocking {
+        val attachResponse =
+            apiClient.attachNonFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX3,
+                request = NonFungibleTokenItemTokenAttachRequest(
+                    parentTokenId = "$NON_FUNGIBLE_TOKEN_TYPE$NON_FUNGIBLE_TOKEN_INDEX2",
+                    serviceWalletAddress = ownerAddress1,
+                    serviceWalletSecret = ownerAddress1Secret,
+                    tokenHolderAddress = ownerAddress1
+                )
+            )
+        assertNotNull(attachResponse)
+        assertEquals(1002, attachResponse.statusCode)
+
+        delay(2000) //wait for tx confirmed
+        val detachResponse =
+            apiClient.detachNonFungible(
+                contractId = ITEM_TOKEN_CONTRACT_ID,
+                tokenType = NON_FUNGIBLE_TOKEN_TYPE,
+                tokenIndex = NON_FUNGIBLE_TOKEN_INDEX3,
+                request = NonFungibleTokenItemTokenDetachRequest(
+                    serviceWalletAddress = ownerAddress1,
+                    serviceWalletSecret = ownerAddress1Secret,
+                    tokenHolderAddress = ownerAddress1
+                )
+            )
+        assertNotNull(detachResponse)
+//        assertEquals(1002, detachResponse.statusCode)
+        println(detachResponse)
+    }
+
     companion object {
         const val HOST_URL = "https://test-api.blockchain.line.me"
         const val SERVICE_ID = "5016b367-eae8-44cb-8052-6672b498d894"
@@ -498,7 +790,10 @@ class ApiClientTest {
         const val ITEM_TOKEN_CONTRACT_ID = "1c396d46"
         const val FUNGIBLE_TOKEN_TYPE = "00000002"
         const val NON_FUNGIBLE_TOKEN_TYPE = "10000002"
-        const val NON_FUNGIBLE_TOKEN_INDEX ="00000002"
+        const val NON_FUNGIBLE_TOKEN_INDEX = "00000002"
+        const val NON_FUNGIBLE_TOKEN_INDEX2 = "00000003"
+        const val NON_FUNGIBLE_TOKEN_INDEX3 = "00000006"
+
         const val LINE_USER_ID = "U9fc03e78e1ae958b1bd3633cfb48acb9"
         const val LINE_USER_WALLET_ADDRESS = "tlink1p07h3gj6n0mhqlj0tdxaltlsk727hrujcprmqu"
 

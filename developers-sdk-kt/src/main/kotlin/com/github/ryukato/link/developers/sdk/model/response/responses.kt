@@ -183,6 +183,7 @@ data class NonFungibleTokenType(
     val totalMint: BigInteger,
     val totalBurn: BigInteger,
     val createdAt: Long,
+    @JsonProperty("token")
     val tokens: List<NonFungibleIndex>
 )
 
@@ -237,4 +238,14 @@ class RequestSessionStatusDeserializer(): StdDeserializer<RequestSessionStatus>(
 
 data class ProxyStatus(val isApproved: Boolean)
 
+data class ErrorResponse(
+    val responseTime: Long,
+    val statusCode: Int,
+    val statusMessage: String
+)
 
+sealed class ResultWrapper<out T> {
+    data class Success<out T>(val value: T): ResultWrapper<T>()
+    data class GenericError(val code: Int? = null, val error: ErrorResponse? = null): ResultWrapper<Nothing>()
+    object NetworkError: ResultWrapper<Nothing>()
+}
