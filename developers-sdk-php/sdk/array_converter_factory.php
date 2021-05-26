@@ -1,6 +1,6 @@
 <?php
 
-namespace Ryukato;
+namespace LineDevelopersSdk;
 
 require_once 'vendor/autoload.php';
 

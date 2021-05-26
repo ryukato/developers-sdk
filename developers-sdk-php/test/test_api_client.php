@@ -5,11 +5,11 @@ require_once '../sdk/api_client.php';
 use Tebru\Retrofit\Retrofit;
 use Tebru\RetrofitHttp\Guzzle6\Guzzle6HttpClient;
 
-use Ryukato\ApiClient;
-use Ryukato\AuthorizedClientBuilder;
-use Ryukato\ArrayConverterFactory;
+use LineDevelopersSdk\ApiClient;
+use LineDevelopersSdk\AuthorizedClientBuilder;
+use LineDevelopersSdk\ArrayConverterFactory;
 
-$api_secret = "9256bf8a-2b86-42fe-b3e0-d3079d0141fe";
+$api_secret = getenv("API_SECRET", true) ? :"9256bf8a-2b86-42fe-b3e0-d3079d0141fe";
 
 $retrofit = Retrofit::builder()
     ->setBaseUrl('http://localhost:9999')
@@ -17,7 +17,7 @@ $retrofit = Retrofit::builder()
     ->addConverterFactory(new ArrayConverterFactory())
     ->build();
 
-$service = $retrofit->create(Ryukato\ApiClient::class);
+$service = $retrofit->create(LineDevelopersSdk\ApiClient::class);
 
 $body = [
             "ownerAddress" => "tlink1fr9mpexk5yq3hu6jc0npajfsa0x7tl427fuveq",

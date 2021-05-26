@@ -1,6 +1,6 @@
 <?php
 
-namespace Ryukato;
+namespace LineDevelopersSdk;
 
 require_once 'vendor/autoload.php';
 require_once 'signature_generator.php';
@@ -68,7 +68,8 @@ class AuthorizedClientBuilder {
 
             return $r->withHeader('Signature', $signature)
                      ->withHeader('Nonce', $nonce)
-                     ->withHeader('Timestamp', $timestamp);
+                     ->withHeader('Timestamp', $timestamp)
+                     ->withHeader('User-Agent', "LineDevelopersPhpSdk");
         }, 'autosigner'));
 
         return $client;
