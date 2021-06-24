@@ -1,0 +1,7 @@
+{
+    "require": {
+        "tebru/retrofit-php": "^3.3",
+        "tebru/retrofit-php-http-guzzle6": "^0.1.1",
+        "tebru/retrofit-php-converter-gson": "^0.3.0"
+    }
+}
